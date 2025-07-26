@@ -1,0 +1,12 @@
+.next
+next-env.d.ts
+node_modules
+yarn.lock
+package-lock.json
+public
+README.md
+bash_scripts
+test-results
+blob-report
+allure-report
+allure-results
