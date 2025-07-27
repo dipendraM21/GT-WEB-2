@@ -1,4 +1,4 @@
-import FlightListing from '@/components/web/components/FlightResult/FlightListing'
+import FlightListing from "@/components/web/FlightResult/FlightListing"
 
 const page = () => {
   return (

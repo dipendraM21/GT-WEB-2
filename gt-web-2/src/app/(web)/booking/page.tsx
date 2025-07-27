@@ -1,4 +1,4 @@
-import FlightInfo from '@/components/web/components/Booking/flightInfo'
+import FlightInfo from "@/components/web/Booking/flightInfo";
 
 export default function Booking() {
   return (

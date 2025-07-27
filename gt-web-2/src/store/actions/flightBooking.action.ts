@@ -2,7 +2,7 @@ import {
   FlightListingDataProps,
   FlightSearchResultData,
   SearchQueryPayload,
-} from '@/types/module/flightSearch'
+} from '@/types/module/web/flightSearch'
 import {
   FLIGHT_SEARCH_REQUEST,
   GET_ALL_FLIGHT_LISTING_DATA,

@@ -1,4 +1,4 @@
-import { FlightListingDataProps } from '@/types/module/flightSearch'
+import { FlightListingDataProps } from '@/types/module/web/flightSearch'
 import { FlightBookingActionTypes } from '@/types/store/action/flightBooking.action'
 import { FlightBookingReducerReducerData } from '@/types/store/reducers/flightBooking.reducer'
 import {

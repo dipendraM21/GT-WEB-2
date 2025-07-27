@@ -1,8 +1,8 @@
-import { LoginComponent } from "@/components/web/components/auth/LoginComponent";
+import { LoginComponent } from "@/components/web/auth/LoginComponent";
 
 export default function Login() {
     return (
-        <section className="primary-bg">
+        <section className="bg-red-500">
             <LoginComponent />
         </section>
     )

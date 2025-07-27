@@ -33,14 +33,6 @@
   width: -webkit-fill-available;
 }
 
-/* .common-flight-booking-card-input-label {
-  position: absolute;
-  top: 14px;
-  right: -17px;
-  color: #4a4a4a !important;
-  width: 100%;
-} */
-
 .common-flight-booking-card-input {
   border: 1px solid #e7e7e7 !important;
 }
@@ -98,8 +90,8 @@
   position: relative;
 }
 
-.form-check-input:checked[type='checkbox']:disabled {
-  background: url('../../public/svg/disabled-check-square.svg') !important;
+.form-check-input:checked[type="checkbox"]:disabled {
+  background: url("../../public/svg/disabled-check-square.svg") !important;
   background-color: #eaeaea !important;
   background-position: center !important;
   /* Center the image */
@@ -194,7 +186,7 @@
 
 .custom-ticket-slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 14px;
   width: 14px;
   left: 4px;
@@ -264,4 +256,8 @@ input:checked + .custom-ticket-slider:before {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.text-wrap-style-balance {
+  text-wrap-style: balance !important;
 }

@@ -3,7 +3,7 @@ import {
     VerifyOtpPrpops,
     UserRegistration,
     ForgotPasswordPrpops
-} from "@/typessss/module/web/authModule"
+} from "@/types/module/authModule"
 import {
     LoginFailureAction,
     LoginSuccessAction,

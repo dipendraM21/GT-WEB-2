@@ -1,4 +1,4 @@
-import { Routes } from '@/types/module/routesModule'
+import { Routes } from '@/types/module/core/routesModule'
 
 export const appRoutes: Routes = {
   // Public Routes

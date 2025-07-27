@@ -1,7 +1,4 @@
-import {
-  showErrorToast,
-  showSuccessToast,
-} from '@/components/web/core/Toast/CustomToast'
+
 import { ConvertAuthData } from '@/serializer/auth.serializer'
 import {
   ForgotPasswordAction,
@@ -42,6 +39,7 @@ import {
   resendOtpApi,
   verifyOtpApi,
 } from '../apis'
+import { showErrorToast, showSuccessToast } from '@/utils/toast'
 
 function* signupWorker(action: Signup) {
   try {

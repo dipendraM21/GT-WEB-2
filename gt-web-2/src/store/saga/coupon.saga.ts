@@ -1,8 +1,4 @@
 import {
-  showErrorToast,
-  showSuccessToast,
-} from '@/components/web/core/Toast/CustomToast'
-import {
   AddCouponDetails,
   AddMarkupDetails,
   GetCouponDetails,
@@ -28,6 +24,7 @@ import {
   getMarkupDetailsDataApi,
 } from '../apis'
 
+import { showErrorToast, showSuccessToast } from '@/utils/toast'
 function* addCouponDetailsWorker(action: AddCouponDetails) {
   try {
     const response: AxiosResponse = yield call(

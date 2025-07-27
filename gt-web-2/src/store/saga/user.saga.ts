@@ -4,9 +4,9 @@ import { call, takeLatest, put } from 'redux-saga/effects';
 import { editUserDetailsApi, getCurrentUserDataApi, getUserListApi, manageUserPermissionApi } from "../apis";
 import { getCurrentUsersDataSuccess, getSelectedUsersDataSuccess, getUsersDataSuccess, getUsersFailureAction, manageUserAccessSuccess, updateUserDataSuccess } from "../actions/user.action";
 import { ManageUserAccessAction, UpdateUserDataAction, UserListPaginationData } from "@/types/store/action/user.action";
-import { showErrorToast, showSuccessToast } from "@/components/web/core/Toast/CustomToast";
 import { PaginationProps } from "@/types/module/adminModules/userModule";
 import { ConvertUpdateUserDataBE } from "@/serializer/user.serializer";
+import { showErrorToast, showSuccessToast } from "@/utils/toast";
 
 function* getUserListWorker(action: UserListPaginationData) {
     try {

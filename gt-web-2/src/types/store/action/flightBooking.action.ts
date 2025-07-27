@@ -1,7 +1,7 @@
 import {
   FlightListingDataProps,
   SearchQueryPayload,
-} from '@/types/module/flightSearch'
+} from '@/types/module/web/flightSearch'
 
 export interface FlightBookingSagaType {
   type: string

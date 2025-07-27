@@ -1,12 +1,23 @@
-import UserLayout from '@/layouts/UserLayout'
+// src/app/layout.tsx
+import '@/app/(web)/globals.css'
+import DefaultPage from '@/components/web/DefaultPage/defaultPage'
 import ThemeProvider from '@/providers/theme-provider'
+import '@/styles/cards.css'
+import '@/styles/common.css'
+import '@/styles/commonMarginPadding.css'
+import '@/styles/error-page.css'
+import '@/styles/flex-class.css'
+import '@/styles/fonts.css'
+import '@/styles/home.css'
+import '@/styles/navbar.css'
+import '@/styles/popup-modal.css'
+import '@/styles/radio-btn.css'
+import '@/styles/tabs.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ReactNode } from 'react'
-import '@/styles/home.css'
-import '@/styles/common.css'
-import '@/styles/commonMarginPadding.css'
-import '@/app/(web)/globals.css'
+import 'react-responsive-modal/styles.css'
+import { Toaster } from 'sonner'
 
 const Maison = localFont({
   src: [
@@ -55,11 +66,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             href="https://fonts.gstatic.com"
             crossOrigin=""
           />
-        <link href="/src/style.css" rel="stylesheet"/>
+          <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossOrigin=""
+          />
         </head>
         <body>
-          <UserLayout>{children}</UserLayout>
-          {/* <Toast limit={1} /> */}
+        <Toaster richColors position="top-right" theme="dark" />
+          <DefaultPage>{children}</DefaultPage>
         </body>
       </ThemeProvider>
     </html>

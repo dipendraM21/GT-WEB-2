@@ -1,4 +1,3 @@
-import { showErrorToast } from '@/components/web/core/Toast/CustomToast'
 import {
   GetBookingDetailsDataAction,
   GetMyBookingDetailsDataAction,
@@ -14,6 +13,7 @@ import {
   getMyBookingDetailsDataSuccess,
 } from '../actions/accounting.action'
 import { getBookingDetailsDataApi, getMyBookingDetailsDataApi } from '../apis'
+import { showErrorToast } from '@/utils/toast'
 
 function* fetchBookingDetailsDataWorker(action: GetBookingDetailsDataAction) {
   try {

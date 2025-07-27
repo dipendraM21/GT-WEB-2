@@ -1,5 +1,5 @@
-import { TransformCaseOptions } from '@/types/module/commonModule'
-import { CabinClass } from '@/types/module/flightSearch'
+import { TransformCaseOptions } from '@/types/module/core/commonModule'
+import { CabinClass } from '@/types/module/web/flightSearch'
 import { clsx, type ClassValue } from 'clsx'
 import Cookies from 'js-cookie'
 import moment from 'moment'

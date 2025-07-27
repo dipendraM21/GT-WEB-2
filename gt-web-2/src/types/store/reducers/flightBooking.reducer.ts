@@ -1,7 +1,7 @@
 import {
   FlightListingDataProps,
   FlightSearchResultData,
-} from '@/types/module/flightSearch'
+} from '@/types/module/web/flightSearch'
 
 export interface FlightBookingReducerReducerData {
   loading: boolean

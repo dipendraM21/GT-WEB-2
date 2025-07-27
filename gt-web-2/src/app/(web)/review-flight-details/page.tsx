@@ -1,6 +1,6 @@
 'use client'
-import FlightBookingUI from "@/components/pages/flight-review/Detailscrad"
-import FareSummaryUI from "@/components/pages/flight-review/FareSummary"
+import FlightBookingUI from "@/components/web/flight-review/Detailscrad"
+import FareSummaryUI from "@/components/web/flight-review/FareSummary"
 import { Box, Text } from "theme-ui"
 
 function ReviewFlightDetails() {

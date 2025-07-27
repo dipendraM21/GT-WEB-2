@@ -11,8 +11,8 @@ import {
   ForgotPasswordPrpops,
   LoginPrpops,
   VerifyOtpPrpops,
-} from '@/typessss/module/web/authModule'
-import { SearchQueryPayload } from '@/types/module/flightSearch'
+} from '@/types/module/authModule'
+import { SearchQueryPayload } from '@/types/module/web/flightSearch'
 import { AxiosResponse } from 'axios'
 import NetworkClient from './NetworkClient'
 

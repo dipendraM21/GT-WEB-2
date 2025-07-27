@@ -1,7 +1,7 @@
 import { AuthReducerData } from '@/types/store/reducers/auth.reducer'
 import { FORGOT_PASSWORD, FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, LOGOUT_FAILURE, LOGOUT_SUCCESS, REQUEST_LOGIN, REQUEST_SIGNUP, RESEND_OTP, RESEND_OTP_SUCCESS, SIGNUP_SUCCESS, VERIFY_OTP, VERIFY_OTP_FAILURE, VERIFY_OTP_SUCCESS } from '../../utils/storeTypes'
 import { AuthActionTypes } from '@/types/store/action/auth.action'
-import { LoginPrpops, UserRegistration, VerifyOtpPrpops } from '@/typessss/module/web/authModule'
+import { LoginPrpops, UserRegistration, VerifyOtpPrpops } from '@/types/module/authModule'
 
 const initialState: AuthReducerData = {
     loading: false,

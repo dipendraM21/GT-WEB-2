@@ -1,7 +1,4 @@
-import {
-  showErrorToast,
-  showSuccessToast,
-} from '@/components/web/core/Toast/CustomToast'
+
 import { AddBalance, GetBalance } from '@/types/store/action/balance.action'
 import { ADD_BALANCE, GET_BALANCE } from '@/utils/storeTypes'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -11,6 +8,7 @@ import {
   getBalanceSuccess,
 } from '../actions/balance.action'
 import { addBalanceApi, getBalanceDataApi } from '../apis'
+import { showErrorToast, showSuccessToast } from '@/utils/toast'
 
 function* addBalanceWorker(action: AddBalance) {
   try {
