@@ -139,7 +139,7 @@ export const translation: translation_Props = {
   CANCELLATION_QUEUES: "Cancellation Queues",
   RESCHEDULE_QUEUES: "Reschedule Queues",
   HOLD_QUEUES: "Hold Queues",
-  ACCOUNTING: "Accounting & Reports",
+  ACCOUNTING: "Accounting",
   MY_BOOKINGS: "My Bookings",
   MARKUP_MANAGEMENT: "Markup Management",
   MARKUP_LIST: "Markup List",

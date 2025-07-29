@@ -1,39 +1,37 @@
-'use client'
-import { TextInputField } from '@/components/core/TextInputField/TextInputField'
-import { ThemeButton } from '@/components/core/Button/Button'
+"use client";
+import { ThemeButton } from "@/components/core/Button/Button";
+import { AdminCard } from "@/components/core/Card/AdminCard";
 import {
-  getUsersData,
-  manageUserAccess,
-  setCurrentUserStatus,
-} from '@/store/actions/user.action'
-import { TableColumns } from '@/types/module/admin/tableModule'
+  ActionDropdown,
+  ActionItem,
+} from "@/components/core/Table/ActionDropdown";
+import { CommonTable } from "@/components/core/Table/CommonTable";
+import { getUsersData, manageUserAccess } from "@/store/actions/user.action";
 import {
+  ApprovalStatus,
   UserData,
   UserPermissionsActions,
-} from '@/types/module/admin/userModule'         
-import { MainStoreType } from '@/types/store/reducers/main.reducers'
-import { UserListFillterData } from '@/utils/constant'
-import { appRoutes } from '@/utils/routes'
-import { translation } from '@/utils/translation'
-import { MoreOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Menu } from 'antd'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box } from 'theme-ui'
-import { TablePageComponent } from '../../core/Table/TablePageComponent'
+} from "@/types/module/admin/userModule";
+import { MainStoreType } from "@/types/store/reducers/main.reducers";
+import { appRoutes } from "@/utils/routes";
+import { ColumnDef } from "@tanstack/react-table";
+import { Calendar, Eye, FileText, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Text } from "theme-ui";
 
 export default function UserListing() {
-  const dispatch = useDispatch()
-  const itemsPerPage = 10
-  const getUserData = useSelector((state: MainStoreType) => state.userData)
+  const dispatch = useDispatch();
+  const itemsPerPage = 10;
+  const getUserData = useSelector((state: MainStoreType) => state.userData);
   const currentUserStatus = useSelector(
     (state: MainStoreType) => state.userData?.currentUserStatus
-  )
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [queryValue, setQueryValue] = useState<string>('')
-  const router = useRouter()
+  );
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [queryValue, setQueryValue] = useState<string>("");
+  const router = useRouter();
 
   const handleClick = (type: UserPermissionsActions, email: string) => {
     dispatch(
@@ -44,20 +42,22 @@ export default function UserListing() {
         },
         () => {}
       )
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     if (currentPage) {
-      router.push(`?currentpage=${currentPage}?userstatus=${currentUserStatus}`)
+      router.push(
+        `?currentpage=${currentPage}?userstatus=${currentUserStatus}`
+      );
     }
-  }, [router, currentPage, currentUserStatus])
+  }, [router, currentPage, currentUserStatus]);
 
   useEffect(() => {
     return () => {
-      dispatch(getUsersData())
-    }
-  }, [dispatch])
+      dispatch(getUsersData());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (currentPage || currentUserStatus) {
@@ -66,86 +66,62 @@ export default function UserListing() {
           pageNo: currentPage,
           userStatus: currentUserStatus as string,
         })
-      )
+      );
     }
-  }, [dispatch, currentPage, currentUserStatus])
+  }, [dispatch, currentPage, currentUserStatus]);
 
-  const userListColumns: TableColumns<UserData> = [
+  const userListColumns: ColumnDef<UserDataWithId>[] = [
     {
-      title: 'Sr',
-      dataIndex: 'sr',
-      key: 'sr',
-      render: (_: string, __: UserData, index: number) =>
-        (currentPage - 1) * itemsPerPage + index + 1,
+      accessorFn: (_, index) => (currentPage - 1) * itemsPerPage + index + 1,
+      header: "Sr",
+      cell: ({ getValue }) => getValue(),
     },
     {
-      title: 'Name',
-      dataIndex: 'firstName',
-      key: 'fullName',
-      render: (_, record: UserData) => (
+      accessorKey: "firstName",
+      header: "Name",
+      cell: ({ row }) => (
         <Link
           className="text-decoration-unset user-link-primary"
-          href={`${appRoutes?.userRequests}/${record._id}`}
+          href={`${appRoutes?.userRequests}/${row.original._id}`}
         >
-          {`${record.firstName} ${record.lastName}`}
+          <Text variant="Maison16Medium20" color="#0047AB">
+            {`${row.original.firstName} ${row.original.lastName}`}
+          </Text>
         </Link>
       ),
     },
-    { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Phone Number', dataIndex: 'mobileNumber', key: 'mobileNumber' },
     {
-      title: 'City',
-      dataIndex: 'address',
-      key: 'city',
-      render: (_: string, record: UserData) => `${record.address.city}`,
+      accessorKey: "email",
+      header: "Email",
     },
-    { title: 'Register As', dataIndex: 'registerAs', key: 'registerAs' },
     {
-      title: 'Actions',
-      key: 'actions',
-      render: (_, record: UserData) => (
-        <Dropdown
-          menu={{
-            items: [
-              {
-                key: 'details',
-                label: (
-                  <span onClick={() => handleDetails(record)}>Details</span>
-                ),
-              },
-              {
-                key: 'showTicket',
-                label: (
-                  <span onClick={() => handleShowTicket(record)}>
-                    Show Ticket
-                  </span>
-                ),
-              },
-              {
-                key: 'cancel',
-                label: <span onClick={() => handleCancel(record)}>Cancel</span>,
-              },
-              {
-                key: 'reschedule',
-                label: (
-                  <span onClick={() => handleReschedule(record)}>
-                    Reschedule
-                  </span>
-                ),
-              },
-            ],
-          }}
-          trigger={['click']}
-        >
-          <Button shape="circle" icon={<MoreOutlined />} />
-        </Dropdown>
+      accessorKey: "mobileNumber",
+      header: "Phone Number",
+    },
+    {
+      accessorKey: "address.city",
+      header: "City",
+      cell: ({ row }) => row.original.address.city,
+    },
+    {
+      accessorKey: "registerAs",
+      header: "Register As",
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <ActionDropdown<UserData>
+          actions={getTableActions(row.original)}
+          record={row.original}
+        />
       ),
     },
-  ]
+  ];
 
   const handleFilterChange = (value: string) => {
-    setQueryValue(value)
-  }
+    setQueryValue(value);
+  };
 
   const handleClickSubmit = useCallback(() => {
     dispatch(
@@ -154,140 +130,315 @@ export default function UserListing() {
         userStatus: currentUserStatus as string,
         queryParameter: queryValue,
       })
-    )
-  }, [dispatch, currentPage, currentUserStatus, queryValue])
+    );
+  }, [dispatch, currentPage, currentUserStatus, queryValue]);
 
   const handleClickCancel = () => {
-    setQueryValue('')
+    setQueryValue("");
     dispatch(
       getUsersData({
         pageNo: currentPage,
         userStatus: currentUserStatus as string,
-        queryParameter: '',
+        queryParameter: "",
       })
-    )
-  }
-
-  const actionMenu = (record: UserData) => (
-    <Menu>
-      <Menu.Item key="details" onClick={() => handleDetails(record)}>
-        Details
-      </Menu.Item>
-      <Menu.Item key="showTicket" onClick={() => handleShowTicket(record)}>
-        Show Ticket
-      </Menu.Item>
-      <Menu.Item key="cancel" onClick={() => handleCancel(record)}>
-        Cancel
-      </Menu.Item>
-      <Menu.Item key="reschedule" onClick={() => handleReschedule(record)}>
-        Reschedule
-      </Menu.Item>
-    </Menu>
-  )
+    );
+  };
 
   const handleDetails = (record: UserData) => {
     // Implement navigation or modal for details
-  }
+  };
 
   const handleShowTicket = (record: UserData) => {
     // Implement navigation or modal for ticket
-  }
+  };
 
   const handleCancel = (record: UserData) => {
     // Implement cancel logic
-  }
+  };
 
   const handleReschedule = (record: UserData) => {
     // Implement reschedule logic
-  }
+  };
+
+  // Define actions for the dropdown
+  const getTableActions = (record: UserData): ActionItem<UserData>[] => [
+    {
+      key: "details",
+      label: "Details",
+      icon: Eye,
+      onClick: handleDetails,
+    },
+    {
+      key: "showTicket",
+      label: "Show Ticket",
+      icon: FileText,
+      onClick: handleShowTicket,
+    },
+    {
+      key: "cancel",
+      label: "Cancel",
+      icon: X,
+      onClick: handleCancel,
+      isDestructive: true,
+    },
+    {
+      key: "reschedule",
+      label: "Reschedule",
+      icon: Calendar,
+      onClick: handleReschedule,
+    },
+  ];
+
+  // Create a type that extends UserData with id
+  type UserDataWithId = UserData & { id: string };
+
+  // Dummy data for testing
+  const dummyUserData: UserDataWithId[] = [
+    {
+      _id: "1",
+      id: "1",
+      title: "Mr",
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      mobileNumber: "+91 9876543210",
+      userName: "johndoe",
+      companyName: "Tech Solutions Inc",
+      registerAs: "Individual",
+      isAdmin: false,
+      panNumber: "ABCDE1234F",
+      nameOnPan: "John Doe",
+      landline: "022-12345678",
+      faxNo: "022-12345679",
+      userTNC: true,
+      approvalStatus: "approved" as ApprovalStatus,
+      password: "hashedpassword",
+      __v: 0,
+      gstNumber: "22AAAAA0000A1Z5",
+      address: {
+        addressLine1: "123 Main Street",
+        addressLine2: "Apartment 4B",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pinCode: "400001",
+        country: "India",
+      },
+    },
+    {
+      _id: "2",
+      id: "2",
+      title: "Ms",
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane.smith@example.com",
+      mobileNumber: "+91 9876543211",
+      userName: "janesmith",
+      companyName: "Digital Marketing Pro",
+      registerAs: "Business",
+      isAdmin: false,
+      panNumber: "FGHIJ5678K",
+      nameOnPan: "Jane Smith",
+      landline: "022-12345680",
+      faxNo: "022-12345681",
+      userTNC: true,
+      approvalStatus: "pending" as ApprovalStatus,
+      password: "hashedpassword",
+      __v: 0,
+      gstNumber: "27BBBBB0000B2Z6",
+      address: {
+        addressLine1: "456 Business Park",
+        addressLine2: "Floor 3",
+        city: "Delhi",
+        state: "Delhi",
+        pinCode: "110001",
+        country: "India",
+      },
+    },
+    {
+      _id: "3",
+      id: "3",
+      title: "Dr",
+      firstName: "Robert",
+      lastName: "Johnson",
+      email: "robert.johnson@example.com",
+      mobileNumber: "+91 9876543212",
+      userName: "robertjohnson",
+      companyName: "Healthcare Solutions",
+      registerAs: "Individual",
+      isAdmin: false,
+      panNumber: "KLMNO9012P",
+      nameOnPan: "Robert Johnson",
+      landline: "022-12345682",
+      faxNo: "022-12345683",
+      userTNC: true,
+      approvalStatus: "approved" as ApprovalStatus,
+      password: "hashedpassword",
+      __v: 0,
+      gstNumber: "33CCCCC0000C3Z7",
+      address: {
+        addressLine1: "789 Medical Center",
+        addressLine2: "Suite 101",
+        city: "Bangalore",
+        state: "Karnataka",
+        pinCode: "560001",
+        country: "India",
+      },
+    },
+    {
+      _id: "4",
+      id: "4",
+      title: "Mrs",
+      firstName: "Sarah",
+      lastName: "Williams",
+      email: "sarah.williams@example.com",
+      mobileNumber: "+91 9876543213",
+      userName: "sarahwilliams",
+      companyName: "Creative Design Studio",
+      registerAs: "Business",
+      isAdmin: false,
+      panNumber: "PQRST3456U",
+      nameOnPan: "Sarah Williams",
+      landline: "022-12345684",
+      faxNo: "022-12345685",
+      userTNC: true,
+      approvalStatus: "rejected" as ApprovalStatus,
+      password: "hashedpassword",
+      __v: 0,
+      gstNumber: "44DDDDD0000D4Z8",
+      address: {
+        addressLine1: "321 Creative Lane",
+        addressLine2: "Studio 5",
+        city: "Chennai",
+        state: "Tamil Nadu",
+        pinCode: "600001",
+        country: "India",
+      },
+    },
+    {
+      _id: "5",
+      id: "5",
+      title: "Mr",
+      firstName: "Michael",
+      lastName: "Brown",
+      email: "michael.brown@example.com",
+      mobileNumber: "+91 9876543214",
+      userName: "michaelbrown",
+      companyName: "Financial Services Ltd",
+      registerAs: "Individual",
+      isAdmin: false,
+      panNumber: "UVWXY6789Z",
+      nameOnPan: "Michael Brown",
+      landline: "022-12345686",
+      faxNo: "022-12345687",
+      userTNC: true,
+      approvalStatus: "pending" as ApprovalStatus,
+      password: "hashedpassword",
+      __v: 0,
+      gstNumber: "55EEEEE0000E5Z9",
+      address: {
+        addressLine1: "654 Finance Street",
+        addressLine2: "Tower 2",
+        city: "Hyderabad",
+        state: "Telangana",
+        pinCode: "500001",
+        country: "India",
+      },
+    },
+  ];
+
+  // Add unique id to each user data for the table
+  const tableData =
+    ((getUserData?.data?.users as UserData[])?.map((user, index) => ({
+      ...user,
+      id: user._id || `user-${index}`,
+    })) as UserDataWithId[]) || dummyUserData;
 
   return (
-    <div>
-      {/* <TablePageComponent
-        pageTitle={translation?.USER_LIST}
-        loading={getUserData.loading}
-        columns={userListColumns}
-        cancelBtnTitle={translation?.RESET}
-        submitBtnTitle={translation?.SEARCH}
-        totalPage={getUserData?.data?.totalUsers}
-        pageSize={10}
-        onChange={(page) => {
-          setCurrentPage(page)
-        }}
-        onClickfilltering={(value) => {
-          setCurrentPage(1)
-          dispatch(setCurrentUserStatus(value?.key))
-        }}
-        onInputChange={handleFilterChange}
-        value={queryValue}
-        activeTab={currentUserStatus as string}
-        hasPagination
-        filltering={UserListFillterData}
-        submitBtnClick={handleClickSubmit}
-        cancelBtnClick={handleClickCancel}
-        dataSource={getUserData?.data?.users as UserData[]}
-      /> */}
+    <AdminCard
+      heading="User List"
+      subtitle="Manage and view all registered users"
+    >
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-4">
+          {/* <div className="flex items-center flex-wrap gap-2">
+            {UserListFillterData?.map((itm, idx) => (
+              <ThemeButton
+                className="cta-button tertiary-button-focused justify-end"
+                text={itm?.label}
+                sx={{
+                  backgroundColor:
+                    currentUserStatus === itm?.key
+                      ? "disableDarkBlue"
+                      : "yellow_status_bg",
+                }}
+                textSx={{
+                  color:
+                    currentUserStatus === itm?.key
+                      ? "white"
+                      : "primary_text_dark",
+                }}
+                key={`table-fillter-${idx}`}
+                onClick={() => {
+                  setCurrentPage(1);
+                  dispatch(setCurrentUserStatus(itm?.key));
+                }}
+                variant="secondary"
+              />
+            ))}
+          </div> */}
 
-      <TablePageComponent
-        heading={translation?.USER_LIST}
-        loading={getUserData.loading}
-        columns={userListColumns}
-        totalPage={getUserData?.data?.totalUsers}
-        pageSize={10}
-        onChange={(page) => {
-          setCurrentPage(page)
-        }}
-        hasPagination
-        dataSource={getUserData?.data?.users as UserData[]}
-        footerContent={
-          <>
-            <Box className="flex justify-content-between">
-              <Box className="flex items-center flex-wrap gap-2">
-                {UserListFillterData?.map((itm, idx) => (
-                  <ThemeButton
-                    className="cta-button tertiary-button-focused justify-end"
-                    text={itm?.label}
-                    sx={{
-                      backgroundColor:
-                        currentUserStatus === itm?.key
-                          ? 'disableDarkBlue'
-                          : 'yellow_status_bg',
-                    }}
-                    textSx={{
-                      color:
-                        currentUserStatus === itm?.key
-                          ? 'white'
-                          : 'primary_text_dark',
-                    }}
-                    key={`table-fillter-${idx}`}
-                    onClick={() => {
-                      setCurrentPage(1)
-                      dispatch(setCurrentUserStatus(itm?.key))
-                    }}
-                    variant="secondary"
-                  />
-                ))}
-              </Box>
+          {/* <div className="flex items-center gap-2">
+            <ThemeButton
+              variant="primary"
+              className="cta-button"
+              onClick={handleClickSubmit}
+              text={translation?.SEARCH}
+            />
+            <TextInputField
+              firstInputBox
+              value={queryValue}
+              onChange={handleFilterChange}
+              Inputsx={{ borderRadius: "6px" }}
+              inputWidth="table-fillter-input"
+              placeholder="Search users..."
+            />
+          </div> */}
+        </div>
+      </div>
 
-              <div className="gp-8 table-fillter-container">
-                <ThemeButton
-                  variant="primary"
-                  className="cta-button"
-                  onClick={handleClickSubmit}
-                  text={translation?.SEARCH}
-                />
-                <TextInputField
-                  firstInputBox
-                  value={queryValue}
-                  onChange={handleFilterChange}
-                  Inputsx={{ borderRadius: '6px' }}
-                  inputWidth="table-fillter-input"
-                />
-              </div>
-            </Box>
-          </>
-        }
+      <CommonTable<UserDataWithId>
+        columns={userListColumns}
+        data={tableData}
+        isLoading={getUserData.loading}
+        dataLength={tableData.length}
+        className="user-listing-table"
       />
-    </div>
-  )
+
+      {getUserData?.data?.totalUsers > itemsPerPage && (
+        <div className="flex justify-center mt-6">
+          <div className="flex items-center gap-2">
+            <ThemeButton
+              variant="secondary"
+              text="Previous"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+            />
+            <span className="px-4 py-2 text-gray-700">
+              Page {currentPage} of{" "}
+              {Math.ceil((getUserData?.data?.totalUsers || 0) / itemsPerPage)}
+            </span>
+            <ThemeButton
+              variant="secondary"
+              text="Next"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={
+                currentPage >=
+                Math.ceil((getUserData?.data?.totalUsers || 0) / itemsPerPage)
+              }
+            />
+          </div>
+        </div>
+      )}
+    </AdminCard>
+  );
 }
