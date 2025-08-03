@@ -1,10 +1,10 @@
-'use client'
-import gtLogo from '@/../public/images/gt-logo.png'
-import { navItems } from '@/utils/constant'
-import { translation } from '@/utils/translation'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Box, Paragraph, Text } from 'theme-ui'
+"use client";
+import gtLogo from "@/../public/images/gt-logo.png";
+import { CustomText } from "@/components/core/Text";
+import { navItems } from "@/utils/constant";
+import { translation } from "@/utils/translation";
+import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -17,71 +17,66 @@ const Footer = () => {
           </Link>
 
           <div className="pl-30 text-center">
-            <Text
-              variant="Maison20Medium125"
-              color="grey_light"
-              className="mb-3"
+            <CustomText
+              variant="font-20-medium-25 mb-3"
+              color="primary-grey-300"
             >
               {translation?.GAYATRI_TRAVELS}
-            </Text>
-            <Box
-              as="div"
-              className="md: md:flex text-center flex-col gap-14 my-3"
-            >
+            </CustomText>
+            <div className="md: md:flex text-center flex-col space-y-14 my-3">
               {navItems?.map((item, index) => (
                 <Link
                   key={index}
                   href={item.href}
                   className="text-decoration-none "
                 >
-                  <Text
+                  <CustomText
                     sx={{
-                      cursor: 'pointer',
-                      position: 'relative',
-                      color: 'grey_subtext',
+                      cursor: "pointer",
+                      position: "relative",
                       fontSize: 14,
-                      ':hover': { color: 'orange_500' },
-                      '::after': {
+                      "&:hover": { color: "orange_500" },
+                      "::after": {
                         content: '""',
-                        display: 'block',
-                        height: '2px',
-                        width: '100%',
-                        backgroundColor: '#ff7b00',
-                        position: 'absolute',
-                        bottom: '-4px',
-                        left: '0',
+                        display: "block",
+                        height: "2px",
+                        width: "100%",
+                        backgroundColor: "#ff7b00",
+                        position: "absolute",
+                        bottom: "-4px",
+                        left: "0",
                         opacity: 0,
-                        transition: 'opacity 0.2s ease-in-out',
+                        transition: "opacity 0.2s ease-in-out",
                       },
-                      ':hover::after': { opacity: 1 },
+                      ":hover::after": { opacity: 1 },
                     }}
-                    variant="Maison16Medium20"
+                    color="primary-grey-700"
+                    variant="text-14-medium-20"
+                    // className="font-14-medium-20"
                   >
                     {item.name}
-                  </Text>
+                  </CustomText>
                 </Link>
               ))}
-            </Box>
+            </div>
           </div>
 
           <div>
-            <Text
-              variant="Maison20Medium125"
-              color="grey_light"
-              className="mb-3"
+            <CustomText
+              variant="font-20-medium-25 mb-3"
+              color="primary-grey-300"
             >
               {translation?.PRODUCT_AND_SERVICES}
-            </Text>
+            </CustomText>
           </div>
 
           <div>
-            <Text
-              variant="Maison20Medium125"
-              color="grey_light"
-              className="mb-3"
+            <CustomText
+              variant="font-20-medium-25 mb-3"
+              color="primary-grey-300"
             >
               {translation?.LETS_GET_CONNECTED}
-            </Text>
+            </CustomText>
             <div className="flex space-x-3">
               <a
                 href="#"
@@ -116,9 +111,13 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm">
-          <Paragraph color="grey_light" variant="Maison16Medium20">
+          <CustomText
+            as="p"
+            variant="font-16-medium-20"
+            color="primary-grey-300"
+          >
             {translation?.COPYRIGHT_TEXT}
-          </Paragraph>
+          </CustomText>
 
           <div>
             <p>
@@ -131,7 +130,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

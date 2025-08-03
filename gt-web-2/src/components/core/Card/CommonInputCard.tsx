@@ -1,24 +1,23 @@
-'use client'
-import React, { useCallback, useEffect } from 'react'
-import { Box, Card, Text } from 'theme-ui'
-import { SelectInputField } from '../SelectInputField/SelectInputField'
-import { TextInputField } from '../TextInputField/TextInputField'
-import { ThemeButton } from '../Button/Button'
-import { ButtonProps } from '@/types/module/core/themuiModule'
-import { toast } from 'sonner'
-import { Field, FieldType } from '@/types/module/web/authModule'
-
+"use client";
+import { ButtonProps } from "@/types/module/core/themuiModule";
+import { Field, FieldType } from "@/types/module/web/authModule";
+import React, { useCallback, useEffect } from "react";
+import { toast } from "sonner";
+import { ThemeButton } from "../Button/Button";
+import { SelectInputField } from "../SelectInputField/SelectInputField";
+import { CustomText } from "../Text";
+import { TextInputField } from "../TextInputField/TextInputField";
 
 interface CommonInputCardProps extends ButtonProps {
-  wrapperClass?: string
-  heading?: string
-  desc?: string
-  headingColor?: string
-  descColor?: string
-  descVariant?: string
-  textHeadingClassName?: string
-  headingVariant?: string
-  fields: Field[]
+  wrapperClass?: string;
+  heading?: string;
+  desc?: string;
+  headingColor?: string;
+  descColor?: string;
+  descVariant?: string;
+  textHeadingClassName?: string;
+  headingVariant?: string;
+  fields: Field[];
 }
 
 const CommonInputCard: React.FC<CommonInputCardProps> = ({
@@ -34,8 +33,8 @@ const CommonInputCard: React.FC<CommonInputCardProps> = ({
   ...props
 }) => {
   useEffect(() => {
-    toast.success("Testing toast directly")
-  }, [])
+    toast.success("Testing toast directly");
+  }, []);
   const renderField = useCallback((field: Field) => {
     if (field.type === FieldType.SELECT_INPUT_FIELD) {
       return (
@@ -45,12 +44,12 @@ const CommonInputCard: React.FC<CommonInputCardProps> = ({
           value={field.value}
           isShowRequired={field.isShowRequired}
           onChange={(e) => {
-            field.onChange?.(e?.value as string)
+            field.onChange?.(e?.value as string);
           }}
           id="state-select"
           name="state"
           options={field.options as string[]}
-          labelSx={{ display: 'block', textAlign: 'start' }}
+          labelSx={{ display: "block", textAlign: "start" }}
           placeholder={field.placeholder}
           firstInputBox={field?.firstInputBox}
           instanceId="state-select-instance"
@@ -59,7 +58,7 @@ const CommonInputCard: React.FC<CommonInputCardProps> = ({
           touched={field.touched}
           onBlur={field.onBlur}
         />
-      )
+      );
     }
     return (
       <TextInputField
@@ -75,40 +74,39 @@ const CommonInputCard: React.FC<CommonInputCardProps> = ({
         type={field?.inputType}
         isShowRequired={field.isShowRequired}
         onFocus={() => {
-          field.onFocus?.()
+          field.onFocus?.();
         }}
         onBlur={field?.onBlur}
         manualErrorSX={{
-          display: 'block',
-          textAlign: 'start',
+          display: "block",
+          textAlign: "start",
         }}
         onChange={(e) => {
-          field.onChange?.(e)
+          field.onChange?.(e);
         }}
         placeholder={field.placeholder}
         wrapperClass={`mt-0 w-[100%] ${field?.wrapperClass}`}
-        labelSx={{ display: 'block', textAlign: 'start' }}
+        labelSx={{ display: "block", textAlign: "start" }}
       />
-    )
-  }, [])
-  
+    );
+  }, []);
+
   return (
-    <Card as="div" className={wrapperClass}>
-      <Box className={textHeadingClassName}>
-        <Text variant={headingVariant} color={headingColor}>
+    <div className={wrapperClass}>
+      <div className={textHeadingClassName}>
+        <CustomText variant={headingVariant} color={headingColor}>
           {heading}
-         
-        </Text>
+        </CustomText>
         {desc && (
-          <Text variant={descVariant} color={descColor}>
+          <CustomText as="p" variant={descVariant} color={descColor}>
             {desc}
-          </Text>
+          </CustomText>
         )}
-      </Box>
+      </div>
       {fields?.map((field) => renderField(field))}
       <ThemeButton {...props} />
-    </Card>
-  )
-}
+    </div>
+  );
+};
 
-export default CommonInputCard
+export default CommonInputCard;

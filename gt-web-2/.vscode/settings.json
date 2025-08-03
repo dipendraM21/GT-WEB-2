@@ -19,5 +19,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "zencoder.enableRepoIndexing": true // Trim final newlines
+  "zencoder.enableRepoIndexing": true, // Trim final newlines
+  "tailwindCSS.experimental.configFile": "./src/app/(web)/globals.css"
 }

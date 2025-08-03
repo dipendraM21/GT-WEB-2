@@ -1,24 +1,22 @@
-'use client'
-import FeatureList from '@/components/core/Card/FeatureListCard'
-import featureData from '@/utils/constant'
-import { translation } from '@/utils/translation'
+"use client";
+import FeatureList from "@/components/core/Card/FeatureListCard";
+import featureData from "@/utils/constant";
+import { translation } from "@/utils/translation";
 
 const ServicesCard = () => {
   return (
-    <div>
-      <FeatureList
-        titleVariant="Maison24MDemi125"
-        headingWrapperClassName="mb-4 text-center"
-        descriptionVariant="Maison18Medium125"
-        descColor="grey_medium"
-        titleColor="blue_dark"
-        headingColor="orange_accent_alpha"
-        data={featureData}
-        heading={translation?.WHY_WITH_US}
-        containerClassName="container mx-auto why-choose-inner-area my-30"
-      />
-    </div>
-  )
-}
+    <FeatureList
+      titleVariant="font-24-demi-30"
+      headingWrapperClassName="mb-4 text-center"
+      descriptionVariant="font-18-medium-20"
+      descColor="grey_medium"
+      titleColor="blue_dark"
+      headingColor="primary-orange-500-transparent"
+      data={featureData}
+      heading={translation?.WHY_WITH_US}
+      containerClassName="container mx-auto why-choose-inner-area my-30"
+    />
+  );
+};
 
-export default ServicesCard
+export default ServicesCard;

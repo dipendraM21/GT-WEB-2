@@ -1,40 +1,41 @@
-import Image, { StaticImageData } from 'next/image'
-import { FC } from 'react'
-import { Box, Paragraph, Text } from 'theme-ui'
+import Image, { StaticImageData } from "next/image";
+import { FC } from "react";
+import { Box, Paragraph } from "theme-ui";
+import { CustomText } from "../Text";
 
 interface FeatureListProps {
-  heading?: string
-  headingVariant?: string
-  headingClassName?: string
-  gridWrapperClassName?: string
-  headingWrapperClassName?: string
-  mainClassName?: string
-  containerClassName?: string
-  cardClassName?: string
-  iconWrapperClassName?: string
-  titleVariant?: string
-  descriptionVariant?: string
-  descColor?: string
-  iconClassName?: string
-  headingColor?: string
-  titleColor?: string
+  heading?: string;
+  headingVariant?: string;
+  headingClassName?: string;
+  gridWrapperClassName?: string;
+  headingWrapperClassName?: string;
+  mainClassName?: string;
+  containerClassName?: string;
+  cardClassName?: string;
+  iconWrapperClassName?: string;
+  titleVariant?: string;
+  descriptionVariant?: string;
+  descColor?: string;
+  iconClassName?: string;
+  headingColor?: string;
+  titleColor?: string;
   data: {
-    icon: StaticImageData
-    heading: string
-    description: string
-  }[]
+    icon: StaticImageData;
+    heading: string;
+    description: string;
+  }[];
 }
 const FeatureList: FC<FeatureListProps> = ({
   heading,
-  headingVariant = 'Maison36Medium125',
+  headingVariant = "font-36-medium-44",
   descColor,
-  headingWrapperClassName = 'text-center mb-10',
+  headingWrapperClassName = "text-center mb-10",
   headingClassName,
-  gridWrapperClassName = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14',
-  mainClassName = 'why-choose-us-area my-30',
-  containerClassName = 'container mx-auto why-choose-inner-area',
-  cardClassName = 'single-box bg-white p-6 shadow-md rounded-lg text-center',
-  iconWrapperClassName = 'text-center mb-4 flex items-center justify-center',
+  gridWrapperClassName = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14",
+  mainClassName = "why-choose-us-area my-30",
+  containerClassName = "container mx-auto why-choose-inner-area",
+  cardClassName = "single-box bg-white p-6 shadow-md rounded-lg text-center",
+  iconWrapperClassName = "text-center mb-4 flex items-center justify-center",
   titleVariant,
   descriptionVariant,
   data,
@@ -46,14 +47,14 @@ const FeatureList: FC<FeatureListProps> = ({
     <Box as="div" className={mainClassName}>
       <div className={containerClassName}>
         <Box as="div" className={headingWrapperClassName}>
-          <Text
+          <CustomText
             color={headingColor}
             variant={headingVariant}
             className={`${headingClassName}`}
           >
             {heading}
-          </Text>
-          <div className="heading-divider w-16 h-[3px] bg-blue-900 mx-auto mt-2"></div>
+          </CustomText>
+          {/* <div className="heading-divider w-16 h-[3px] bg-primary-grey-300 mx-auto mt-2"></div> */}
         </Box>
 
         <Box as="div" className={gridWrapperClassName}>
@@ -68,13 +69,13 @@ const FeatureList: FC<FeatureListProps> = ({
                     alt={`item-icon-${idx}`}
                   />
                 </div>
-                <Text
+                <CustomText
                   color={titleColor}
                   variant={titleVariant}
                   className="text-xl font-semibold text-gray-700"
                 >
                   {item?.heading}
-                </Text>
+                </CustomText>
                 <Paragraph
                   color={descColor}
                   variant={descriptionVariant}
@@ -87,7 +88,7 @@ const FeatureList: FC<FeatureListProps> = ({
         </Box>
       </div>
     </Box>
-  )
-}
+  );
+};
 
-export default FeatureList
+export default FeatureList;

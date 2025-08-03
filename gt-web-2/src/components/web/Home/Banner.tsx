@@ -2,7 +2,6 @@
 import CommonInputCard from "@/components/core/Card/CommonInputCard";
 import { Field } from "@/types/module/web/authModule";
 import { toCamelCase } from "@/utils/functions";
-
 import { translation } from "@/utils/translation";
 
 const Banner = () => {
@@ -35,8 +34,8 @@ const Banner = () => {
           wrapperClass="banner-login-card"
           textHeadingClassName="flex flex-col"
           text={translation?.LOGIN}
-          headingVariant="Maison36SemiBold125"
-          headingColor="orange_accent_alpha"
+          headingVariant="font-36-semi-bold-125"
+          headingColor="primary-orange-500-transparent"
           heading={translation?.USER_LOGIN}
         />
       </div>

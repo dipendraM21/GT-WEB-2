@@ -1,4 +1,5 @@
 import React from "react";
+import { CustomStyleProps } from "../../../types/module/core/customStyleTypes";
 
 export interface CustomTextProps {
   children?: React.ReactNode;
@@ -6,17 +7,15 @@ export interface CustomTextProps {
   className?: string;
   color?: string;
   variant?: string;
-  sx?: React.CSSProperties;
+  sx?: CustomStyleProps;
   [key: string]: unknown; // Allow additional props
 }
 
 /**
- * Custom Text component with flexible styling options
- * Supports all standard text props plus custom styling
  */
 export const CustomText: React.FC<CustomTextProps> = ({
   children,
-  as = "h3",
+  as = "span",
   className = "",
   color,
   variant,
@@ -25,16 +24,17 @@ export const CustomText: React.FC<CustomTextProps> = ({
 }) => {
   const Component = as;
 
-  const combinedStyle: React.CSSProperties = {
-    color,
-    ...sx,
+  // Handle sx prop separately since it's CustomStyleProps
+  console.log("color", `var(--color-${color})`);
+  const styleProps: React.CSSProperties = {
+    color: `var(--color-${color})`,
   };
 
   return (
     <Component
-      className={className}
-      style={combinedStyle}
-      data-variant={variant}
+      className={variant}
+      style={styleProps}
+      // data-variant={variant}
       {...props}
     >
       {children}

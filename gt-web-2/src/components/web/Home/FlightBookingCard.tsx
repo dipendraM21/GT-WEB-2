@@ -1,128 +1,127 @@
-'use client'
+"use client";
+import { ThemeButton } from "@/components/core/Button/Button";
+import DateSelectModal from "@/components/core/PopupModals/DateSelectModal";
+import TravelClassSelector from "@/components/core/PopupModals/TravelClassSelector";
+import CommonRadioButton from "@/components/core/RadioButton/RadioButton";
+import CommonTab from "@/components/core/Tabs/CommonTab";
+import { TextInputField } from "@/components/core/TextInputField/TextInputField";
 import {
   saveFlightSearchData,
   setFlightSearchRequest,
-} from '@/store/actions/flightBooking.action'
-import { DateRangeSelectionProps } from '@/types/module/web/dateRangeCalendarModule'
-import { AirportDataItemsProps, CabinClass } from '@/types/module/web/flightSearch'
-import { MainStoreType } from '@/types/store/reducers/main.reducers'
-import { flightBookingTabs, selecteTripOptions } from '@/utils/constant'
-import { formatCabinClass } from '@/utils/functions'
-import { translation } from '@/utils/translation'
-import moment from 'moment'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
-import { RangeKeyDict } from 'react-date-range'
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
-import { HiSwitchHorizontal } from 'react-icons/hi'
-import { IoSearchOutline } from 'react-icons/io5'
-import { MdFlightLand, MdFlightTakeoff } from 'react-icons/md'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, Card } from 'theme-ui'
-import CommonFlightSelect from '../FlightSelectCard/CommonFlightSelect'
-import CommonTab from '@/components/core/Tabs/CommonTab'
-import CommonRadioButton from '@/components/core/RadioButton/RadioButton'
-import { TextInputField } from '@/components/core/TextInputField/TextInputField'
-import DateSelectModal from '@/components/core/PopupModals/DateSelectModal'
-import TravelClassSelector from '@/components/core/PopupModals/TravelClassSelector'
-import { ThemeButton } from '@/components/core/Button/Button'
+} from "@/store/actions/flightBooking.action";
+import { DateRangeSelectionProps } from "@/types/module/web/dateRangeCalendarModule";
+import { CabinClass } from "@/types/module/web/flightSearch";
+import { MainStoreType } from "@/types/store/reducers/main.reducers";
+import { flightBookingTabs, selecteTripOptions } from "@/utils/constant";
+import { formatCabinClass } from "@/utils/functions";
+import { translation } from "@/utils/translation";
+import moment from "moment";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { RangeKeyDict } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { HiSwitchHorizontal } from "react-icons/hi";
+import { IoSearchOutline } from "react-icons/io5";
+import { MdFlightLand, MdFlightTakeoff } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import CommonFlightSelect from "../FlightSelectCard/CommonFlightSelect";
 
 interface FlightBookingCardProps {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface OpenDateRangeProps {
-  departureDate: boolean
-  returnDate: boolean
+  departureDate: boolean;
+  returnDate: boolean;
 }
 
 const FlightBookingCard: React.FC = () => {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const returnDateInputRef = useRef<HTMLInputElement>(null)
-  const [country, setCountry] = useState<FlightBookingCardProps[] | []>([])
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const returnDateInputRef = useRef<HTMLInputElement>(null);
+  const [country, setCountry] = useState<FlightBookingCardProps[] | []>([]);
   const { flightFiltersData, loading } = useSelector(
     (state: MainStoreType) => state.flightBookingData
-  )
+  );
 
   const [selectedDateRange, setSelectedDateRange] = useState<
     DateRangeSelectionProps[] | null
-  >(null)
+  >(null);
 
   const formattedDate = moment(selectedDateRange?.[0]?.startDate).format(
     "DD MMM'YY"
-  )
+  );
   const formattedEndDate =
     selectedDateRange?.[0]?.startDate !== selectedDateRange?.[0]?.endDate
       ? moment(selectedDateRange?.[0]?.endDate).format("DD MMM'YY")
-      : ''
+      : "";
 
-  const [shouldFocusReturnDate, setShouldFocusReturnDate] = useState(false)
-  const [showTravelModal, setShowTravelModal] = useState(false)
+  const [shouldFocusReturnDate, setShouldFocusReturnDate] = useState(false);
+  const [showTravelModal, setShowTravelModal] = useState(false);
   const [openDateRange, setOpenDateRange] = useState<OpenDateRangeProps>({
     departureDate: false,
     returnDate: false,
-  })
+  });
 
-  const isRoundTrip = flightFiltersData?.journeyType === translation.ROUND_TRIP
+  const isRoundTrip = flightFiltersData?.journeyType === translation.ROUND_TRIP;
   const returnDatePlaceholder = isRoundTrip
     ? translation.RETURN_ON
-    : translation.TAP_TO_ADD_RETURN_DATE
+    : translation.TAP_TO_ADD_RETURN_DATE;
 
   const handleOptionChange = (value: string) => {
-    dispatch(saveFlightSearchData({ journeyType: value }))
-  }
+    dispatch(saveFlightSearchData({ journeyType: value }));
+  };
 
   const handleSelect = (ranges: RangeKeyDict) => {
-    const selection = ranges.selection
+    const selection = ranges.selection;
 
     const currentRange = selectedDateRange?.[0] || {
       startDate: new Date(),
       endDate: new Date(),
-      key: 'selection',
-    }
+      key: "selection",
+    };
 
-    const isOneWay = flightFiltersData?.journeyType === translation.ONE_WAY
+    const isOneWay = flightFiltersData?.journeyType === translation.ONE_WAY;
 
-    let updatedStartDate = currentRange.startDate
-    let updatedEndDate = currentRange.endDate
+    let updatedStartDate = currentRange.startDate;
+    let updatedEndDate = currentRange.endDate;
 
     if (isOneWay || openDateRange.departureDate) {
-      updatedStartDate = selection.startDate
-      updatedEndDate = isOneWay ? selection.startDate : currentRange.endDate
+      updatedStartDate = selection.startDate;
+      updatedEndDate = isOneWay ? selection.startDate : currentRange.endDate;
     }
 
     if (isRoundTrip && openDateRange.returnDate) {
-      updatedEndDate = selection.endDate
+      updatedEndDate = selection.endDate;
     }
 
     const updatedRange = [
       {
         startDate: updatedStartDate,
         endDate: updatedEndDate,
-        key: 'selection',
+        key: "selection",
       },
-    ]
+    ];
 
-    setSelectedDateRange(updatedRange)
+    setSelectedDateRange(updatedRange);
 
-    const payload: any = {}
+    const payload: any = {};
     if (openDateRange.departureDate || isOneWay) {
-      payload.departureDate = updatedStartDate
+      payload.departureDate = updatedStartDate;
     }
     if (openDateRange.returnDate && isRoundTrip) {
-      payload.returnDate = updatedEndDate
+      payload.returnDate = updatedEndDate;
     }
 
-    dispatch(saveFlightSearchData(payload))
+    dispatch(saveFlightSearchData(payload));
 
     setOpenDateRange({
       departureDate: false,
       returnDate: false,
-    })
-  }
+    });
+  };
 
   // useEffect(() => {
   //   const airportsData = require('airports-json')
@@ -143,38 +142,40 @@ const FlightBookingCard: React.FC = () => {
 
   useEffect(() => {
     if (isRoundTrip && shouldFocusReturnDate) {
-      returnDateInputRef.current?.focus()
-      setShouldFocusReturnDate(false)
+      returnDateInputRef.current?.focus();
+      setShouldFocusReturnDate(false);
     }
-  }, [isRoundTrip, shouldFocusReturnDate])
+  }, [isRoundTrip, shouldFocusReturnDate]);
 
   useEffect(() => {
     if (
       flightFiltersData?.journeyType === translation.ONE_WAY &&
       selectedDateRange?.[0]
     ) {
-      const { startDate, endDate, key } = selectedDateRange[0]
+      const { startDate, endDate, key } = selectedDateRange[0];
       if (startDate !== endDate) {
-        setSelectedDateRange([{ startDate, endDate: startDate, key }])
+        setSelectedDateRange([{ startDate, endDate: startDate, key }]);
       }
     }
-  }, [flightFiltersData?.journeyType])
+  }, [flightFiltersData?.journeyType]);
 
   const getTravellerSummary = () => {
-    const passengers = flightFiltersData?.passengers || {}
+    const passengers = flightFiltersData?.passengers || {};
     const totalTravellers =
-      (parseInt(passengers.adults || '0') || 0) +
-      (parseInt(passengers.children || '0') || 0) +
-      (parseInt(passengers.infants || '0') || 0)
+      (parseInt(passengers.adults || "0") || 0) +
+      (parseInt(passengers.children || "0") || 0) +
+      (parseInt(passengers.infants || "0") || 0);
 
     const className = flightFiltersData?.cabinClass
       ? formatCabinClass(flightFiltersData.cabinClass)
-      : 'Economy'
+      : "Economy";
 
     return totalTravellers > 1
-      ? `${totalTravellers} Traveller${totalTravellers > 1 ? 's' : ''}, ${className}`
-      : ''
-  }
+      ? `${totalTravellers} Traveller${
+          totalTravellers > 1 ? "s" : ""
+        }, ${className}`
+      : "";
+  };
 
   const getNormalizedRange = () => {
     return [
@@ -183,10 +184,10 @@ const FlightBookingCard: React.FC = () => {
         endDate: isRoundTrip
           ? selectedDateRange?.[0]?.endDate || new Date()
           : selectedDateRange?.[0]?.startDate || new Date(),
-        key: 'selection',
+        key: "selection",
       },
-    ]
-  }
+    ];
+  };
 
   const handleSubmit = () => {
     const {
@@ -197,10 +198,10 @@ const FlightBookingCard: React.FC = () => {
       passengers,
       cabinClass,
       journeyType,
-    } = flightFiltersData || {}
+    } = flightFiltersData || {};
 
     if (!origin || !destination || !departureDate) {
-      return
+      return;
     }
 
     const routeInfos = [
@@ -209,14 +210,14 @@ const FlightBookingCard: React.FC = () => {
         toCityOrAirport: { code: destination },
         travelDate: new Date(departureDate).toISOString().slice(0, 10),
       },
-    ]
+    ];
 
     if (journeyType === translation.ROUND_TRIP && returnDate) {
       routeInfos.push({
         fromCityOrAirport: { code: destination },
         toCityOrAirport: { code: origin },
         travelDate: new Date(returnDate).toISOString().slice(0, 10),
-      })
+      });
     }
 
     dispatch(
@@ -224,9 +225,9 @@ const FlightBookingCard: React.FC = () => {
         {
           searchQuery: {
             paxInfo: {
-              ADULT: passengers?.adults || '0',
-              CHILD: passengers?.children || '0',
-              INFANT: passengers?.infants || '0',
+              ADULT: passengers?.adults || "0",
+              CHILD: passengers?.children || "0",
+              INFANT: passengers?.infants || "0",
             },
             cabinClass: cabinClass as CabinClass,
             routeInfos,
@@ -242,12 +243,12 @@ const FlightBookingCard: React.FC = () => {
           }
         }
       )
-    )
-  }
+    );
+  };
 
   return (
     <div className="container">
-      <Card className="booking-card">
+      <div className="booking-card">
         <CommonTab
           tabs={flightBookingTabs}
           activeTab="flight"
@@ -265,7 +266,7 @@ const FlightBookingCard: React.FC = () => {
           mainClass="radio-group flex justify-start my-20 gap-4 item-center ml-20"
         />
 
-        <Box className="grid grid-cols-12 gap-x-3 gap-y-20 w-full h-full">
+        <div className="grid grid-cols-12 gap-x-3 gap-y-20 w-full h-full">
           <div className="col-span-12 grid grid-cols-12 gap-3">
             <div className="col-span-12 md:col-span-6">
               <CommonFlightSelect
@@ -274,13 +275,13 @@ const FlightBookingCard: React.FC = () => {
                 )}
                 label="From"
                 classNames={{
-                  control: () => 'common-flight-booking-card w-full br-l-10',
-                  singleValue: () => 'w-390',
+                  control: () => "common-flight-booking-card w-full br-l-10",
+                  singleValue: () => "w-390",
                 }}
                 placeholder="Origin"
-                icon={<MdFlightTakeoff color={'black'} size={23} />}
+                icon={<MdFlightTakeoff color={"black"} size={23} />}
                 onChange={(val) => {
-                  dispatch(saveFlightSearchData({ origin: val }))
+                  dispatch(saveFlightSearchData({ origin: val }));
                 }}
               />
             </div>
@@ -301,13 +302,13 @@ const FlightBookingCard: React.FC = () => {
                   (opt) => opt.value !== flightFiltersData?.origin
                 )}
                 placeholder="Destination"
-                icon={<MdFlightLand color={'black'} size={23} />}
+                icon={<MdFlightLand color={"black"} size={23} />}
                 classNames={{
-                  control: () => 'common-flight-booking-card w-full br-r-10',
-                  singleValue: () => 'w-390',
+                  control: () => "common-flight-booking-card w-full br-r-10",
+                  singleValue: () => "w-390",
                 }}
                 onChange={(val) => {
-                  dispatch(saveFlightSearchData({ destination: val }))
+                  dispatch(saveFlightSearchData({ destination: val }));
                 }}
               />
             </div>
@@ -324,7 +325,7 @@ const FlightBookingCard: React.FC = () => {
               placeholder="Onward Date"
               value={formattedDate}
               onClick={() => {
-                setOpenDateRange({ returnDate: false, departureDate: true })
+                setOpenDateRange({ returnDate: false, departureDate: true });
               }}
             />
             {openDateRange.departureDate && (
@@ -336,7 +337,7 @@ const FlightBookingCard: React.FC = () => {
                     saveFlightSearchData({
                       journeyType: translation.ROUND_TRIP,
                     })
-                  )
+                  );
                 }}
                 ranges={getNormalizedRange()}
                 onChange={handleSelect}
@@ -350,10 +351,10 @@ const FlightBookingCard: React.FC = () => {
               if (!isRoundTrip) {
                 dispatch(
                   saveFlightSearchData({ journeyType: translation.ROUND_TRIP })
-                )
+                );
               }
-              setShouldFocusReturnDate(true)
-              setOpenDateRange({ returnDate: true, departureDate: false })
+              setShouldFocusReturnDate(true);
+              setOpenDateRange({ returnDate: true, departureDate: false });
             }}
           >
             <TextInputField
@@ -390,11 +391,11 @@ const FlightBookingCard: React.FC = () => {
               wrapperClass="w-full"
               customClassName="br-r-10 cursor-pointer"
               onClick={(e) => {
-                e.stopPropagation()
-                setShowTravelModal(!showTravelModal)
+                e.stopPropagation();
+                setShowTravelModal(!showTravelModal);
               }}
               readOnly
-              value={getTravellerSummary() || ''}
+              value={getTravellerSummary() || ""}
               placeholder="Tap to select"
             />
             {showTravelModal && (
@@ -405,7 +406,7 @@ const FlightBookingCard: React.FC = () => {
               </div>
             )}
           </div>
-        </Box>
+        </div>
 
         <div className="flex justify-center items-center my-3">
           <ThemeButton
@@ -417,9 +418,9 @@ const FlightBookingCard: React.FC = () => {
             // isLoading={loading}
           />
         </div>
-      </Card>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default FlightBookingCard
+export default FlightBookingCard;
