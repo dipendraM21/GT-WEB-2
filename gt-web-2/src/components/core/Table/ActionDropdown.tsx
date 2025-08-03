@@ -44,7 +44,7 @@ export const ActionDropdown = <T extends object>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={contentClassName}>
-        {actions.map((action) => {
+        {actions?.map((action) => {
           const IconComponent = action.icon;
           return (
             <DropdownMenuItem

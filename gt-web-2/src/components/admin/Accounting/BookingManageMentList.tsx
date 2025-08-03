@@ -1,26 +1,26 @@
-'use client'
-import DateInputField from '@/components/core/TextInputField/DateInputField'
-import { TextInputField } from '@/components/core/TextInputField/TextInputField'
-import { ThemeButton } from '@/components/core/Button/Button'
-import { SelectInputField } from '@/components/core/SelectInputField/SelectInputField'
-import { getMyBookingDetailsData } from '@/store/actions/accounting.action'
-import { RootState } from '@/store/store'
-import { BookingDetailsDataProps } from '@/types/module/admin/bookingDetailsModule'
-import { TableColumns } from '@/types/module/admin/tableModule'
-import { BookingTypeOptions, ITEMS_PER_PAGE } from '@/utils/constant'
-import { formatDate } from '@/utils/functions'
-import { translation } from '@/utils/translation'
-import { Menu } from 'antd'
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box } from 'theme-ui'
-import { TablePageComponent } from '../../core/Table/TablePageComponent'
+"use client";
+import { ThemeButton } from "@/components/core/Button/Button";
+import { SelectInputField } from "@/components/core/SelectInputField/SelectInputField";
+import DateInputField from "@/components/core/TextInputField/DateInputField";
+import { TextInputField } from "@/components/core/TextInputField/TextInputField";
+import { getMyBookingDetailsData } from "@/store/actions/accounting.action";
+import { RootState } from "@/store/store";
+import { BookingDetailsDataProps } from "@/types/module/admin/bookingDetailsModule";
+import { TableColumns } from "@/types/module/admin/tableModule";
+import { BookingTypeOptions, ITEMS_PER_PAGE } from "@/utils/constant";
+import { formatDate } from "@/utils/functions";
+import { translation } from "@/utils/translation";
+import { Menu } from "antd";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box } from "theme-ui";
+import { TablePageComponent } from "../../core/Table/TablePageComponent";
 
 const statusColors: Record<string, string> = {
-  confirmed: 'green',
-  pending: 'gold',
-  cancelled: 'red',
-}
+  confirmed: "green",
+  pending: "gold",
+  cancelled: "red",
+};
 
 const actionMenu = (record: BookingDetailsDataProps) => (
   <Menu>
@@ -29,136 +29,136 @@ const actionMenu = (record: BookingDetailsDataProps) => (
     <Menu.Item key="cancel">Cancel</Menu.Item>
     <Menu.Item key="reschedule">Reschedule</Menu.Item>
   </Menu>
-)
+);
 const BookingManageMentList = () => {
-  const dispatch = useDispatch()
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [filterValues, setFilterValues] = useState({
-    transactionId: '',
-    sector: '',
-    bookingDate: '',
-    passengerName: '',
-    gdsPnr: '',
-    airlinePnr: '',
-    bookingStatus: '',
-    paxInfo: '',
-    journeyDate: '',
-    ticketNumbers: '',
-  })
+    transactionId: "",
+    sector: "",
+    bookingDate: "",
+    passengerName: "",
+    gdsPnr: "",
+    airlinePnr: "",
+    bookingStatus: "",
+    paxInfo: "",
+    journeyDate: "",
+    ticketNumbers: "",
+  });
 
   const { myBookingDetailsData, loading } = useSelector(
     (state: RootState) => state.accountingData
-  )
+  );
   const myBookingDetailsDataArray = myBookingDetailsData
     ? [myBookingDetailsData]
-    : []
+    : [];
 
   const columns: TableColumns<BookingDetailsDataProps> = [
     {
-      title: 'Sr',
-      dataIndex: 'sr',
-      key: 'sr',
+      title: "Sr",
+      dataIndex: "sr",
+      key: "sr",
       render: (_: string, __: BookingDetailsDataProps, index: number) =>
         (currentPage - 1) * ITEMS_PER_PAGE + index + 1,
     },
-    { title: 'Tx.ID', dataIndex: 'txId', key: 'txId' },
+    { title: "Tx.ID", dataIndex: "txId", key: "txId" },
     {
-      title: 'Sector',
-      dataIndex: 'sector',
-      key: 'sector',
+      title: "Sector",
+      dataIndex: "sector",
+      key: "sector",
       render: (value, record, index) => {
         return (
           <div>
-            {record?.itemInfos?.AIR?.tripInfos[0]?.sI[0]?.da?.code} -{' '}
+            {record?.itemInfos?.AIR?.tripInfos[0]?.sI[0]?.da?.code} -{" "}
             {record?.itemInfos?.AIR?.tripInfos[0]?.sI[0]?.aa?.code}
           </div>
-        )
+        );
       },
     },
     {
-      title: 'Booking Date',
-      dataIndex: 'order',
-      key: 'order',
+      title: "Booking Date",
+      dataIndex: "order",
+      key: "order",
       render: (value, record, index) => {
-        return <div>{formatDate(record?.order?.createdOn)}</div>
+        return <div>{formatDate(record?.order?.createdOn)}</div>;
       },
     },
     {
-      title: 'Passenger Name',
-      dataIndex: 'leadPaxName',
-      key: 'leadPaxName',
+      title: "Passenger Name",
+      dataIndex: "leadPaxName",
+      key: "leadPaxName",
       render: (value, record, index) => {
-        const traveller = record?.itemInfos?.AIR?.travellerInfos[0]
-        const passengerName = `${traveller?.ti} ${traveller?.fN} ${traveller?.lN}`
-        return <div>{passengerName}</div>
+        const traveller = record?.itemInfos?.AIR?.travellerInfos[0];
+        const passengerName = `${traveller?.ti} ${traveller?.fN} ${traveller?.lN}`;
+        return <div>{passengerName}</div>;
       },
     },
-    { title: 'GDSPNR', dataIndex: 'gdsPnr', key: 'gdsPnr' },
-    { title: 'AirlinePnr', dataIndex: 'aPnr', key: 'aPnr' },
+    { title: "GDSPNR", dataIndex: "gdsPnr", key: "gdsPnr" },
+    { title: "AirlinePnr", dataIndex: "aPnr", key: "aPnr" },
     {
-      title: 'BookingStatus',
-      dataIndex: 'order',
-      key: 'order',
+      title: "BookingStatus",
+      dataIndex: "order",
+      key: "order",
       render: (value, record, index) => {
-        return <div>{record?.order?.status}</div>
+        return <div>{record?.order?.status}</div>;
       },
     },
 
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       // render: (_: any, record: BookingDetailsData) => (
       //   <Dropdown menu={{ items: actionMenu(record) }} trigger={['click']}>
       //     <Button shape="default" icon={<MoreOutlined />} />
       //   </Dropdown>
       // ),
     },
-  ]
+  ];
 
   const handleInputChange = (name: string, value: string) => {
-    setFilterValues({ ...filterValues, [name]: value })
-  }
+    setFilterValues({ ...filterValues, [name]: value });
+  };
 
   const handleSearch = () => {
     dispatch(
       getMyBookingDetailsData({
         bookingId: filterValues?.transactionId,
       })
-    )
-  }
+    );
+  };
 
   const handleReset = () => {
     setFilterValues({
-      transactionId: '',
-      sector: '',
-      bookingDate: '',
-      passengerName: '',
-      gdsPnr: '',
-      airlinePnr: '',
-      bookingStatus: '',
-      paxInfo: '',
-      journeyDate: '',
-      ticketNumbers: '',
-    })
-  }
+      transactionId: "",
+      sector: "",
+      bookingDate: "",
+      passengerName: "",
+      gdsPnr: "",
+      airlinePnr: "",
+      bookingStatus: "",
+      paxInfo: "",
+      journeyDate: "",
+      ticketNumbers: "",
+    });
+  };
 
   return (
-    <>
+    <div>
       <TablePageComponent
         heading={translation.BOOKING_MANAGEMENT}
         columns={columns}
         dataSource={[
           {
             order: {
-              bookingId: 'TJS100201539186',
+              bookingId: "TJS100201539186",
               amount: 5764,
               markup: 0,
               deliveryInfo: {
-                emails: ['heelpatel216@gmail.com'],
-                contacts: ['9714411841'],
+                emails: ["heelpatel216@gmail.com"],
+                contacts: ["9714411841"],
               },
-              status: 'PENDING',
-              createdOn: '2025-07-18T17:13:28.744',
+              status: "PENDING",
+              createdOn: "2025-07-18T17:13:28.744",
               isPassportConsentTaken: false,
             },
             itemInfos: {
@@ -167,38 +167,38 @@ const BookingManageMentList = () => {
                   {
                     sI: [
                       {
-                        id: '292954',
+                        id: "292954",
                         fD: {
                           aI: {
-                            code: '6E',
-                            name: 'IndiGo',
+                            code: "6E",
+                            name: "IndiGo",
                             isLcc: true,
                           },
-                          fN: '6814',
-                          eT: '321',
+                          fN: "6814",
+                          eT: "321",
                         },
                         stops: 0,
                         duration: 135,
                         da: {
-                          code: 'DEL',
-                          name: 'Delhi Indira Gandhi Intl',
-                          cityCode: 'DEL',
-                          city: 'Delhi',
-                          country: 'India',
-                          countryCode: 'IN',
-                          terminal: 'Terminal 1',
+                          code: "DEL",
+                          name: "Delhi Indira Gandhi Intl",
+                          cityCode: "DEL",
+                          city: "Delhi",
+                          country: "India",
+                          countryCode: "IN",
+                          terminal: "Terminal 1",
                         },
                         aa: {
-                          code: 'BOM',
-                          name: 'Chhatrapati Shivaji',
-                          cityCode: 'BOM',
-                          city: 'Mumbai',
-                          country: 'India',
-                          countryCode: 'IN',
-                          terminal: 'Terminal 2',
+                          code: "BOM",
+                          name: "Chhatrapati Shivaji",
+                          cityCode: "BOM",
+                          city: "Mumbai",
+                          country: "India",
+                          countryCode: "IN",
+                          terminal: "Terminal 2",
                         },
-                        dt: '2025-07-21T07:00',
-                        at: '2025-07-21T09:15',
+                        dt: "2025-07-21T07:00",
+                        at: "2025-07-21T09:15",
                         iand: false,
                         isRs: false,
                         sN: 0,
@@ -213,7 +213,7 @@ const BookingManageMentList = () => {
                 travellerInfos: [
                   {
                     checkinStatusMap: {
-                      'DEL-BOM': false,
+                      "DEL-BOM": false,
                     },
                     fd: {
                       fC: {
@@ -234,19 +234,19 @@ const BookingManageMentList = () => {
                         OC: 167,
                       },
                       bI: {
-                        iB: '15 Kg (01 Piece only)',
-                        cB: '7 Kg',
+                        iB: "15 Kg (01 Piece only)",
+                        cB: "7 Kg",
                       },
                       rT: 1,
-                      cc: 'ECONOMY',
-                      cB: 'M',
-                      fB: 'RMIP',
+                      cc: "ECONOMY",
+                      cB: "M",
+                      fB: "RMIP",
                       mI: false,
                     },
-                    ti: 'Mr',
-                    pt: 'ADULT',
-                    fN: 'Teser',
-                    lN: 'AdultA',
+                    ti: "Mr",
+                    pt: "ADULT",
+                    fN: "Teser",
+                    lN: "AdultA",
                     ipct: false,
                   },
                 ],
@@ -270,13 +270,13 @@ const BookingManageMentList = () => {
               },
             },
             gstInfo: {
-              gstNumber: '07AAGCT7826A1ZF',
-              email: 'prabhu@technogramsolutions.com',
-              mobile: '9538500324',
-              address: 'gurugram',
-              registeredName: 'TGS Pvt Ltd',
-              bookingId: 'TJS100201539186',
-              bookingUserId: '212649',
+              gstNumber: "07AAGCT7826A1ZF",
+              email: "prabhu@technogramsolutions.com",
+              mobile: "9538500324",
+              address: "gurugram",
+              registeredName: "TGS Pvt Ltd",
+              bookingId: "TJS100201539186",
+              bookingUserId: "212649",
               id: 29233,
               info: {},
             },
@@ -292,15 +292,15 @@ const BookingManageMentList = () => {
         hasPagination={true}
         loading={loading}
         onChange={(page) => {
-          setCurrentPage(page)
+          setCurrentPage(page);
         }}
         footerContent={
           <>
             <Box
               className="grid gap-4 pb-4"
               sx={{
-                gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-                display: 'grid',
+                gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
+                display: "grid",
               }}
             >
               <TextInputField
@@ -308,7 +308,7 @@ const BookingManageMentList = () => {
                 firstInputBox
                 name="transactionId"
                 value={filterValues?.transactionId}
-                onChange={(value) => handleInputChange('transactionId', value)}
+                onChange={(value) => handleInputChange("transactionId", value)}
                 label="Transaction ID"
               />
 
@@ -318,27 +318,27 @@ const BookingManageMentList = () => {
                 label="Booking Type"
                 value={filterValues?.bookingStatus}
                 classNames={{
-                  container: () => 'w-full',
-                  control: () => 'w-full',
+                  container: () => "w-full",
+                  control: () => "w-full",
                 }}
                 onChange={(value) =>
-                  handleInputChange('bookingStatus', value?.value as string)
+                  handleInputChange("bookingStatus", value?.value as string)
                 }
                 options={BookingTypeOptions}
-                labelSx={{ display: 'block', textAlign: 'start' }}
+                labelSx={{ display: "block", textAlign: "start" }}
               />
 
               <DateInputField
                 placeholder="Booking Date"
                 value={filterValues?.bookingDate}
-                onChange={(value) => handleInputChange('bookingDate', value)}
+                onChange={(value) => handleInputChange("bookingDate", value)}
                 label="Booking Date"
               />
 
               <DateInputField
                 placeholder="Journey Date"
                 value={filterValues?.journeyDate}
-                onChange={(value) => handleInputChange('journeyDate', value)}
+                onChange={(value) => handleInputChange("journeyDate", value)}
                 label="Journey Date"
               />
 
@@ -347,7 +347,7 @@ const BookingManageMentList = () => {
                 placeholder="Ticket Numbers"
                 name="ticketNumbers"
                 value={filterValues?.ticketNumbers}
-                onChange={(value) => handleInputChange('ticketNumbers', value)}
+                onChange={(value) => handleInputChange("ticketNumbers", value)}
                 label="Ticket Numbers"
               />
 
@@ -356,7 +356,7 @@ const BookingManageMentList = () => {
                 firstInputBox
                 name="gdsPnr"
                 value={filterValues?.gdsPnr}
-                onChange={(value) => handleInputChange('gdsPnr', value)}
+                onChange={(value) => handleInputChange("gdsPnr", value)}
                 label="GdsPnr"
               />
 
@@ -365,7 +365,7 @@ const BookingManageMentList = () => {
                 name="airlinePnr"
                 firstInputBox
                 value={filterValues?.airlinePnr}
-                onChange={(value) => handleInputChange('airlinePnr', value)}
+                onChange={(value) => handleInputChange("airlinePnr", value)}
                 label="Airline Pnr"
               />
 
@@ -374,7 +374,7 @@ const BookingManageMentList = () => {
                 name="paxInfo"
                 firstInputBox
                 value={filterValues?.paxInfo}
-                onChange={(value) => handleInputChange('paxInfo', value)}
+                onChange={(value) => handleInputChange("paxInfo", value)}
                 label="Pax Info"
               />
 
@@ -383,16 +383,16 @@ const BookingManageMentList = () => {
                 name="passengerName"
                 firstInputBox
                 value={filterValues?.passengerName}
-                onChange={(value) => handleInputChange('passengerName', value)}
+                onChange={(value) => handleInputChange("passengerName", value)}
                 label="Passenger Name"
               />
               <Box
                 sx={{
-                  display: 'flex',
-                  alignItems: 'flex-end',
+                  display: "flex",
+                  alignItems: "flex-end",
                   // justifyContent: 'flex-end',
-                  height: '100%',
-                  gridColumn: 'auto',
+                  height: "100%",
+                  gridColumn: "auto",
                 }}
               >
                 <ThemeButton onClick={handleSearch} text="Search" />
@@ -401,8 +401,8 @@ const BookingManageMentList = () => {
           </>
         }
       />
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default BookingManageMentList
+export default BookingManageMentList;

@@ -1,0 +1,196 @@
+/* **************************/
+/* ******* Fonts Styles *******/
+/* **************************/
+
+@theme {
+  --font-maison-bold: "Maison-Bold", ui-sans-serif, sans-serif;
+  --font-maison-demi: "Maison-Demi", ui-sans-serif, sans-serif;
+  --font-maison-light: "Maison-Light", ui-sans-serif, sans-serif;
+  --font-maison-medium: "Maison-Medium", ui-sans-serif, sans-serif;
+  --font-maison-mono-bold: "MaisonMono-Bold", monospace;
+  --font-maison-mono-light: "MaisonMono-Light", monospace;
+  --font-maison-regular: "Maison-Regular", ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  /* Maison Font Styles */
+  .font-maison-bold {
+    font-family: var(--font-maison-bold);
+  }
+
+  .font-maison-demi {
+    font-family: var(--font-maison-demi);
+  }
+
+  .font-maison-light {
+    font-family: var(--font-maison-light);
+  }
+
+  .font-maison-medium {
+    font-family: var(--font-maison-medium);
+  }
+
+  .font-maison-mono-bold {
+    font-family: var(--font-maison-mono-bold);
+  }
+
+  .font-maison-mono-light {
+    font-family: var(--font-maison-mono-light);
+  }
+
+  .font-maison-regular {
+    font-family: var(--font-maison-regular);
+  }
+
+  .font-maison-regular-oblique {
+    font-family: var(--font-maison-regular-oblique);
+  }
+}
+
+@layer utilities {
+  /* ------------------- Maison Typography Utilities ------------------- */
+  .font-14-regular-20 {
+    font-family: var(--font-maison-regular);
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 14px;
+  }
+  .font-14-medium-20 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 20px;
+    font-size: 14px;
+  }
+  .font-16-regular-20 {
+    font-family: var(--font-maison-regular);
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 16px;
+  }
+  .font-16-medium-20 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 20px;
+    font-size: 16px;
+  }
+  .font-16-demi-20 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 16px;
+  }
+  .font-18-medium-20 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 20px;
+    font-size: 18px;
+  }
+  .font-18-demi-20 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 18px;
+  }
+  .font-18-regular-20 {
+    font-family: var(--font-maison-regular);
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 18px;
+  }
+  .font-20-medium-25 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 25px;
+    font-size: 20px;
+  }
+  .font-20-demi-25 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 25px;
+    font-size: 20px;
+  }
+  .font-20-semiBold-25 {
+    font-family: var(--font-maison-semiBold);
+    font-weight: 600;
+    line-height: 25px;
+    font-size: 20px;
+  }
+  .font-22-regular-28 {
+    font-family: var(--font-maison-regular);
+    font-weight: 400;
+    line-height: 28px;
+    font-size: 22px;
+  }
+  .font-22-medium-28 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 28px;
+    font-size: 22px;
+  }
+  .font-22-demi-28 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 28px;
+    font-size: 22px;
+  }
+  .font-24-medium-30 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 30px;
+    font-size: 24px;
+  }
+  .font-24-demi-30 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 30px;
+    font-size: 24px;
+  }
+  .font-28-medium-32 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 32px;
+    font-size: 28px;
+  }
+  .font-28-demi-32 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 32px;
+    font-size: 28px;
+  }
+  .font-30-demi-38 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 38px;
+    font-size: 30px;
+  }
+  .font-36-medium-44 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 44px;
+    font-size: 36px;
+  }
+  .font-36-semiBold-44 {
+    font-family: var(--font-maison-semiBold);
+    font-weight: 600;
+    line-height: 44px;
+    font-size: 36px;
+  }
+  .font-40-demi-50 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 50px;
+    font-size: 40px;
+  }
+  .font-50-demi-60 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 60px;
+    font-size: 50px;
+  }
+  .font-60-demi-75 {
+    font-family: var(--font-maison-demi);
+    font-weight: 600;
+    line-height: 75px;
+    font-size: 60px;
+  }
+}

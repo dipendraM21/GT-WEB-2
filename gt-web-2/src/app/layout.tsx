@@ -17,7 +17,6 @@ import "@/styles/tabs.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
-import "react-responsive-modal/styles.css";
 import { Toaster } from "sonner";
 
 const Maison = localFont({
