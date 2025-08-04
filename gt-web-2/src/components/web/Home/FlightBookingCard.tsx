@@ -253,7 +253,7 @@ const FlightBookingCard: React.FC = () => {
           tabs={flightBookingTabs}
           activeTab="flight"
           iconSize={30}
-          textVariant="Maison22Medium125"
+          textVariant="font-22-medium-125"
           iconClass="booking-card-icon"
         />
 

@@ -2,7 +2,8 @@
 import Image from "next/image";
 import React from "react";
 import { IconType } from "react-icons";
-import { Box, Text } from "theme-ui";
+import { Box } from "theme-ui";
+import { CustomText } from "../Text";
 
 interface Tab {
   key: string;
@@ -28,7 +29,7 @@ const CommonTab: React.FC<ProfilePageHeaderProps> = ({
   activeTab,
   setActiveTab,
   textVariant = "Maison16Medium20",
-  textColor = "orange_accent_alpha",
+  textColor = "primary-orange-500-transparent",
   customTabClass,
   iconSize = 20,
   wrapperClass = "profile-page-header",
@@ -57,9 +58,9 @@ const CommonTab: React.FC<ProfilePageHeaderProps> = ({
               <tab.IconComponent className={iconClass} size={iconSize} />
             )}
 
-            <Text color={textColor} variant={textVariant}>
+            <CustomText color={textColor} variant={textVariant}>
               {tab.label}
-            </Text>
+            </CustomText>
           </button>
         ))}
       </div>

@@ -8,33 +8,49 @@ export interface CustomTextProps {
   color?: string;
   variant?: string;
   sx?: CustomStyleProps;
-  [key: string]: unknown; // Allow additional props
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+  [key: string]: unknown;
 }
 
-/**
- */
 export const CustomText: React.FC<CustomTextProps> = ({
   children,
   as = "span",
   className = "",
   color,
-  variant,
+  variant = "",
   sx,
+  sm,
+  md,
+  lg,
+  xl,
   ...props
 }) => {
   const Component = as;
 
-  // Handle sx prop separately since it's CustomStyleProps
-  console.log("color", `var(--color-${color})`);
-  const styleProps: React.CSSProperties = {
-    color: `var(--color-${color})`,
+  const responsiveTextSizes = {
+    sm,
+    md,
+    lg,
+    xl,
+  };
+
+  const responsiveClasses = Object.entries(responsiveTextSizes)
+    .filter(([_, val]) => val !== undefined)
+    .map(([key, val]) => `${key}:text-[${val}px]`)
+    .join(" ");
+
+  const styleProps: CustomStyleProps = {
+    ...(color && { color: `var(--color-${color})` }),
+    ...sx,
   };
 
   return (
     <Component
-      className={variant}
+      className={`${responsiveClasses} ${variant} ${className}`.trim()}
       style={styleProps}
-      // data-variant={variant}
       {...props}
     >
       {children}

@@ -9,8 +9,8 @@ const ServicesCard = () => {
       titleVariant="font-24-demi-30"
       headingWrapperClassName="mb-4 text-center"
       descriptionVariant="font-18-medium-20"
-      descColor="grey_medium"
-      titleColor="blue_dark"
+      descColor="primary-grey-500"
+      titleColor="primary-blue-900"
       headingColor="primary-orange-500-transparent"
       data={featureData}
       heading={translation?.WHY_WITH_US}

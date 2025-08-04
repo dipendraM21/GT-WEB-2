@@ -64,6 +64,12 @@
     line-height: 20px;
     font-size: 16px;
   }
+  .font-16-medium-125 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 125%;
+    font-size: 16px;
+  }
   .text-14-medium-20 {
     font-family: "Maison-Medium", ui-sans-serif, sans-serif;
     font-weight: 500;
@@ -122,6 +128,12 @@
     font-family: var(--font-maison-medium);
     font-weight: 500;
     line-height: 28px;
+    font-size: 22px;
+  }
+  .font-22-medium-125 {
+    font-family: var(--font-maison-medium);
+    font-weight: 500;
+    line-height: 125%;
     font-size: 22px;
   }
   .font-22-demi-28 {

@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import { FC } from "react";
-import { Box, Paragraph } from "theme-ui";
+import { Box } from "theme-ui";
 import { CustomText } from "../Text";
 
 interface FeatureListProps {
@@ -76,13 +76,14 @@ const FeatureList: FC<FeatureListProps> = ({
                 >
                   {item?.heading}
                 </CustomText>
-                <Paragraph
+                <CustomText
+                  as="p"
                   color={descColor}
                   variant={descriptionVariant}
                   className="text-gray-500 mt-2"
                 >
                   {item?.description}
-                </Paragraph>
+                </CustomText>
               </div>
             ))}
         </Box>
