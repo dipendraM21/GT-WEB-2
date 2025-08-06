@@ -1,41 +1,41 @@
-'use client'
-import { saveFlightSearchData } from '@/store/actions/flightBooking.action'
-import { CabinClass } from '@/types/module/web/flightSearch'
-import { MainStoreType } from '@/types/store/reducers/main.reducers'
-import { GuestNumberSelectorData, travelClassesData } from '@/utils/constant'
-import { formatCabinClass } from '@/utils/functions'
-import { translation } from '@/utils/translation'
-import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Text } from 'theme-ui'
-import GuestNumberSelector from '../Card/GuestNumberSelector'
-import CommonRadioButton from '../RadioButton/RadioButton'
-import { ThemeButton } from '../Button/Button'
+"use client";
+import { saveFlightSearchData } from "@/store/actions/flightBooking.action";
+import { CabinClass } from "@/types/module/web/flightSearch";
+import { MainStoreType } from "@/types/store/reducers/main.reducers";
+import { GuestNumberSelectorData, travelClassesData } from "@/utils/constant";
+import { formatCabinClass } from "@/utils/functions";
+import { translation } from "@/utils/translation";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ThemeButton } from "../Button/Button";
+import GuestNumberSelector from "../Card/GuestNumberSelector";
+import CommonRadioButton from "../RadioButton/RadioButton";
+import { CustomText } from "../Text";
 
 interface SelectedDataProps {
-  adults: string
-  children: string
-  infants: string
-  cabinClass: CabinClass
+  adults: string;
+  children: string;
+  infants: string;
+  cabinClass: CabinClass;
 }
 const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
-  const dispatch = useDispatch()
-  const modalRef = useRef<HTMLDivElement>(null)
-  const [isClient, setIsClient] = useState(false)
+  const dispatch = useDispatch();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [isClient, setIsClient] = useState(false);
 
   const { flightFiltersData } = useSelector(
     (state: MainStoreType) => state.flightBookingData
-  )
+  );
   const [selectedData, setSelectedData] = useState<SelectedDataProps>({
-    adults: flightFiltersData?.passengers?.adults || '',
-    children: flightFiltersData?.passengers?.children || '',
-    infants: flightFiltersData?.passengers?.infants || '',
-    cabinClass: flightFiltersData?.cabinClass || 'ECONOMY',
-  })
+    adults: flightFiltersData?.passengers?.adults || "",
+    children: flightFiltersData?.passengers?.children || "",
+    infants: flightFiltersData?.passengers?.infants || "",
+    cabinClass: flightFiltersData?.cabinClass || "ECONOMY",
+  });
 
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,23 +43,23 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        onClose()
+        onClose();
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
+    };
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [onClose])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const handleSubmit = () => {
     const total =
       (parseInt(selectedData?.adults) || 0) +
       (parseInt(selectedData?.children) || 0) +
-      (parseInt(selectedData?.infants) || 0)
+      (parseInt(selectedData?.infants) || 0);
 
     if (total > 0) {
-      onClose()
+      onClose();
       dispatch(
         saveFlightSearchData({
           passengers: {
@@ -69,11 +69,11 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
           },
           cabinClass: selectedData?.cabinClass,
         })
-      )
+      );
     } else {
     }
-  }
-  if (!isClient) return null
+  };
+  if (!isClient) return null;
   return (
     <div className="relative w-full max-w-sm">
       <div
@@ -88,7 +88,7 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
             setSelectedData({
               ...selectedData,
               adults: adults,
-            })
+            });
           }}
         />
         <GuestNumberSelector
@@ -99,7 +99,7 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
             setSelectedData({
               ...selectedData,
               children: children,
-            })
+            });
           }}
         />
         <GuestNumberSelector
@@ -110,14 +110,17 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
             setSelectedData({
               ...selectedData,
               infants: infants,
-            })
+            });
           }}
         />
 
         <div>
-          <Text variant="Maison16Demi20" color="orange_accent_alpha">
+          <CustomText
+            variant="font-16-demi-20"
+            color="primary-orange-500-transparent"
+          >
             CHOOSE TRAVEL CLASS
-          </Text>
+          </CustomText>
           <div className="flex flex-col gap-1">
             <CommonRadioButton
               options={travelClassesData}
@@ -126,13 +129,13 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
               selectedValue={
                 selectedData?.cabinClass
                   ? formatCabinClass(selectedData.cabinClass as CabinClass)
-                  : 'Economy'
+                  : "Economy"
               }
-              onChange={(val:CabinClass) => {
+              onChange={(val: CabinClass) => {
                 setSelectedData({
                   ...selectedData,
                   cabinClass: val as CabinClass,
-                })
+                });
               }}
               mainClass="radio-group flex justify-start gap-2 item-center flex-col"
             />
@@ -142,14 +145,14 @@ const TravelClassSelector = ({ onClose }: { onClose: () => void }) => {
         <div className="flex justify-end">
           <ThemeButton
             text="Done"
-            sx={{ bg: 'green_deep', borderRadius: '20px' }}
+            sx={{ bg: "green_deep", borderRadius: "20px" }}
             wrapperClassName="flex items-center gap-2"
             onClick={handleSubmit}
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TravelClassSelector
+export default TravelClassSelector;

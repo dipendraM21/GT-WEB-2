@@ -27,7 +27,7 @@ interface FeatureListProps {
 }
 const FeatureList: FC<FeatureListProps> = ({
   heading,
-  headingVariant = "font-36-medium-44",
+  headingVariant = "font-36-semiBold-44",
   descColor,
   headingWrapperClassName = "text-center mb-10",
   headingClassName,
@@ -72,7 +72,7 @@ const FeatureList: FC<FeatureListProps> = ({
                 <CustomText
                   color={titleColor}
                   variant={titleVariant}
-                  className="text-xl font-semibold text-gray-700"
+                  className="font-semibold text-gray-700"
                 >
                   {item?.heading}
                 </CustomText>

@@ -6,6 +6,7 @@ import {
   ActionItem,
 } from "@/components/core/Table/ActionDropdown";
 import { CommonTable } from "@/components/core/Table/CommonTable";
+import { CustomText } from "@/components/core/Text";
 import { getUsersData, manageUserAccess } from "@/store/actions/user.action";
 import {
   ApprovalStatus,
@@ -20,7 +21,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text } from "theme-ui";
 
 export default function UserListing() {
   const dispatch = useDispatch();
@@ -84,9 +84,13 @@ export default function UserListing() {
           className="text-decoration-unset user-link-primary"
           href={`${appRoutes?.userRequests}/${row.original._id}`}
         >
-          <Text variant="Maison16Medium20" color="#0047AB">
+          <CustomText
+            variant="font-16-medium-20"
+            color="primary-blue-700"
+            className="text-decoration-unset user-link-primary"
+          >
             {`${row.original.firstName} ${row.original.lastName}`}
-          </Text>
+          </CustomText>
         </Link>
       ),
     },

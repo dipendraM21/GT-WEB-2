@@ -1,19 +1,20 @@
-import FlightIcon from '@/../public/images/flight-1.png'
-import { FlightSegment } from '@/types/module/web/flightSearch'
-import { FlightBookingCardProps } from '@/types/module/core/routesModule'
+import FlightIcon from "@/../public/images/flight-1.png";
+import { FlightBookingCardProps } from "@/types/module/core/routesModule";
+import { FlightSegment } from "@/types/module/web/flightSearch";
 import {
   convertToTime,
   formatValue,
   getNuumberOfStops,
-} from '@/utils/functions'
-import Image from 'next/image'
-import React, { useState } from 'react'
-import { MdChevronRight } from 'react-icons/md'
-import { TbCircleArrowDownFilled } from 'react-icons/tb'
-import { Box, Card, Divider, Text } from 'theme-ui'
-import CommonRadioButton from '../RadioButton/RadioButton'
-import { FeatureChip } from './Chip'
-import { ThemeButton } from '../Button/Button'
+} from "@/utils/functions";
+import Image from "next/image";
+import React, { useState } from "react";
+import { MdChevronRight } from "react-icons/md";
+import { TbCircleArrowDownFilled } from "react-icons/tb";
+import { Box, Card, Divider } from "theme-ui";
+import { ThemeButton } from "../Button/Button";
+import CommonRadioButton from "../RadioButton/RadioButton";
+import CustomText from "../Text/CustomText";
+import { FeatureChip } from "./Chip";
 
 const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
   item,
@@ -27,8 +28,8 @@ const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
   FareData,
   segMentData,
 }) => {
-  const [showAllFareData, setShowAllFareData] = useState(false)
-  const displayFare = showAllFareData ? FareData : FareData?.slice(0, 3)
+  const [showAllFareData, setShowAllFareData] = useState(false);
+  const displayFare = showAllFareData ? FareData : FareData?.slice(0, 3);
   return (
     <>
       {segMentData.map((flight: FlightSegment, index: number) => (
@@ -37,8 +38,8 @@ const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
           className="bg-white rounded-xl bg-gradient-background flight-list-round-trip-br"
           sx={{
             border: isSelected
-              ? '1px solid #FF3F1F'
-              : '1px solid hsl(214.3 1.80% 91.4%)',
+              ? "1px solid #FF3F1F"
+              : "1px solid hsl(214.3 1.80% 91.4%)",
           }}
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center p-20">
@@ -52,12 +53,18 @@ const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
                     width={50}
                   />
                   <Box className="flex flex-col gap-1 items-baseline">
-                    <Text variant="Maison22Medium125" color="primary_text_dark">
+                    <CustomText
+                      variant="font-22-medium-125"
+                      color="primary_grey_800"
+                    >
                       {flight?.airlineName}
-                    </Text>
-                    <Text variant="Maison14Medium20" color="grey_medium">
+                    </CustomText>
+                    <CustomText
+                      variant="font-14-medium-20"
+                      color="primary_grey_600"
+                    >
                       {flight?.flightCode}
-                    </Text>
+                    </CustomText>
                   </Box>
                 </Box>
               </Box>
@@ -68,43 +75,55 @@ const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
               // <Image src={flight?.src} alt="itm-src" height={40} width={40} />
             )} */}
               <Box className="flex flex-col items-baseline gap-2">
-                <Text variant="Maison20Demi125" color="primary_text_dark">
+                <CustomText variant="font-20-demi-25" color="primary_grey_800">
                   {convertToTime(flight?.departureTime)}
-                </Text>
-                <Text variant="Maison14Medium20" color="grey_medium">
+                </CustomText>
+                <CustomText
+                  variant="font-14-medium-20"
+                  color="primary_grey_600"
+                >
                   {flight?.from}
-                </Text>
+                </CustomText>
               </Box>
 
               <Box className="flex flex-col items-center px-4">
-                <Text variant="Maison14Medium20" color="grey_medium">
+                <CustomText
+                  variant="font-14-medium-20"
+                  color="primary_grey_600"
+                >
                   {convertToTime(flight?.departureTime)}
-                </Text>
-                <Divider color="black" style={{ width: '100px' }} />
-                <Text variant="Primary12Regular" color="grey_dark">
+                </CustomText>
+                <Divider color="black" style={{ width: "100px" }} />
+                <CustomText
+                  variant="font-12-regular-125"
+                  color="primary_grey_800"
+                >
                   {getNuumberOfStops(flight?.stops)}
-                </Text>
+                </CustomText>
               </Box>
 
               <Box className="flex flex-col gap-2 items-baseline px-4">
-                <Text variant="Maison20Demi125" color="primary_text_dark">
+                <CustomText variant="Maison20Demi125" color="primary_text_dark">
                   {convertToTime(flight?.arrivalTime)}
-                </Text>
-                <Text variant="Maison14Medium20" color="grey_medium">
+                </CustomText>
+                <CustomText
+                  variant="font-14-medium-20"
+                  color="primary_grey_600"
+                >
                   {flight?.to}
-                </Text>
+                </CustomText>
               </Box>
               <div className="flex flex-col items-baseline gap-2">
                 <CommonRadioButton
-                  variant="Maison20Demi125"
+                  variant="font-20-demi-25"
                   options={displayFare?.map((option) => ({
                     value: formatValue(option.baseFare),
                     label: formatValue(option.baseFare),
                   }))}
                   name="paymentOptions"
                   textClass="mgl-10"
-                  textColor="primary_text_dark"
-                  selectedValue={''}
+                  textColor="primary_grey_800"
+                  selectedValue={""}
                   mainClass="radio-group flex justify-start gap-0 item-center ml-20 flex-col"
                 />
                 {FareData?.length > 3 && (
@@ -130,9 +149,12 @@ const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
                     className="flex justify-end items-center"
                     onClick={onDetailsClick}
                   >
-                    <Text variant="Maison18Medium125" color="primary_text_dark">
+                    <CustomText
+                      variant="font-18-medium-20"
+                      color="primary_grey_800"
+                    >
                       {translation?.FLIGHT_DETAILS}
-                    </Text>
+                    </CustomText>
                     <MdChevronRight color="#ff7b00" size={23} />
                   </Box>
                 </Box>
@@ -143,7 +165,7 @@ const FlightBookingCard: React.FC<FlightBookingCardProps> = ({
         </Card>
       ))}
     </>
-  )
-}
+  );
+};
 
-export default React.memo(FlightBookingCard)
+export default React.memo(FlightBookingCard);

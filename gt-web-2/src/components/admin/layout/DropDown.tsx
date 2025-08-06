@@ -1,5 +1,6 @@
 import logOut from "@/../public/svg/logout.svg";
 import profileImage from "@/../public/svg/profile.svg";
+import { CustomText } from "@/components/core/Text";
 import { AdminHeaderProps } from "@/types/module/core/commonModule";
 import { appRoutes } from "@/utils/routes";
 import { translation } from "@/utils/translation";
@@ -7,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { MdBalance } from "react-icons/md";
-import { Card, Divider, Flex, Text } from "theme-ui";
+import { Card, Divider, Flex } from "theme-ui";
 
 interface HeaderDropDownProps {
   handleClickLogout: () => void;
@@ -57,13 +58,13 @@ export const DropDown: React.FC<HeaderDropDownProps> = ({
                   ) : (
                     <div className="admin-dropdown-item-icon">{item?.icon}</div>
                   ))}
-                <Text
+                <CustomText
                   sx={{ pl: "15px" }}
                   className="admin-dropdown-item"
-                  variant="Maison16Regular20"
+                  variant="font-16-regular-20"
                 >
                   {item?.label}
-                </Text>
+                </CustomText>
               </Flex>
             </Link>
           ) : (
@@ -85,13 +86,13 @@ export const DropDown: React.FC<HeaderDropDownProps> = ({
                 ) : (
                   <div className="admin-dropdown-item-icon">{item?.icon}</div>
                 ))}
-              <Text
+              <CustomText
                 sx={{ pl: "15px" }}
                 className="admin-dropdown-item"
-                variant="Maison16Regular20"
+                variant="font-16-regular-20"
               >
                 {item?.label}
-              </Text>
+              </CustomText>
             </Flex>
           )}
           {index < dropdownItems.length - 1 && <Divider m={0} />}

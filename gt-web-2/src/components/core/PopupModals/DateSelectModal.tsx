@@ -1,16 +1,17 @@
-import { translation } from '@/utils/translation'
-import moment from 'moment'
-import { FC } from 'react'
-import { DateRangePicker, Range, RangeKeyDict } from 'react-date-range'
-import { IoCalendarOutline } from 'react-icons/io5'
-import { Box, Text } from 'theme-ui'
+import { translation } from "@/utils/translation";
+import moment from "moment";
+import { FC } from "react";
+import { DateRangePicker, Range, RangeKeyDict } from "react-date-range";
+import { IoCalendarOutline } from "react-icons/io5";
+import { Box } from "theme-ui";
+import { CustomText } from "../Text";
 
 interface DateSelectModalProps {
-  ranges?: Range[]
-  onChange?: (rangesByKey: RangeKeyDict) => void
-  onClickRoundTrip?: () => void
-  selectedTrip?: string
-  isRoundTrip?: boolean
+  ranges?: Range[];
+  onChange?: (rangesByKey: RangeKeyDict) => void;
+  onClickRoundTrip?: () => void;
+  selectedTrip?: string;
+  isRoundTrip?: boolean;
 }
 
 const DateSelectModal: FC<DateSelectModalProps> = ({
@@ -20,14 +21,14 @@ const DateSelectModal: FC<DateSelectModalProps> = ({
   onClickRoundTrip,
   isRoundTrip,
 }) => {
-  const formattedStart = moment(ranges?.[0]?.startDate).format('DD MMM YY')
-  const formattedEnd = moment(ranges?.[0]?.endDate).format('DD MMM YY')
+  const formattedStart = moment(ranges?.[0]?.startDate).format("DD MMM YY");
+  const formattedEnd = moment(ranges?.[0]?.endDate).format("DD MMM YY");
 
   const getText = (): string => {
     return formattedStart === formattedEnd
       ? translation?.BOOK_WITH_ROUND_TRIP
-      : `${formattedStart} - ${formattedEnd}`
-  }
+      : `${formattedStart} - ${formattedEnd}`;
+  };
 
   return (
     <Box as="div" className="relative w-full max-w-3xl">
@@ -41,21 +42,23 @@ const DateSelectModal: FC<DateSelectModalProps> = ({
         >
           <div className="flex items-center gap-1 p-11 ml-3">
             <IoCalendarOutline size={16} />
-            <Text variant="Maison16Medium20" color="grey_medium">
+            <CustomText variant="font-16-medium-20" color="primary-grey-600">
               {formattedStart}
-            </Text>
+            </CustomText>
           </div>
 
           <span className="mx-2">–</span>
 
           <div
-            className={`flex items-center gap-1 ${!isRoundTrip && 'border-b-2 border-grey1 cursor-pointer'}`}
+            className={`flex items-center gap-1 ${
+              !isRoundTrip && "border-b-2 border-grey1 cursor-pointer"
+            }`}
             onClick={onClickRoundTrip}
           >
             <IoCalendarOutline size={16} />
-            <Text variant="Maison16Medium20" color="grey_medium">
+            <CustomText variant="font-16-medium-20" color="primary-grey-600">
               {getText()}
-            </Text>
+            </CustomText>
           </div>
         </Box>
 
@@ -65,7 +68,7 @@ const DateSelectModal: FC<DateSelectModalProps> = ({
             onChange={onChange}
             moveRangeOnFirstSelection={false}
             direction="horizontal"
-            rangeColors={['#00C6B7']}
+            rangeColors={["#00C6B7"]}
             dateDisplayFormat="MM/dd/yyyy"
             ranges={ranges}
             retainEndDateOnFirstSelection={
@@ -75,7 +78,7 @@ const DateSelectModal: FC<DateSelectModalProps> = ({
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default DateSelectModal
+export default DateSelectModal;

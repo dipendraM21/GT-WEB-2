@@ -8,8 +8,9 @@ import {
 import { CustomModalProps } from "@/types/module/core/themuiModule";
 import { X } from "lucide-react";
 import React, { ReactNode } from "react";
-import { Flex, Text } from "theme-ui";
+import { Flex } from "theme-ui";
 import { CustomModalBtn } from "../Button/CustomModalBtn";
+import { CustomText } from "../Text";
 
 interface CommonModalProps {
   open: boolean;
@@ -43,9 +44,9 @@ const CommonModal: React.FC<CommonModalProps & CustomModalProps> = ({
           }}
         >
           <div></div>
-          <Text className="text-center" variant="Maison18Demi111">
+          <CustomText className="text-center" variant="font-18-demi-20">
             {title}
-          </Text>
+          </CustomText>
           <DialogClose asChild>
             <button
               aria-label="Close"
@@ -57,14 +58,13 @@ const CommonModal: React.FC<CommonModalProps & CustomModalProps> = ({
         </Flex>
 
         {description && (
-          <Text
+          <CustomText
             as="p"
-            my="20px"
-            className="text-center"
-            variant="Maison16Medium20"
+            className="text-center mt-20"
+            variant="font-16-medium-20"
           >
             {description}
-          </Text>
+          </CustomText>
         )}
 
         {children}

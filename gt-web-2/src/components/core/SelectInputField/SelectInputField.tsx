@@ -1,22 +1,23 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import React, { useRef } from 'react'
-import Selects, { DropdownIndicatorProps, components } from 'react-select'
-import { Box, Text } from 'theme-ui'
+import { SelectInputFieldProps } from "@/types/module/core/selectInputFieldModule";
 import {
   GroupType,
   OptionType,
   isMultiple,
   stylesConfig,
-} from '@/utils/stylesConfig'
-import { SelectInputFieldProps } from '@/types/module/core/selectInputFieldModule'
+} from "@/utils/stylesConfig";
+import Image from "next/image";
+import React, { useRef } from "react";
+import Selects, { DropdownIndicatorProps, components } from "react-select";
+import { Box } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 export const SelectInputField: React.FC<SelectInputFieldProps> = ({
   wrapperClass,
   wrapperSx,
   isDisabled = false,
-  customClassName = '',
+  customClassName = "",
   value,
   defaultValue,
   options,
@@ -26,15 +27,15 @@ export const SelectInputField: React.FC<SelectInputFieldProps> = ({
   isSearchable = false,
   isLoading = false,
   touched = false,
-  errors = '',
+  errors = "",
   description,
   label,
   stylesConfigs = stylesConfig,
   classNames,
-  indicatorIconClassName = 'primary-selection',
+  indicatorIconClassName = "primary-selection",
   name,
   firstInputBox = false,
-  labelVariant = 'Maison18Medium125',
+  labelVariant = "font-18-medium-20",
   labelSx,
   inputId,
   instanceId,
@@ -43,10 +44,10 @@ export const SelectInputField: React.FC<SelectInputFieldProps> = ({
   labelClassName,
   isShowRequired,
   requiredIconSx,
-  validationVariant = 'Maison16Regular20',
+  validationVariant = "font-16-regular-20",
   manualErrorSX,
 }) => {
-  const currentValueRef = useRef(value)
+  const currentValueRef = useRef(value);
 
   const DropdownIndicator = (
     props: DropdownIndicatorProps<OptionType, typeof isMultiple, GroupType>
@@ -55,33 +56,33 @@ export const SelectInputField: React.FC<SelectInputFieldProps> = ({
       <components.DropdownIndicator {...props}>
         <Image
           className={indicatorIconClassName}
-          src={'/svg/select.svg'}
+          src={"/svg/select.svg"}
           alt="select"
           width={10}
           height={10}
         />
       </components.DropdownIndicator>
-    )
-  }
+    );
+  };
 
   const labelProps: { htmlFor?: string } = {
     htmlFor: id,
-  }
+  };
   return (
     <Box
       variant={variant}
       className={wrapperClass}
-      mt={firstInputBox ? 'unset' : 14}
+      mt={firstInputBox ? "unset" : 14}
       sx={wrapperSx}
     >
       {label && (
-        <Text
+        <CustomText
           className={labelClassName}
           as="label"
           sx={{
-            mb: 10,
+            marginBottom: "10px",
             ...labelSx,
-            color: errors && touched ? 'red_600' : 'primary_text_dark',
+            color: errors && touched ? "primary-red-600" : "primary-grey-800",
           }}
           variant={labelVariant}
           aria-labelledby={id}
@@ -89,42 +90,42 @@ export const SelectInputField: React.FC<SelectInputFieldProps> = ({
         >
           {label}
           {isShowRequired && (
-            <Text
+            <CustomText
               as="span"
               sx={{
                 ...requiredIconSx,
-                color: 'red',
-                ml: '4px',
+                color: "red",
+                marginLeft: "4px",
               }}
             >
               *
-            </Text>
+            </CustomText>
           )}
-        </Text>
+        </CustomText>
       )}
       <Selects
         isDisabled={isDisabled}
         defaultValue={
           defaultValue
-            ? typeof value === 'string'
+            ? typeof value === "string"
               ? { value: value, label: value }
               : { value: value?.label, label: value?.label }
             : undefined
         }
-        className={errors && touched ? 'react-select-error' : customClassName}
+        className={errors && touched ? "react-select-error" : customClassName}
         id={id}
         placeholder={placeholder}
         name={name}
         // classNamePrefix={errors && touched ? 'react-select-error' : ''}
         onBlur={(e) => {
           if (onBlur) {
-            onBlur(e, currentValueRef?.current)
+            onBlur(e, currentValueRef?.current);
           }
         }}
         components={{ DropdownIndicator }}
         value={
           value
-            ? typeof value === 'string'
+            ? typeof value === "string"
               ? { value: value, label: value }
               : { value: value?.value, label: value?.label }
             : null
@@ -133,17 +134,17 @@ export const SelectInputField: React.FC<SelectInputFieldProps> = ({
           onChange({
             value: selectedOption?.value,
             label: selectedOption?.label,
-          })
+          });
           if (selectedOption?.value) {
-            currentValueRef.current = selectedOption?.value
+            currentValueRef.current = selectedOption?.value;
           }
         }}
         options={
           options?.map((option) => {
-            if (typeof option === 'string') {
-              return { value: option, label: option }
+            if (typeof option === "string") {
+              return { value: option, label: option };
             } else {
-              return { value: option.value, label: option.label }
+              return { value: option.value, label: option.label };
             }
           }) || []
         }
@@ -151,33 +152,36 @@ export const SelectInputField: React.FC<SelectInputFieldProps> = ({
         isLoading={isLoading}
         classNames={{
           ...classNames,
-          control: () => (errors && touched ? 'react-select-error' : ''),
+          control: () => (errors && touched ? "react-select-error" : ""),
         }}
         styles={stylesConfigs}
         inputId={inputId}
         instanceId={instanceId}
         onInputChange={(inputValue, { action }) => {
-          if (action === 'input-change') {
-            onChange({ value: inputValue, label: inputValue })
-            currentValueRef.current = inputValue
+          if (action === "input-change") {
+            onChange({ value: inputValue, label: inputValue });
+            currentValueRef.current = inputValue;
           }
         }}
         menuPlacement="auto"
       />
       {errors && touched ? (
-        <Text
-          sx={{ ...manualErrorSX, color: 'red_600' }}
+        <CustomText
+          sx={{ ...manualErrorSX, color: "red_600" }}
           variant={validationVariant}
           color="red_600"
           className="pt-6"
         >
           {errors.toString()}
-        </Text>
+        </CustomText>
       ) : (
-        <Text variant={validationVariant} sx={{ my: '5px', minHeight: '11px' }}>
+        <CustomText
+          variant={validationVariant}
+          sx={{ my: "5px", minHeight: "11px" }}
+        >
           {description}
-        </Text>
+        </CustomText>
       )}
     </Box>
-  )
-}
+  );
+};

@@ -1,6 +1,7 @@
 "use client";
 import gtLogo from "@/../public/images/gt-logo.png";
 import { CommonConfirmationModal } from "@/components/core/PopupModals/CommonConfirmationModal";
+import { CustomText } from "@/components/core/Text";
 import { logout } from "@/store/actions/auth.action";
 import { getBalance } from "@/store/actions/balance.action";
 import { MainStoreType } from "@/types/store/reducers/main.reducers";
@@ -17,7 +18,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Text } from "theme-ui";
+import { Box } from "theme-ui";
 import BalanceInfo from "./BalanceInfo";
 import { DropDown } from "./DropDown";
 
@@ -107,20 +108,20 @@ export default function Header() {
               sx={{ backgroundColor: isShowDropDown && "#EEEE" }}
             >
               <Box as="div" className="user-names">
-                <Text
-                  variant="Maison20Medium125"
-                  sx={{ color: "blue_primary" }}
+                <CustomText
+                  variant="font-20-medium-125"
+                  color="primary-blue-700"
                 >
                   {capitalizeFirstLetter(getUserData?.userName as string)}
-                </Text>
-                <Text
-                  color="blue_translucent"
+                </CustomText>
+                <CustomText
+                  color="primary-blue-600-alpha"
                   as="h3"
-                  variant="Maison16Medium20"
+                  variant="font-16-medium-125"
                   className="text-end"
                 >
                   {translation?.ADMIN}
-                </Text>
+                </CustomText>
               </Box>
               <Box as="div" className="user-image-container">
                 <FaRegUser size={30} color="#333548bf" />

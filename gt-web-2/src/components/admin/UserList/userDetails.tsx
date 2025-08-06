@@ -1,62 +1,67 @@
-'use client'
-import { TextInputField } from '@/components/core/TextInputField/TextInputField'
-import { CustomModalBtn } from '@/components/core/Button/CustomModalBtn'
-import { SelectInputField } from '@/components/core/SelectInputField/SelectInputField'
-import Spinner from '@/components/core/spinner/Spinner'
-import CustomSwitch from '@/components/core/Switch/Switch'
+"use client";
+import { CustomModalBtn } from "@/components/core/Button/CustomModalBtn";
+import { SelectInputField } from "@/components/core/SelectInputField/SelectInputField";
+import Spinner from "@/components/core/spinner/Spinner";
+import CustomSwitch from "@/components/core/Switch/Switch";
+import { CustomText } from "@/components/core/Text";
+import { TextInputField } from "@/components/core/TextInputField/TextInputField";
 import {
   showErrorToast,
   showSuccessToast,
-} from '@/components/core/Toast/CustomToast'
+} from "@/components/core/Toast/CustomToast";
 import {
   getUsersData,
   manageUserAccess,
   updateUserData,
-} from '@/store/actions/user.action'
-import { ApprovalStatus } from '@/types/module/admin/userModule'
-import { Field, FieldType, UserRegistration } from '@/types/module/web/authModule'
-import { RegisterAs } from '@/types/module/core/commonModule'
-import { MainStoreType } from '@/types/store/reducers/main.reducers'
-import { toCamelCase } from '@/utils/functions'
+} from "@/store/actions/user.action";
+import { ApprovalStatus } from "@/types/module/admin/userModule";
+import { RegisterAs } from "@/types/module/core/commonModule";
+import {
+  Field,
+  FieldType,
+  UserRegistration,
+} from "@/types/module/web/authModule";
+import { MainStoreType } from "@/types/store/reducers/main.reducers";
+import { toCamelCase } from "@/utils/functions";
 import {
   gstRegex,
   panRegex,
   phoneNumberRegex,
   validateOnlyNumbers,
-} from '@/utils/regexMatch'
-import { appRoutes } from '@/utils/routes'
-import { translation, translationWithFunction } from '@/utils/translation'
-import { signupValidationSchema } from '@/utils/validationSchemas'
-import { useFormik } from 'formik'
-import { useRouter } from 'next/navigation'
-import { FC, useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, Card, Divider, Text } from 'theme-ui'
+} from "@/utils/regexMatch";
+import { appRoutes } from "@/utils/routes";
+import { translation, translationWithFunction } from "@/utils/translation";
+import { signupValidationSchema } from "@/utils/validationSchemas";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
+import { FC, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Card, Divider } from "theme-ui";
 
 interface UserDetailsProps {
-  userId: string
+  userId: string;
 }
 export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const router = useRouter();
+  const dispatch = useDispatch();
   const currentUserData = useSelector(
     (state: MainStoreType) => state.userData?.selectedUserData
-  )
-  const userData = useSelector((state: MainStoreType) => state.userData)
-  const [country, setCountry] = useState<string[]>()
+  );
+  const userData = useSelector((state: MainStoreType) => state.userData);
+  const [country, setCountry] = useState<string[]>();
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const { Country } = await import('country-state-city')
-      const countries = Country.getAllCountries()
+      const { Country } = await import("country-state-city");
+      const countries = Country.getAllCountries();
       if (countries) {
-        const state = countries.map((item) => item.name)
-        setCountry(state)
+        const state = countries.map((item) => item.name);
+        setCountry(state);
       }
-    }
+    };
 
-    fetchCountries()
-  }, [])
+    fetchCountries();
+  }, []);
 
   useEffect(() => {
     if (userId) {
@@ -64,33 +69,33 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
         getUsersData({
           userId: userId,
         })
-      )
+      );
     }
-  }, [userId, dispatch])
+  }, [userId, dispatch]);
 
   const InitialValues = {
-    title: currentUserData?.title || '',
-    firstName: currentUserData?.firstName || '',
-    lastName: currentUserData?.lastName || '',
-    email: currentUserData?.email || '',
-    mobileNumber: currentUserData?.mobileNumber || '',
-    userName: currentUserData?.userName || '',
-    companyName: currentUserData?.companyName || '',
-    registerAs: currentUserData?.registerAs || '',
-    panNumber: currentUserData?.panNumber || '',
-    nameOnPan: currentUserData?.nameOnPan || '',
-    landline: currentUserData?.landline || '',
-    faxNo: currentUserData?.faxNo || '',
-    userTNC: currentUserData?.userTNC || '',
-    addressLine1: currentUserData?.address?.addressLine1 || '',
-    addressLine2: currentUserData?.address?.addressLine2 || '',
-    city: currentUserData?.address?.city || '',
-    state: currentUserData?.address?.state || '',
-    pinCode: currentUserData?.address?.pinCode || '',
-    country: currentUserData?.address?.country || '',
-    gstNumber: currentUserData?.gstNumber || '',
-    approvalStatus: currentUserData?.approvalStatus || '',
-  } as UserRegistration
+    title: currentUserData?.title || "",
+    firstName: currentUserData?.firstName || "",
+    lastName: currentUserData?.lastName || "",
+    email: currentUserData?.email || "",
+    mobileNumber: currentUserData?.mobileNumber || "",
+    userName: currentUserData?.userName || "",
+    companyName: currentUserData?.companyName || "",
+    registerAs: currentUserData?.registerAs || "",
+    panNumber: currentUserData?.panNumber || "",
+    nameOnPan: currentUserData?.nameOnPan || "",
+    landline: currentUserData?.landline || "",
+    faxNo: currentUserData?.faxNo || "",
+    userTNC: currentUserData?.userTNC || "",
+    addressLine1: currentUserData?.address?.addressLine1 || "",
+    addressLine2: currentUserData?.address?.addressLine2 || "",
+    city: currentUserData?.address?.city || "",
+    state: currentUserData?.address?.state || "",
+    pinCode: currentUserData?.address?.pinCode || "",
+    country: currentUserData?.address?.country || "",
+    gstNumber: currentUserData?.gstNumber || "",
+    approvalStatus: currentUserData?.approvalStatus || "",
+  } as UserRegistration;
 
   const formik = useFormik({
     initialValues: InitialValues,
@@ -98,7 +103,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
     validateOnMount: true,
     validationSchema: signupValidationSchema,
     onSubmit: () => {},
-  })
+  });
 
   const {
     handleBlur,
@@ -107,28 +112,28 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
     touched,
     setFieldValue,
     setFieldTouched,
-  } = formik
+  } = formik;
 
   const handleChangePanNo = (panNumber: string) => {
-    const upperCasePan = panNumber.toUpperCase()
-    setFieldValue('panNumber', upperCasePan)
+    const upperCasePan = panNumber.toUpperCase();
+    setFieldValue("panNumber", upperCasePan);
     if (!panRegex.test(upperCasePan) && upperCasePan.length === 10) {
-      setFieldTouched('panNumber', true)
-      setFieldValue('panNumber', '')
-      showErrorToast(translation?.INVALID_PAN_NO)
+      setFieldTouched("panNumber", true);
+      setFieldValue("panNumber", "");
+      showErrorToast(translation?.INVALID_PAN_NO);
     }
-  }
+  };
 
   const handleChangeGstNo = (gstNumber: string) => {
-    const upperCaseGst = gstNumber.toUpperCase()
-    setFieldValue('gstNumber', upperCaseGst)
+    const upperCaseGst = gstNumber.toUpperCase();
+    setFieldValue("gstNumber", upperCaseGst);
 
     if (!gstRegex.test(upperCaseGst) && upperCaseGst.length === 15) {
-      setFieldTouched('gstNumber', true)
-      setFieldValue('gstNumber', '')
-      showErrorToast(translation?.INVALID_GST_NO)
+      setFieldTouched("gstNumber", true);
+      setFieldValue("gstNumber", "");
+      showErrorToast(translation?.INVALID_GST_NO);
     }
-  }
+  };
 
   const CompanyDetailsfieldset: Field[] = [
     {
@@ -139,7 +144,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (companyName) => {
-        setFieldValue('companyName', companyName)
+        setFieldValue("companyName", companyName);
       },
       error: errors?.companyName,
       touched: touched?.companyName,
@@ -153,7 +158,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       options: [RegisterAs.AGENT, RegisterAs.DISTRIBUTOR, RegisterAs.ADMIN],
       isShowRequired: true,
       onChange: (registerAs) => {
-        setFieldValue('registerAs', registerAs)
+        setFieldValue("registerAs", registerAs);
       },
       error: errors?.registerAs,
       touched: touched?.registerAs,
@@ -166,7 +171,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (panNumber) => {
-        handleChangePanNo(panNumber)
+        handleChangePanNo(panNumber);
       },
       error: errors?.panNumber,
       touched: touched?.panNumber,
@@ -179,7 +184,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (nameOnPan) => {
-        setFieldValue('nameOnPan', nameOnPan)
+        setFieldValue("nameOnPan", nameOnPan);
       },
       error: errors?.nameOnPan,
       touched: touched?.nameOnPan,
@@ -192,7 +197,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (addressLine1) => {
-        setFieldValue('addressLine1', addressLine1)
+        setFieldValue("addressLine1", addressLine1);
       },
       error: errors?.addressLine1,
       touched: touched?.addressLine1,
@@ -204,7 +209,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       placeholder: translation?.ADDRESS_2,
       type: FieldType.TEXT_INPUT_FIELD,
       onChange: (addressLine2) => {
-        setFieldValue('addressLine2', addressLine2)
+        setFieldValue("addressLine2", addressLine2);
       },
     },
     {
@@ -215,7 +220,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (city) => {
-        setFieldValue('city', city)
+        setFieldValue("city", city);
       },
       error: errors?.city,
       touched: touched?.city,
@@ -228,7 +233,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (state) => {
-        setFieldValue('state', state)
+        setFieldValue("state", state);
       },
       error: errors?.state,
       touched: touched?.state,
@@ -242,9 +247,9 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       isShowRequired: true,
       onChange: (pinCode) => {
         if (validateOnlyNumbers.test(pinCode)) {
-          setFieldValue('pinCode', pinCode)
+          setFieldValue("pinCode", pinCode);
         } else {
-          setFieldValue('pinCode', '')
+          setFieldValue("pinCode", "");
         }
       },
       error: errors?.pinCode,
@@ -260,7 +265,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       options: country,
       isSearchable: true,
       onChange: (country) => {
-        setFieldValue('country', country)
+        setFieldValue("country", country);
       },
       error: errors?.country,
       touched: touched?.country,
@@ -273,9 +278,9 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (mobileNumber) => {
-        const numericValue = mobileNumber.replace(phoneNumberRegex, '')
+        const numericValue = mobileNumber.replace(phoneNumberRegex, "");
         if (numericValue.length <= 10) {
-          setFieldValue('landline', numericValue)
+          setFieldValue("landline", numericValue);
         }
       },
       error: errors?.landline,
@@ -288,7 +293,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       placeholder: translation?.ENTER_GST_NO,
       type: FieldType.TEXT_INPUT_FIELD,
       onChange: (gstNumber) => {
-        handleChangeGstNo(gstNumber)
+        handleChangeGstNo(gstNumber);
       },
       error: errors?.gstNumber,
       touched: touched?.gstNumber,
@@ -300,10 +305,10 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       placeholder: translation?.FAX_NO,
       type: FieldType.TEXT_INPUT_FIELD,
       onChange: (faxNo) => {
-        setFieldValue('faxNo', faxNo)
+        setFieldValue("faxNo", faxNo);
       },
     },
-  ]
+  ];
 
   const PersonalDetailsfieldset: Field[] = [
     {
@@ -313,14 +318,14 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       placeholder: translation?.TITLE,
       type: FieldType.SELECT_INPUT_FIELD,
       isShowRequired: true,
-      options: ['Mr.', 'Mrs.', 'Ms.'],
+      options: ["Mr.", "Mrs.", "Ms."],
       onChange: (title) => {
-        setFieldValue('title', title)
+        setFieldValue("title", title);
       },
       error: errors?.title,
       touched: touched?.title,
       onBlur: () => {
-        setFieldTouched('title', true)
+        setFieldTouched("title", true);
       },
     },
     {
@@ -331,7 +336,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (firstName) => {
-        setFieldValue('firstName', firstName)
+        setFieldValue("firstName", firstName);
       },
       error: errors?.firstName,
       touched: touched?.firstName,
@@ -344,7 +349,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (lastName) => {
-        setFieldValue('lastName', lastName)
+        setFieldValue("lastName", lastName);
       },
       error: errors?.lastName,
       touched: touched?.lastName,
@@ -357,22 +362,22 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (email) => {
-        setFieldValue('email', email)
+        setFieldValue("email", email);
       },
       error: errors?.email,
       touched: touched?.email,
     },
     {
-      name: 'mobileNumber',
+      name: "mobileNumber",
       label: translation?.PHONE_NO,
       value: values?.mobileNumber,
       placeholder: translation?.PHONE_NO,
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (mobileNumber) => {
-        const numericValue = mobileNumber.replace(phoneNumberRegex, '')
+        const numericValue = mobileNumber.replace(phoneNumberRegex, "");
         if (numericValue.length <= 10) {
-          setFieldValue('mobileNumber', numericValue)
+          setFieldValue("mobileNumber", numericValue);
         }
       },
       error: errors?.mobileNumber,
@@ -386,18 +391,18 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (userName) => {
-        setFieldValue('userName', userName)
+        setFieldValue("userName", userName);
       },
       error: errors?.userName,
       touched: touched?.userName,
     },
-  ]
+  ];
   const checkIsApproved = (): boolean => {
     if (values?.approvalStatus === ApprovalStatus?.approved) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const handleChangeSwitch = (value: boolean | string) => {
     dispatch(
@@ -408,12 +413,12 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
         },
         (res) => {
           if (res) {
-            return window.location.reload()
+            return window.location.reload();
           }
         }
       )
-    )
-  }
+    );
+  };
 
   const renderField = useCallback(
     (field: Field) => {
@@ -425,12 +430,12 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
             value={field.value}
             isShowRequired={false}
             onChange={(e) => {
-              field.onChange?.(e?.value as string)
+              field.onChange?.(e?.value as string);
             }}
             id={`select-${field.name}`}
             name={field.name}
             options={field.options as string[]}
-            labelSx={{ display: 'block', textAlign: 'start' }}
+            labelSx={{ display: "block", textAlign: "start" }}
             placeholder={field.placeholder}
             firstInputBox
             instanceId={`select-instance-${field.name}`}
@@ -439,7 +444,7 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
             touched={field.touched}
             onBlur={field.onBlur}
           />
-        )
+        );
       }
       return (
         <TextInputField
@@ -453,84 +458,87 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
           autoFocus={field.autoFocus}
           isShowRequired={false}
           onFocus={() => {
-            field.onFocus?.()
+            field.onFocus?.();
           }}
           onBlur={handleBlur}
           manualErrorSX={{
-            display: 'block',
-            textAlign: 'start',
+            display: "block",
+            textAlign: "start",
           }}
           onChange={(e) => {
-            field.onChange?.(e)
+            field.onChange?.(e);
           }}
           placeholder={field.placeholder}
           wrapperClass="mt-0 w-[100%]"
-          labelSx={{ display: 'block', textAlign: 'start' }}
+          labelSx={{ display: "block", textAlign: "start" }}
         />
-      )
+      );
     },
     [handleBlur]
-  )
+  );
 
   const handleClickCancel = () => {
-    router.push(appRoutes?.userRequests)
-  }
+    router.push(appRoutes?.userRequests);
+  };
 
   const handleClickSubmit = () => {
     if (currentUserData?._id) {
-      const updatedFields: Record<keyof UserRegistration, string | boolean> = {} as Record<keyof UserRegistration, string | boolean>
+      const updatedFields: Record<keyof UserRegistration, string | boolean> =
+        {} as Record<keyof UserRegistration, string | boolean>;
 
       Object.keys(values).forEach((key) => {
-        const typedKey = key as keyof UserRegistration
-        const newValue = values[typedKey]
-        const initialValue = InitialValues[typedKey]
+        const typedKey = key as keyof UserRegistration;
+        const newValue = values[typedKey];
+        const initialValue = InitialValues[typedKey];
 
         if (newValue !== undefined && newValue !== initialValue) {
-          updatedFields[typedKey] = newValue
+          updatedFields[typedKey] = newValue;
         }
-      })
+      });
 
       if (Object.keys(updatedFields).length > 0) {
         dispatch(
           updateUserData(currentUserData._id, updatedFields, (res) => {
             if (res) {
-              showSuccessToast(translation?.USER_UPDATED_SUCCESS)
-              router.push(appRoutes?.userRequests)
+              showSuccessToast(translation?.USER_UPDATED_SUCCESS);
+              router.push(appRoutes?.userRequests);
             }
           })
-        )
+        );
       } else {
-        showErrorToast(translation?.NO_CHANGES_MADE)
+        showErrorToast(translation?.NO_CHANGES_MADE);
       }
     }
-  }
+  };
   return (
     <div className="page-wrapper pb-3">
       <div className="content">
         <div className="row">
-          <div className="col-sm-12">
+          <div className="w-full">
             <Card className="show-entire" variant="selectStoreCard">
               <Box as="div" className="flex-space-between-center">
-                <Text variant="Maison24Medium125" color="orange_accent_alpha">
+                <CustomText
+                  variant="font-24-medium-125"
+                  color="primary-orange-500-transparent"
+                >
                   {translation?.COMPANY_DETAILS}
-                </Text>
+                </CustomText>
 
                 <Box as="div" className="flex-row-centered-gap-10">
-                  <Text
-                    color="orange_accent_alpha"
-                    sx={{ fontSize: '18px' }}
-                    variant="Maison16Regular20"
+                  <CustomText
+                    color="primary-orange-500-transparent"
+                    variant="font-18-medium-20"
                   >
                     {translationWithFunction.accountStatus(
                       values?.userName,
                       checkIsApproved()
                     )}
-                  </Text>
+                  </CustomText>
                   <CustomSwitch
                     isChecked={checkIsApproved()}
                     handleSwitchOnChange={handleChangeSwitch}
-                    switchName={'user-details'}                  
-                    />
+                    switchName={"user-details"}
+                  />
                 </Box>
               </Box>
 
@@ -538,28 +546,31 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
               <div
                 className="grid gap-20 mt-14 mb-10"
                 style={{
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+                  gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))",
                 }}
               >
                 {CompanyDetailsfieldset?.map(renderField)}
               </div>
               <Box className="pt-20">
-                <Text variant="Maison24Medium125" color="orange_accent_alpha">
+                <CustomText
+                  variant="font-24-medium-125"
+                  color="primary-orange-500-transparent"
+                >
                   {translation?.PEARSONAL_DETAILS}
-                </Text>
+                </CustomText>
                 <Divider className="my-3" />
                 <div
                   key={`user-pearsonal-details`}
                   className="grid gap-20 mt-14 mb-10"
                   style={{
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+                    gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))",
                   }}
                 >
                   {PersonalDetailsfieldset?.map(renderField)}
                 </div>
               </Box>
               <CustomModalBtn
-                wrapperSx={{ justifyContent: 'flex-end', gap: '10px' }}
+                wrapperSx={{ justifyContent: "flex-end", gap: "10px" }}
                 submitBtnTitle={translation?.SUBMIT}
                 cancelBtnTitle={translation?.CANCEL}
                 cancelBtnClick={handleClickCancel}
@@ -572,5 +583,5 @@ export const UserDetails: FC<UserDetailsProps> = ({ userId }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

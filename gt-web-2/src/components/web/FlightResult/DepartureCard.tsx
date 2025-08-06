@@ -1,15 +1,16 @@
 // components/TimeSlotCard.tsx
-import Image from 'next/image'
-import React from 'react'
-import { Box, Text } from 'theme-ui'
+import Image from "next/image";
+import React from "react";
+import { Box } from "theme-ui";
+import CustomText from "../../core/Text/CustomText";
 
 type Props = {
-  icon: string
-  label: string
-  timeRange: string
-  selected: boolean
-  onClick: () => void
-}
+  icon: string;
+  label: string;
+  timeRange: string;
+  selected: boolean;
+  onClick: () => void;
+};
 
 const DepartureCard: React.FC<Props> = ({
   icon,
@@ -22,16 +23,18 @@ const DepartureCard: React.FC<Props> = ({
     <Box
       onClick={onClick}
       className={`flight-list-card py-10 px-15 text-center cursor-pointer w-full ${
-        selected ? 'shadow-md flight-list-card-selected' : 'flight-list-card '
+        selected ? "shadow-md flight-list-card-selected" : "flight-list-card "
       }`}
     >
       <Image src={icon} alt="icon" width={30} height={30} />
-      <Text variant="Maison14Medium20" className="text-nowrap mt-2">
+      <CustomText variant="font-14-medium-20" className="text-nowrap mt-2">
         {label}
-      </Text>
-      <Text className="text-sm text-gray-500">{timeRange}</Text>
+      </CustomText>
+      <CustomText variant="font-14-medium-20" className="text-sm text-gray-500">
+        {timeRange}
+      </CustomText>
     </Box>
-  )
-}
+  );
+};
 
-export default DepartureCard
+export default DepartureCard;

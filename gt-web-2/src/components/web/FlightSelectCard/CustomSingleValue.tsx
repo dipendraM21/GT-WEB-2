@@ -1,10 +1,10 @@
-import { FC } from 'react'
-import { RxCross2 } from 'react-icons/rx'
-import { SingleValueProps, components } from 'react-select'
-import { Text } from 'theme-ui'
+import { CustomText } from "@/components/core/Text";
+import { FC } from "react";
+import { RxCross2 } from "react-icons/rx";
+import { SingleValueProps, components } from "react-select";
 
 interface CustomSingleValueProps extends SingleValueProps<any, false> {
-  onClickClear?: () => void
+  onClickClear?: () => void;
 }
 
 export const CustomSingleValue: FC<CustomSingleValueProps> = ({
@@ -16,19 +16,19 @@ export const CustomSingleValue: FC<CustomSingleValueProps> = ({
   return (
     <components.SingleValue {...props} data={data} innerProps={innerProps}>
       <div {...innerProps} className="flex justify-between items-center">
-        <Text variant="Maison20SemiBold125" color="primary_text_dark">
+        <CustomText variant="font-20-semiBold-125" color="primary-grey-900">
           {data.label}
-        </Text>
+        </CustomText>
         <div>
           <RxCross2
             size={24}
             onClick={(e) => {
-              e.stopPropagation()
-              onClickClear && onClickClear()
+              e.stopPropagation();
+              onClickClear && onClickClear();
             }}
           />
         </div>
       </div>
     </components.SingleValue>
-  )
-}
+  );
+};

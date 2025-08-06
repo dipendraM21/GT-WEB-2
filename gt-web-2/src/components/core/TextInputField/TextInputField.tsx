@@ -1,18 +1,19 @@
-'use client'
-import eyeIcon from '@/../public/svg/eyeball-open-view.svg'
-import eyeClosedIcon from '@/../public/svg/invisible-eye-icon.svg'
-import { TextInputFieldProps } from '@/types/module/core/textInputField'
-import Image from 'next/image'
-import React, { forwardRef, useState } from 'react'
-import { Box, Input, Text } from 'theme-ui'
+"use client";
+import eyeIcon from "@/../public/svg/eyeball-open-view.svg";
+import eyeClosedIcon from "@/../public/svg/invisible-eye-icon.svg";
+import { TextInputFieldProps } from "@/types/module/core/textInputField";
+import Image from "next/image";
+import React, { forwardRef, useState } from "react";
+import { Box, Input } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
   (
     {
       placeholder,
-      variant = 'primaryInput',
-      validationVariant = 'Maison16Regular20',
-      name = '',
+      variant = "primaryInput",
+      validationVariant = "font-16-regular-20",
+      name = "",
       type,
       disabled = false,
       autoFocus,
@@ -26,9 +27,9 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
       onKeyDown,
       onFocus,
       value,
-      wrapperClass = '',
+      wrapperClass = "",
       showIcon,
-      customClassName = '',
+      customClassName = "",
       errors,
       touched,
       description,
@@ -38,10 +39,10 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
       wrapperSx,
       manualErrorMessage,
       iconSrc,
-      labelVariant = 'Maison18Medium125',
-      wrapperVariant = '',
+      labelVariant = "font-18-medium-20",
+      wrapperVariant = "",
       labelClassName,
-      autoComplete = 'off',
+      autoComplete = "off",
       firstInputBox = false,
       required,
       labelSx,
@@ -51,23 +52,23 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
       readOnly = false,
       isShowRequired = false,
       isEyeShow = true,
-      id = '',
-      inputWidth = '',
+      id = "",
+      inputWidth = "",
       labelColor,
     },
     ref
   ) => {
-    const [maskedField, setMaskedField] = useState(false)
+    const [maskedField, setMaskedField] = useState(false);
 
     const handleIconClick = () => {
-      setMaskedField(!maskedField)
-    }
+      setMaskedField(!maskedField);
+    };
 
-    const uniqueId = id || `input-${name}` // Ensure the ID is unique
+    const uniqueId = id || `input-${name}`; // Ensure the ID is unique
 
     const labelProps: { htmlFor: string } = {
       htmlFor: uniqueId, // Use the unique ID here
-    }
+    };
 
     return (
       <React.Fragment>
@@ -75,41 +76,41 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
           className={wrapperClass}
           variant={wrapperVariant}
           onClick={onClickWrapper}
-          mt={firstInputBox ? 0 : '14px'}
+          mt={firstInputBox ? 0 : "14px"}
           sx={{
             ...wrapperSx,
-            position: 'relative',
+            position: "relative",
           }}
         >
           {label && (
-            <Text
+            <CustomText
               className={labelClassName}
               as="label"
               sx={{
-                mb: 10,
+                marginBottom: "10px",
                 ...labelSx,
-                color: errors && touched ? 'red_600' : 'primary_text_dark',
+                color: errors && touched ? "red_600" : "primary_text_dark",
               }}
               variant={labelVariant}
-              color={errors && touched ? 'red_600' : labelColor}
+              color={errors && touched ? "red_600" : labelColor}
               aria-labelledby={uniqueId} // Correctly associate label with input
               {...labelProps}
             >
               {label}
               {isShowRequired && (
-                <Text
+                <CustomText
                   as="span"
                   color="red_600"
                   sx={{
                     ...requiredIconSx,
-                    color: 'red_600',
-                    ml: '4px',
+                    color: "red_600",
+                    marginLeft: "4px",
                   }}
                 >
                   *
-                </Text>
+                </CustomText>
               )}
-            </Text>
+            </CustomText>
           )}
 
           <Input
@@ -119,19 +120,21 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
             autoComplete={autoComplete}
             name={name}
             ref={ref}
-            type={maskedField && type === 'password' ? 'text' : type}
+            type={maskedField && type === "password" ? "text" : type}
             disabled={disabled}
             maxLength={maxLength}
             minLength={minLength}
             autoFocus={autoFocus}
-            className={`mx-0  ${inputWidth ? inputWidth : 'w-100'} font-noto-sans ${customClassName}`}
+            className={`mx-0  ${
+              inputWidth ? inputWidth : "w-100"
+            } font-noto-sans ${customClassName}`}
             sx={{
               ...Inputsx,
-              borderColor: errors && touched ? 'red' : '',
+              borderColor: errors && touched ? "red" : "",
             }}
             onChange={(e) => {
               if (onChange) {
-                onChange(e?.target.value)
+                onChange(e?.target.value);
               }
             }}
             onClick={onClick}
@@ -143,37 +146,37 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
             readOnly={readOnly}
           />
           {errors && touched ? (
-            <Text
-              sx={{ ...manualErrorSX, color: 'red_600' }}
+            <CustomText
+              sx={{ ...manualErrorSX, color: "red_600" }}
               variant={validationVariant}
               className="pt-6"
             >
               {errors.toString()}
-            </Text>
+            </CustomText>
           ) : (
-            <Text
+            <CustomText
               variant={validationVariant}
-              sx={{ my: '5px', minHeight: '11px' }}
+              sx={{ my: "5px", minHeight: "11px" }}
             >
               {description}
-            </Text>
+            </CustomText>
           )}
           {manualErrorMessage && (
-            <Text variant={validationVariant} sx={manualErrorSX}>
+            <CustomText variant={validationVariant} sx={manualErrorSX}>
               {manualErrorMessage.toString()}
-            </Text>
+            </CustomText>
           )}
-          {type === 'password' && isEyeShow && (
+          {type === "password" && isEyeShow && (
             <Box
               onClick={handleIconClick}
               className={iconWrapperClassName}
               sx={{
                 ...iconWrapperSx,
-                position: 'absolute',
-                right: '16px',
-                top: ['52px', '52px', '53px', '53px', '53px'],
-                transform: 'translateY(-50%)',
-                cursor: 'pointer',
+                position: "absolute",
+                right: "16px",
+                top: ["52px", "52px", "53px", "53px", "53px"],
+                transform: "translateY(-50%)",
+                cursor: "pointer",
               }}
             >
               <Image
@@ -195,15 +198,15 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
                 width={20}
                 className="primary-input-icon"
                 src={iconSrc}
-                alt={'icon'}
+                alt={"icon"}
               />
             </Box>
           )}
         </Box>
       </React.Fragment>
-    )
+    );
   }
-)
+);
 
-TextInputField.displayName = 'TextInputField'
-export { TextInputField }
+TextInputField.displayName = "TextInputField";
+export { TextInputField };

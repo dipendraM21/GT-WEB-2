@@ -1,53 +1,54 @@
-'use client'
-import Loader from '@/../public/svg/loader.svg'
-import { ButtonProps } from '@/types/module/core/themuiModule'
-import Image from 'next/image'
-import { CSSProperties, forwardRef, MouseEvent } from 'react'
-import { Box, Button, Text } from 'theme-ui'
+"use client";
+import Loader from "@/../public/svg/loader.svg";
+import { ButtonProps } from "@/types/module/core/themuiModule";
+import Image from "next/image";
+import { CSSProperties, forwardRef, MouseEvent } from "react";
+import { Box, Button } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 const defaultButtonTextStyle: CSSProperties = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-}
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+};
 
 const squareButtonTextStyle: CSSProperties = {
-  overflow: 'hidden',
-  display: '-webkit-box',
-  WebkitBoxOrient: 'vertical',
+  overflow: "hidden",
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
   WebkitLineClamp: 2,
-  wordBreak: 'break-word',
-  hyphens: 'auto',
-}
+  wordBreak: "break-word",
+  hyphens: "auto",
+};
 
 const truncateText = (text: string, maxLength: number): string => {
-  if (text.length <= maxLength) return text
+  if (text.length <= maxLength) return text;
 
-  const truncated = text.slice(0, maxLength - 1)
-  const lastSpaceIndex = truncated.lastIndexOf(' ')
+  const truncated = text.slice(0, maxLength - 1);
+  const lastSpaceIndex = truncated.lastIndexOf(" ");
 
   if (lastSpaceIndex > 0) {
-    return truncated.slice(0, lastSpaceIndex) + '...'
+    return truncated.slice(0, lastSpaceIndex) + "...";
   }
 
-  return truncated + '...'
-}
+  return truncated + "...";
+};
 
 export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       text,
       icon,
-      textColor = 'white',
+      textColor = "white",
       iconRight,
-      textVariant = 'Maison16Demi20',
+      textVariant = "font-16-demi-20",
       isIconOnly,
       onBlur = () => null,
       onClick = () => null,
       toggleOnClick = () => null,
       sx,
       disabled = false,
-      variant = 'primary',
+      variant = "primary",
       type,
       className,
       textSx,
@@ -61,7 +62,7 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
       isUpArrow = false,
       isDownArrow = false,
       autoFocus = false,
-      accessKey = '',
+      accessKey = "",
       isLoading = false,
       wrapperClassName,
       btnColor,
@@ -70,22 +71,22 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const baseTextStyle = isSquareButton
       ? squareButtonTextStyle
-      : defaultButtonTextStyle
-    const maxTextLength = 50
+      : defaultButtonTextStyle;
+    const maxTextLength = 50;
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
       if (
         ref &&
-        typeof ref === 'object' &&
+        typeof ref === "object" &&
         ref.current &&
-        variant === 'iconOnlyBtn'
+        variant === "iconOnlyBtn"
       ) {
-        ref.current.blur()
+        ref.current.blur();
       }
       if (onClick) {
-        onClick(event)
+        onClick(event);
       }
-    }
+    };
 
     return (
       <Button
@@ -93,7 +94,7 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         onClick={handleClick}
         color={btnColor}
-        sx={{ position: 'relative', ...sx }}
+        sx={{ position: "relative", ...sx }}
         variant={variant}
         disabled={disabled || isLoading}
         className={className}
@@ -103,20 +104,20 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         <Box className={wrapperClassName}>
           {icon && isLoading ? (
-            <Loader size={30} color="white" style={{ background: 'white' }} />
+            <Loader size={30} color="white" style={{ background: "white" }} />
           ) : (
             icon && (
               <Box
                 className={iconClassName}
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginRight: isIconOnly ? 0 : icon === 'string' ? 6 : 2,
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: isIconOnly ? 0 : icon === "string" ? 6 : 2,
                   ...iconStyles,
                 }}
                 onClick={toggleOnClick}
               >
-                {typeof icon === 'string' ? (
+                {typeof icon === "string" ? (
                   <Image height={20} width={20} src={icon} alt="Icon" />
                 ) : (
                   icon
@@ -128,10 +129,10 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
           {text ? (
             <Box
               className={
-                isLoading ? 'flex justify-center items-center gap-6' : ''
+                isLoading ? "flex justify-center items-center gap-6" : ""
               }
             >
-              <Text
+              <CustomText
                 variant={textVariant}
                 color={textColor}
                 sx={{
@@ -140,14 +141,14 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
                 }}
               >
                 {truncateText(text, maxTextLength)}
-              </Text>
+              </CustomText>
             </Box>
           ) : null}
 
           {children}
           {iconRight && (
-            <Box sx={{ ml: 2, display: 'flex', alignItems: 'center' }}>
-              {typeof iconRight === 'string' ? (
+            <Box sx={{ ml: 2, display: "flex", alignItems: "center" }}>
+              {typeof iconRight === "string" ? (
                 <Image
                   height={20}
                   width={20}
@@ -206,8 +207,8 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ButtonProps>(
           </svg>
         )}
       </Button>
-    )
+    );
   }
-)
+);
 
-ThemeButton.displayName = 'ThemeButton'
+ThemeButton.displayName = "ThemeButton";

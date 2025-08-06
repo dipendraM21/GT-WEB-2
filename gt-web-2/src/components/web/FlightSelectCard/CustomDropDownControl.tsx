@@ -1,26 +1,27 @@
-import { FC } from 'react'
-import { ControlProps, components } from 'react-select'
-import { Box, Text } from 'theme-ui'
+import { CustomText } from "@/components/core/Text";
+import { FC } from "react";
+import { ControlProps, components } from "react-select";
+import { Box } from "theme-ui";
 
 interface CustomDropDownControlProps extends ControlProps<any, false> {
-  label?: string
-  customLabelVariant?: string
+  label?: string;
+  customLabelVariant?: string;
 }
 
 export const CustomDropDownControl: FC<CustomDropDownControlProps> = ({
-  label = 'From City :',
-  customLabelVariant = 'Maison18Medium125',
+  label = "From City :",
+  customLabelVariant = "font-18-medium-125",
   children,
   ...props
 }) => {
   return (
     <components.Control {...props}>
       <Box as="div" className="flex flex-col custom-dropdown-control">
-        <Text color="grey_dark" variant={customLabelVariant}>
+        <CustomText color="grey_dark" variant={customLabelVariant}>
           {label}
-        </Text>
+        </CustomText>
         <Box className="mt-3">{children}</Box>
       </Box>
     </components.Control>
-  )
-}
+  );
+};

@@ -1,34 +1,35 @@
-'use client'
-import { requestSignup } from '@/store/actions/auth.action'
-import { Field, FieldType } from '@/types/module/authModule'
-import { RegisterAs } from '@/types/module/core/commonModule'
-import { MainStoreType } from '@/types/store/reducers/main.reducers'
-import { removeDot, toCamelCase } from '@/utils/functions'
+"use client";
+import { CustomText } from "@/components/core/Text";
+import { TextInputField } from "@/components/core/TextInputField/TextInputField";
+import { requestSignup } from "@/store/actions/auth.action";
+import { RegisterAs } from "@/types/module/core/commonModule";
+import { Field, FieldType } from "@/types/module/web/authModule";
+import { MainStoreType } from "@/types/store/reducers/main.reducers";
+import { removeDot, toCamelCase } from "@/utils/functions";
 import {
   gstRegex,
   panRegex,
   phoneNumberRegex,
   validateOnlyNumbers,
-} from '@/utils/regexMatch'
-import { appRoutes } from '@/utils/routes'
-import { translation } from '@/utils/translation'
-import { signupValidationSchema } from '@/utils/validationSchemas'
-import { useFormik } from 'formik'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { FC, Fragment, useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, Card, Divider, Text } from 'theme-ui'
-import { ThemeButton } from '../../core/Button/Button'
-import { TermsCheckbox } from '../../core/CheckBox/TermsCheckbox'
-import { SelectInputField } from '../../core/SelectInputField/SelectInputField'
-import Spinner from '../../core/spinner/Spinner'
-import { TextInputField } from '@/components/core/TextInputField/TextInputField'
+} from "@/utils/regexMatch";
+import { appRoutes } from "@/utils/routes";
+import { translation } from "@/utils/translation";
+import { signupValidationSchema } from "@/utils/validationSchemas";
+import { useFormik } from "formik";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Card, Divider } from "theme-ui";
+import { ThemeButton } from "../../core/Button/Button";
+import { TermsCheckbox } from "../../core/CheckBox/TermsCheckbox";
+import { SelectInputField } from "../../core/SelectInputField/SelectInputField";
+import Spinner from "../../core/spinner/Spinner";
 interface FormCTASectionProps {
-  onChange: (value: boolean) => void
-  onClick: () => void
-  checked: boolean
-  disabled: boolean
+  onChange: (value: boolean) => void;
+  onClick: () => void;
+  checked: boolean;
+  disabled: boolean;
 }
 
 export const FormCTASection: FC<FormCTASectionProps> = ({
@@ -45,7 +46,7 @@ export const FormCTASection: FC<FormCTASectionProps> = ({
         text={translation?.READ_AND_ACCEPT}
         textClass="flex flex-wrap ms-2 whitespace-nowrap"
         wrapperClass="flex items-start mt-4 mb-4"
-        textSx={{ fontSize: '16px' }}
+        textSx={{ fontSize: "16px" }}
         onChange={onChange}
         checked={checked}
       />
@@ -57,69 +58,73 @@ export const FormCTASection: FC<FormCTASectionProps> = ({
       />
 
       <Box as="div" className="text-center pt-6">
-        <Text variant="Maison16Regular20">
-          {translation?.ALREADY_HAVE_ACCOUNT}{' '}
-          <Link
-            href={appRoutes?.login}
-            className="link-primary whitespace-nowrap"
-          >
-            {translation?.LOGIN}
+        <CustomText variant="font-16-regular-20">
+          {translation?.ALREADY_HAVE_ACCOUNT}{" "}
+          <Link href={appRoutes?.login} className="whitespace-nowrap">
+            <CustomText
+              color="primary-blue-700"
+              className="whitespace-nowrap ms-1"
+            >
+              {translation?.LOGIN}
+            </CustomText>
           </Link>
-        </Text>
+        </CustomText>
       </Box>
     </Fragment>
-  )
-}
+  );
+};
 
 export const SignupComponent = () => {
-  const router = useRouter()
-  const authUserData = useSelector((state: MainStoreType) => state.authUserData)
-  const dispatch = useDispatch()
-  const [country, setCountry] = useState<string[]>()
-  const [isAgree, setIsAgree] = useState<boolean>(false)
+  const router = useRouter();
+  const authUserData = useSelector(
+    (state: MainStoreType) => state.authUserData
+  );
+  const dispatch = useDispatch();
+  const [country, setCountry] = useState<string[]>();
+  const [isAgree, setIsAgree] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const { Country } = await import('country-state-city')
-      const countries = Country.getAllCountries()
+      const { Country } = await import("country-state-city");
+      const countries = Country.getAllCountries();
       if (countries) {
-        const state = countries.map((item) => item.name)
-        setCountry(state)
+        const state = countries.map((item) => item.name);
+        setCountry(state);
       }
-    }
+    };
 
-    fetchCountries()
-  }, [])
+    fetchCountries();
+  }, []);
 
   const InitialValues = {
-    title: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobileNumber: '',
-    userName: '',
-    companyName: '',
-    registerAs: '',
-    panNumber: '',
-    nameOnPan: '',
-    landline: '',
-    faxNo: '',
-    userTNC: '',
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    pinCode: '',
-    country: '',
-    gstNumber: '',
-  }
+    title: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobileNumber: "",
+    userName: "",
+    companyName: "",
+    registerAs: "",
+    panNumber: "",
+    nameOnPan: "",
+    landline: "",
+    faxNo: "",
+    userTNC: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    pinCode: "",
+    country: "",
+    gstNumber: "",
+  };
 
   const formik = useFormik({
     initialValues: InitialValues,
     validationSchema: signupValidationSchema,
     validateOnMount: true,
     onSubmit: () => {},
-  })
+  });
 
   const {
     handleBlur,
@@ -128,28 +133,28 @@ export const SignupComponent = () => {
     touched,
     setFieldValue,
     setFieldTouched,
-  } = formik
+  } = formik;
 
   const handleChangePanNo = (panNumber: string) => {
-    const upperCasePan = panNumber.toUpperCase()
-    setFieldValue('panNumber', upperCasePan)
+    const upperCasePan = panNumber.toUpperCase();
+    setFieldValue("panNumber", upperCasePan);
     if (!panRegex.test(upperCasePan) && upperCasePan.length === 10) {
-      setFieldTouched('panNumber', true)
-      setFieldValue('panNumber', '')
+      setFieldTouched("panNumber", true);
+      setFieldValue("panNumber", "");
       // showErrorToast(translation?.INVALID_PAN_NO)  TODO: add toast
     }
-  }
+  };
 
   const handleChangeGstNo = (gstNumber: string) => {
-    const upperCaseGst = gstNumber.toUpperCase()
-    setFieldValue('gstNumber', upperCaseGst)
+    const upperCaseGst = gstNumber.toUpperCase();
+    setFieldValue("gstNumber", upperCaseGst);
 
     if (!gstRegex.test(upperCaseGst) && upperCaseGst.length === 15) {
-      setFieldTouched('gstNumber', true)
-      setFieldValue('gstNumber', '')
+      setFieldTouched("gstNumber", true);
+      setFieldValue("gstNumber", "");
       // showErrorToast(translation?.INVALID_GST_NO)  TODO: add toast
     }
-  }
+  };
 
   const CompanyDetailsfieldset: Field[] = [
     {
@@ -160,7 +165,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (companyName) => {
-        setFieldValue('companyName', companyName)
+        setFieldValue("companyName", companyName);
       },
       error: errors?.companyName,
       touched: touched?.companyName,
@@ -174,7 +179,7 @@ export const SignupComponent = () => {
       options: [RegisterAs.AGENT, RegisterAs.DISTRIBUTOR],
       isShowRequired: true,
       onChange: (registerAs) => {
-        setFieldValue('registerAs', registerAs)
+        setFieldValue("registerAs", registerAs);
       },
       error: errors?.registerAs,
       touched: touched?.registerAs,
@@ -187,7 +192,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (panNumber) => {
-        handleChangePanNo(panNumber)
+        handleChangePanNo(panNumber);
       },
       error: errors?.panNumber,
       touched: touched?.panNumber,
@@ -200,7 +205,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (nameOnPan) => {
-        setFieldValue('nameOnPan', nameOnPan)
+        setFieldValue("nameOnPan", nameOnPan);
       },
       error: errors?.nameOnPan,
       touched: touched?.nameOnPan,
@@ -213,7 +218,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (addressLine1) => {
-        setFieldValue('addressLine1', addressLine1)
+        setFieldValue("addressLine1", addressLine1);
       },
       error: errors?.addressLine1,
       touched: touched?.addressLine1,
@@ -225,7 +230,7 @@ export const SignupComponent = () => {
       placeholder: translation?.ADDRESS_2,
       type: FieldType.TEXT_INPUT_FIELD,
       onChange: (addressLine2) => {
-        setFieldValue('addressLine2', addressLine2)
+        setFieldValue("addressLine2", addressLine2);
       },
     },
     {
@@ -236,7 +241,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (city) => {
-        setFieldValue('city', city)
+        setFieldValue("city", city);
       },
       error: errors?.city,
       touched: touched?.city,
@@ -249,7 +254,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (state) => {
-        setFieldValue('state', state)
+        setFieldValue("state", state);
       },
       error: errors?.state,
       touched: touched?.state,
@@ -263,9 +268,9 @@ export const SignupComponent = () => {
       isShowRequired: true,
       onChange: (pinCode) => {
         if (validateOnlyNumbers.test(pinCode)) {
-          setFieldValue('pinCode', pinCode)
+          setFieldValue("pinCode", pinCode);
         } else {
-          setFieldValue('pinCode', '')
+          setFieldValue("pinCode", "");
         }
       },
       error: errors?.pinCode,
@@ -281,7 +286,7 @@ export const SignupComponent = () => {
       options: country,
       isSearchable: true,
       onChange: (country) => {
-        setFieldValue('country', country)
+        setFieldValue("country", country);
       },
       error: errors?.country,
       touched: touched?.country,
@@ -294,9 +299,9 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (mobileNumber) => {
-        const numericValue = mobileNumber.replace(phoneNumberRegex, '')
+        const numericValue = mobileNumber.replace(phoneNumberRegex, "");
         if (numericValue.length <= 10) {
-          setFieldValue('landline', numericValue)
+          setFieldValue("landline", numericValue);
         }
       },
       error: errors?.landline,
@@ -309,7 +314,7 @@ export const SignupComponent = () => {
       placeholder: translation?.ENTER_GST_NO,
       type: FieldType.TEXT_INPUT_FIELD,
       onChange: (gstNumber) => {
-        handleChangeGstNo(gstNumber)
+        handleChangeGstNo(gstNumber);
       },
       error: errors?.gstNumber,
       touched: touched?.gstNumber,
@@ -321,10 +326,10 @@ export const SignupComponent = () => {
       placeholder: translation?.FAX_NO,
       type: FieldType.TEXT_INPUT_FIELD,
       onChange: (faxNo) => {
-        setFieldValue('faxNo', faxNo)
+        setFieldValue("faxNo", faxNo);
       },
     },
-  ]
+  ];
 
   const PersonalDetailsfieldset: Field[] = [
     {
@@ -334,14 +339,14 @@ export const SignupComponent = () => {
       placeholder: translation?.TITLE,
       type: FieldType.SELECT_INPUT_FIELD,
       isShowRequired: true,
-      options: ['Mr.', 'Mrs.', 'Ms.'],
+      options: ["Mr.", "Mrs.", "Ms."],
       onChange: (title) => {
-        setFieldValue('title', title)
+        setFieldValue("title", title);
       },
       error: errors?.title,
       touched: touched?.title,
       onBlur: () => {
-        setFieldTouched('title', true)
+        setFieldTouched("title", true);
       },
     },
     {
@@ -352,7 +357,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (firstName) => {
-        setFieldValue('firstName', firstName)
+        setFieldValue("firstName", firstName);
       },
       error: errors?.firstName,
       touched: touched?.firstName,
@@ -365,7 +370,7 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (lastName) => {
-        setFieldValue('lastName', lastName)
+        setFieldValue("lastName", lastName);
       },
       error: errors?.lastName,
       touched: touched?.lastName,
@@ -378,22 +383,22 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (email) => {
-        setFieldValue('email', email)
+        setFieldValue("email", email);
       },
       error: errors?.email,
       touched: touched?.email,
     },
     {
-      name: 'mobileNumber',
+      name: "mobileNumber",
       label: translation?.PHONE_NO,
       value: values?.mobileNumber,
       placeholder: translation?.PHONE_NO,
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (mobileNumber) => {
-        const numericValue = mobileNumber.replace(phoneNumberRegex, '')
+        const numericValue = mobileNumber.replace(phoneNumberRegex, "");
         if (numericValue.length <= 10) {
-          setFieldValue('mobileNumber', numericValue)
+          setFieldValue("mobileNumber", numericValue);
         }
       },
       error: errors?.mobileNumber,
@@ -407,12 +412,12 @@ export const SignupComponent = () => {
       type: FieldType.TEXT_INPUT_FIELD,
       isShowRequired: true,
       onChange: (userName) => {
-        setFieldValue('userName', userName)
+        setFieldValue("userName", userName);
       },
       error: errors?.userName,
       touched: touched?.userName,
     },
-  ]
+  ];
 
   const renderField = useCallback(
     (field: Field) => {
@@ -424,12 +429,12 @@ export const SignupComponent = () => {
             value={field.value}
             isShowRequired={field.isShowRequired}
             onChange={(e) => {
-              field.onChange?.(e?.value as string)
+              field.onChange?.(e?.value as string);
             }}
             id="state-select"
             name="state"
             options={field.options as string[]}
-            labelSx={{ display: 'block', textAlign: 'start' }}
+            labelSx={{ display: "block", textAlign: "start" }}
             placeholder={field.placeholder}
             firstInputBox
             instanceId="state-select-instance"
@@ -438,7 +443,7 @@ export const SignupComponent = () => {
             touched={field.touched}
             onBlur={field.onBlur}
           />
-        )
+        );
       }
       return (
         <TextInputField
@@ -452,24 +457,24 @@ export const SignupComponent = () => {
           autoFocus={field.autoFocus}
           isShowRequired={field.isShowRequired}
           onFocus={() => {
-            field.onFocus?.()
+            field.onFocus?.();
           }}
           onBlur={handleBlur}
           manualErrorSX={{
-            display: 'block',
-            textAlign: 'start',
+            display: "block",
+            textAlign: "start",
           }}
           onChange={(e) => {
-            field.onChange?.(e)
+            field.onChange?.(e);
           }}
           placeholder={field.placeholder}
           wrapperClass="mt-0 w-[100%]"
-          labelSx={{ display: 'block', textAlign: 'start' }}
+          labelSx={{ display: "block", textAlign: "start" }}
         />
-      )
+      );
     },
     [handleBlur]
-  )
+  );
 
   const checkIsDisabled = (): boolean => {
     return !(
@@ -490,8 +495,8 @@ export const SignupComponent = () => {
       values?.pinCode &&
       values?.country &&
       isAgree
-    )
-  }
+    );
+  };
 
   const handleClickSubmit = () => {
     dispatch(
@@ -503,48 +508,54 @@ export const SignupComponent = () => {
         },
         (res) => {
           if (res) {
-            router.push(appRoutes.login)
+            router.push(appRoutes.login);
           }
         }
       )
-    )
-  }
+    );
+  };
   return (
     <Box
       as="div"
       className="min-h-screen bg-[#f2f2f2] flex items-center justify-center pt-100 sm:px-4 p-10"
     >
       <Card className="w-full max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden p-14 sm:p-30">
-        <Text
-          variant="Maison24Medium125"
-          color="orange_accent_alpha"
+        <CustomText
+          variant="font-24-medium-125"
+          color="primary-orange-500-transparent"
           className="mb-6 text-center"
         >
           {translation?.REGISTRATION}
-        </Text>
+        </CustomText>
         <Divider
-          sx={{ color: 'orange_accent_alpha', borderWidth: '2px' }}
+          sx={{ color: "primary-orange-500-transparent", borderWidth: "2px" }}
           className="my-4"
         />
         <Box className="sm:pt-6">
-          <Text variant="Maison18Demi125" className="text-center sm:text-left">
+          <CustomText
+            variant="font-18-demi-20"
+            className="text-center sm:text-left"
+          >
             {translation?.PEARSONAL_DETAILS}
-          </Text>
+          </CustomText>
           <div
             className="grid gap-20 sm:mt-14 mb-14"
             style={{
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             }}
           >
             {PersonalDetailsfieldset?.map(renderField)}
           </div>
-          <Text variant="Maison18Demi125" className="text-center sm:text-left">
+          <CustomText
+            variant="font-18-demi-20"
+            className="text-center sm:text-left"
+          >
             {translation?.COMPANY_DETAILS}
-          </Text>
+          </CustomText>
           <div
             className="grid gap-20 mt-14 mb-10"
             style={{
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             }}
           >
             {CompanyDetailsfieldset?.map(renderField)}
@@ -555,11 +566,11 @@ export const SignupComponent = () => {
           disabled={checkIsDisabled()}
           onClick={handleClickSubmit}
           onChange={(e) => {
-            setIsAgree(e)
+            setIsAgree(e);
           }}
         />
         <Spinner visible={authUserData?.loading} />
       </Card>
     </Box>
-  )
-}
+  );
+};

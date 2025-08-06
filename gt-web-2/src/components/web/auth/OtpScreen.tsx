@@ -1,15 +1,15 @@
-import { translation } from '@/utils/translation'
-import { FC, Fragment } from 'react'
-import { Text } from 'theme-ui'
-import ResendOtp from './ResendOtp'
-import { OtpInputBox } from '@/components/core/TextInputField/OtpTextInputField'
+import { CustomText } from "@/components/core/Text";
+import { OtpInputBox } from "@/components/core/TextInputField/OtpTextInputField";
+import { translation } from "@/utils/translation";
+import { FC, Fragment } from "react";
+import ResendOtp from "./ResendOtp";
 
 interface OtpScreenProps {
-  countdown: number
-  handleResendOtp: () => void
-  isResendOtp: boolean
-  handleChangeOtp: (otp: string) => void
-  value: string
+  countdown: number;
+  handleResendOtp: () => void;
+  isResendOtp: boolean;
+  handleChangeOtp: (otp: string) => void;
+  value: string;
 }
 export const OtpScreen: FC<OtpScreenProps> = ({
   handleChangeOtp,
@@ -20,9 +20,9 @@ export const OtpScreen: FC<OtpScreenProps> = ({
 }) => {
   return (
     <Fragment>
-      <Text variant="Maison36SemiBold125" className="pb-6">
+      <CustomText variant="font-36-semi-bold-125" className="pb-6">
         {translation?.VERIFY_MOBILE_NUMBER}
-      </Text>
+      </CustomText>
 
       <OtpInputBox onChange={handleChangeOtp} value={value} />
 
@@ -34,5 +34,5 @@ export const OtpScreen: FC<OtpScreenProps> = ({
         />
       </div>
     </Fragment>
-  )
-}
+  );
+};

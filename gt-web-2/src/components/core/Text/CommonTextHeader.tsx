@@ -1,26 +1,27 @@
-import { FC } from 'react'
-import { Box, Text } from 'theme-ui'
+import { FC } from "react";
+import { Box } from "theme-ui";
+import CustomText from "./CustomText";
 
 export interface SectionTitleBarProps {
-  primaryText?: string
-  primaryVariant?: string
-  primaryClass?: string
-  secondaryText?: string
-  secondaryVariant?: string
-  secondaryClass?: string
-  secondaryColor?: string
-  primaryColor?: string
-  onActionClick?: () => void
+  primaryText?: string;
+  primaryVariant?: string;
+  primaryClass?: string;
+  secondaryText?: string;
+  secondaryVariant?: string;
+  secondaryClass?: string;
+  secondaryColor?: string;
+  primaryColor?: string;
+  onActionClick?: () => void;
 }
 const SectionTitleBar: FC<SectionTitleBarProps> = ({
   primaryText,
-  primaryColor = 'grey_medium',
-  secondaryColor = 'grey_medium',
-  primaryVariant = 'Maison16Medium20',
+  primaryColor = "primary-grey-600",
+  secondaryColor = "primary-grey-600",
+  primaryVariant = "font-16-medium-125",
   primaryClass,
   secondaryClass,
   secondaryText,
-  secondaryVariant = 'Maison16Medium20',
+  secondaryVariant = "font-16-medium-125",
   onActionClick,
 }) => {
   return (
@@ -28,24 +29,24 @@ const SectionTitleBar: FC<SectionTitleBarProps> = ({
       as="div"
       className="flex items-center justify-between py-2 border-b-2 border-[#e7e7e8]"
     >
-      <Text
+      <CustomText
         variant={primaryVariant}
         color={primaryColor}
         className={primaryClass}
       >
         {primaryText}
-      </Text>
+      </CustomText>
 
-      <Text
+      <CustomText
         color={secondaryColor}
         variant={secondaryVariant}
         className={secondaryClass}
         onClick={onActionClick}
       >
         {secondaryText}
-      </Text>
+      </CustomText>
     </Box>
-  )
-}
+  );
+};
 
-export default SectionTitleBar
+export default SectionTitleBar;

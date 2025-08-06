@@ -1,16 +1,17 @@
-import Image, { StaticImageData } from 'next/image'
-import React from 'react'
-import { Box, Text } from 'theme-ui'
+import Image, { StaticImageData } from "next/image";
+import React from "react";
+import { Box } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 type PermissionCheckboxProps = {
-  label: string
-  labelClass?: string
-  icon?: StaticImageData
-  checked: boolean
-  disabled?: boolean
-  onChange: (checked: boolean) => void
-  className?: string
-}
+  label: string;
+  labelClass?: string;
+  icon?: StaticImageData;
+  checked: boolean;
+  disabled?: boolean;
+  onChange: (checked: boolean) => void;
+  className?: string;
+};
 
 const Checkbox: React.FC<PermissionCheckboxProps> = ({
   label,
@@ -19,19 +20,19 @@ const Checkbox: React.FC<PermissionCheckboxProps> = ({
   checked,
   disabled = false,
   onChange,
-  className = '',
+  className = "",
 }) => {
   return (
     <div className={`flex justify-between items-center py-2 ${className}`}>
       <Box as="div" className="flex items-center">
         {icon && <Image src={icon} alt="icon-logo" width={30} height={30} />}
-        <Text
+        <CustomText
           className={labelClass}
-          color="grey_medium"
-          variant="Maison18Regular20"
+          color="primary_grey_800"
+          variant="font-18-regular-20"
         >
           {label}
-        </Text>
+        </CustomText>
       </Box>
       <input
         className="form-check-input permission-checkbox"
@@ -41,7 +42,7 @@ const Checkbox: React.FC<PermissionCheckboxProps> = ({
         onChange={(e) => !disabled && onChange(e.target.checked)}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Checkbox
+export default Checkbox;

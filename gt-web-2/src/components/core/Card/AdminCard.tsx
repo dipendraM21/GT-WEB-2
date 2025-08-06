@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { FC, ReactNode } from "react";
-import { Box, Card, Divider, Text, ThemeUIStyleObject } from "theme-ui";
+import { Box, Card, Divider, ThemeUIStyleObject } from "theme-ui";
 import { ThemeButton } from "../Button/Button";
+import CustomText from "../Text/CustomText";
 
 export interface AdminCardProps {
   children?: ReactNode;
@@ -29,16 +30,16 @@ export const AdminCard: FC<AdminCardProps> = ({
   cardVariant = "selectStoreCard",
   cardClassName = "show-entire",
   sx,
-  textColor = "primary_text_dark",
+  textColor = "primary_grey_800",
   heading,
   subtitle,
   actionButtonConfig,
 }) => {
   return (
-    <div className="page-wrapper pb-3">
-      <div className="content">
-        <div className="row">
-          <div className="col-sm-12">
+    <div className="pb-3">
+      <div className="w-full">
+        <div className="flex flex-wrap">
+          <div className="w-full">
             <Card
               className={cardClassName}
               variant={cardVariant}
@@ -74,13 +75,11 @@ export const AdminCard: FC<AdminCardProps> = ({
                 <Box className="flex justify-between items-start mb-6">
                   <Box className="flex flex-col">
                     {heading && (
-                      <Text
-                        variant="Maison28Demi20"
+                      <CustomText
+                        variant="font-28-demi-20"
                         color={textColor}
                         sx={{
-                          mb: subtitle ? 1 : 0,
-                          fontWeight: "demi",
-                          lineHeight: "125%",
+                          marginBottom: subtitle ? "4px" : 0,
                           background:
                             "linear-gradient(135deg, #1F2937 0%, #374151 100%)",
                           backgroundClip: "text",
@@ -90,22 +89,20 @@ export const AdminCard: FC<AdminCardProps> = ({
                         }}
                       >
                         {heading}
-                      </Text>
+                      </CustomText>
                     )}
                     {subtitle && (
-                      <Text
-                        variant="Maison16Regular20"
-                        color="grey_medium"
+                      <CustomText
+                        variant="font-16-regular-20"
+                        color="primary_grey_600"
                         sx={{
-                          fontWeight: "regular",
-                          lineHeight: "125%",
                           opacity: 0.8,
                           textShadow: "0px 1px 2px rgba(0, 0, 0, 0.05)",
-                          mb: 2,
+                          marginBottom: "8px",
                         }}
                       >
                         {subtitle}
-                      </Text>
+                      </CustomText>
                     )}
                   </Box>
                   {actionButtonConfig && (
@@ -139,9 +136,12 @@ export const AdminCard: FC<AdminCardProps> = ({
 export default function FormSectionTitle({ title }: { title: string }) {
   return (
     <>
-      <Text variant="Maison24Medium125" color="orange_accent_alpha">
+      <CustomText
+        variant="font-24-medium-125"
+        color="primary_orange_500_transparent"
+      >
         {title}
-      </Text>
+      </CustomText>
       <Divider className="my-3" />
     </>
   );

@@ -20,7 +20,7 @@ import {
 } from "@tanstack/react-table";
 import debounce from "lodash.debounce";
 import React, { useEffect, useRef, useState } from "react";
-import { Text } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 interface TableProps<T extends { id: string | number }> {
   columns: ColumnDef<T>[];
@@ -211,15 +211,15 @@ export const CommonTable = <T extends { id: string | number }>({
                         }
                         onClick={header?.column?.getToggleSortingHandler()}
                       >
-                        <Text
-                          variant="Maison16Regular20"
+                        <CustomText
+                          variant="font-16-regular-20"
                           sx={{ color: "white" }}
                         >
                           {flexRender(
                             header?.column?.columnDef?.header,
                             header?.getContext()
                           )}
-                        </Text>
+                        </CustomText>
                         {header?.column?.getCanSort() && sortable && (
                           <div className="flex flex-col">
                             <span
@@ -286,12 +286,12 @@ export const CommonTable = <T extends { id: string | number }>({
                       key={`cell-${cell.id}-${cellIndex}`}
                       className="py-3 px-4 transition-colors duration-200"
                     >
-                      <Text variant="Maison16Medium20">
+                      <CustomText variant="font-16-medium-125">
                         {flexRender(
                           cell?.column?.columnDef?.cell,
                           cell?.getContext()
                         )}
-                      </Text>
+                      </CustomText>
                     </TableCell>
                   ))}
                 </TableRow>

@@ -1,17 +1,17 @@
-import React from 'react'
-import { Text } from 'theme-ui'
+import { CustomText } from "@/components/core/Text";
+import React from "react";
 
 interface SortOption {
-  label: string
-  subLabel: string
-  value: string
-  active?: boolean
+  label: string;
+  subLabel: string;
+  value: string;
+  active?: boolean;
 }
 
 interface FlightSortTabsProps {
-  sortOptions: SortOption[]
-  onSortChange: (value: string) => void
-  title?: string
+  sortOptions: SortOption[];
+  onSortChange: (value: string) => void;
+  title?: string;
 }
 
 const FlightSortTabs: React.FC<FlightSortTabsProps> = ({
@@ -21,7 +21,7 @@ const FlightSortTabs: React.FC<FlightSortTabsProps> = ({
 }) => {
   return (
     <div className="flex flex-col w-100">
-      {title && <Text variant="Maison18Medium125">{title}</Text>}
+      {title && <CustomText variant="font-18-medium-125">{title}</CustomText>}
       <div className="w-full bg-white px-4 mt-2 rounded-xl bg-gradient-background flex flight-list-br border-3 border-[#414141] justify-around text-center items-center">
         {sortOptions.map((option, idx) => (
           <React.Fragment key={option.value}>
@@ -29,18 +29,18 @@ const FlightSortTabs: React.FC<FlightSortTabsProps> = ({
               onClick={() => onSortChange(option.value)}
               className={`flex flex-col items-center justify-center py-2 text-xs text-center ${
                 option.active
-                  ? 'text-blue-600 font-medium'
-                  : 'text-gray-700 hover:text-blue-600'
+                  ? "text-blue-600 font-medium"
+                  : "text-gray-700 hover:text-blue-600"
               }`}
             >
-              <Text
-                variant="Maison16Medium20"
-                color="text_primary_strong"
+              <CustomText
+                variant="font-16-medium-20"
+                color="primary-grey-900"
                 className="flex items-center gap-1"
               >
                 {option.label}
                 {/* {option.label === 'Smart' && <FaArrowDown className="text-[10px]" />} */}
-              </Text>
+              </CustomText>
             </button>
             {idx !== sortOptions.length - 1 && (
               <div className="h-[50px] w-px bg-[#414141] self-center opacity-[0.32]"></div>
@@ -49,7 +49,7 @@ const FlightSortTabs: React.FC<FlightSortTabsProps> = ({
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FlightSortTabs
+export default FlightSortTabs;

@@ -1,17 +1,18 @@
-import React from 'react'
-import { Box, Switch, Text, ThemeUIStyleObject } from 'theme-ui'
+import React from "react";
+import { Box, Switch, ThemeUIStyleObject } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 interface CustomSwitchProps {
-  id?: string
-  name?: string
-  variant?: string
-  label?: string
-  textVariant?: string
-  wrapperClassName?: string
-  checked: boolean
-  switchSx?: ThemeUIStyleObject
-  wrapperSx?: ThemeUIStyleObject
-  onChange: (e: boolean) => void
+  id?: string;
+  name?: string;
+  variant?: string;
+  label?: string;
+  textVariant?: string;
+  wrapperClassName?: string;
+  checked: boolean;
+  switchSx?: ThemeUIStyleObject;
+  wrapperSx?: ThemeUIStyleObject;
+  onChange: (e: boolean) => void;
 }
 
 const CustomSwitch: React.FC<CustomSwitchProps> = ({
@@ -21,33 +22,33 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({
   label,
   switchSx,
   wrapperSx,
-  variant = 'switchInput',
+  variant = "switchInput",
   wrapperClassName,
-  textVariant = 'Maison16Regular20',
+  textVariant = "font-16-regular-20",
   onChange,
 }) => {
   return (
     <Box
       className={wrapperClassName}
       sx={{
-        display: 'inline-block',
-        alignItems: 'center',
+        display: "inline-block",
+        alignItems: "center",
         ...wrapperSx,
       }}
     >
-      <Text variant={textVariant}>{label}</Text>
+      <CustomText variant={textVariant}>{label}</CustomText>
       <Switch
         id={id}
         name={name}
         checked={checked}
         onChange={(e) => {
-          onChange(e?.target?.checked)
+          onChange(e?.target?.checked);
         }}
         variant={variant}
         sx={switchSx}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default CustomSwitch
+export default CustomSwitch;

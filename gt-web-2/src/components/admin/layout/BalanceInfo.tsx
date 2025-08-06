@@ -1,10 +1,10 @@
-import React from 'react'
-import { Text } from 'theme-ui'
+import { CustomText } from "@/components/core/Text";
+import React from "react";
 
 interface BalanceInfoProps {
-  availableBalance: number
-  creditLimit: number
-  due: number
+  availableBalance: number;
+  creditLimit: number;
+  due: number;
 }
 
 const BalanceInfo: React.FC<BalanceInfoProps> = ({
@@ -14,35 +14,27 @@ const BalanceInfo: React.FC<BalanceInfoProps> = ({
 }) => (
   <div
     style={{
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       gap: 8,
     }}
   >
-    <Text variant="Maison18Medium125" color="primary_text_dark">
+    <CustomText variant="font-18-medium-125" color="primary-grey-800">
       Available Balance : {availableBalance.toFixed(2)}
-    </Text>
-    <Text
-      variant="Maison18Medium125"
-      color="primary_text_dark"
-      style={{ margin: '0 4px' }}
-    >
+    </CustomText>
+    <CustomText variant="font-18-medium-125" color="primary-grey-800">
       |
-    </Text>
-    <Text variant="Maison18Medium125" color="primary_text_dark">
+    </CustomText>
+    <CustomText variant="font-18-medium-125" color="primary-grey-800">
       Credit Limit : {creditLimit.toFixed(2)}
-    </Text>
-    <Text
-      variant="Maison18Medium125"
-      color="primary_text_dark"
-      style={{ margin: '0 4px' }}
-    >
+    </CustomText>
+    <CustomText variant="font-18-medium-125" color="primary-grey-800">
       |
-    </Text>
-    <Text variant="Maison18Medium125" color="primary_text_dark">
+    </CustomText>
+    <CustomText variant="font-18-medium-125" color="primary-grey-800">
       Due : {due.toFixed(2)}
-    </Text>
+    </CustomText>
   </div>
-)
+);
 
-export default BalanceInfo
+export default BalanceInfo;

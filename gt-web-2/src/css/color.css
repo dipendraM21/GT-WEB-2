@@ -10,6 +10,10 @@
     --color-primary-grey-300: #c0c2c6;
     --color-primary-orange-500-transparent: #fc790dd9;
     --color-primary-blue-900: #122e5d;
+    --color-primary-grey-800: #303030;
+    --color-primary-red-600: #cc0000;
+    --color-primary-blue-700: #0047ab;
+    --color-primary-blue-600-alpha: rgba(46, 55, 164, 0.5);
   }
 }
 
@@ -25,4 +29,8 @@
   --color-primary-orange-500-transparent: #fc790dd9;
   --color-primary-orange-500-transparent: #fc790dd9;
   --color-primary-blue-900: #122e5d;
+  --color-primary-grey-800: #303030;
+  --color-primary-red-600: #cc0000;
+  --color-primary-blue-700: #0047ab;
+  --color-primary-blue-600-alpha: rgba(46, 55, 164, 0.5);
 }

@@ -1,26 +1,26 @@
-'use client'
-import { flightSelectStylesConfig, GroupType } from '@/utils/stylesConfig'
-import { FC, ReactNode } from 'react'
-import { ClassNamesConfig } from 'react-select'
-import Select from 'react-select/async'
-import { Text } from 'theme-ui'
-import { CustomPlaceholder } from './CustomPlaceholder '
-import { CustomSingleValue } from './CustomSingleValue'
+"use client";
+import { CustomText } from "@/components/core/Text";
+import { flightSelectStylesConfig, GroupType } from "@/utils/stylesConfig";
+import { FC, ReactNode } from "react";
+import { ClassNamesConfig } from "react-select";
+import Select from "react-select/async";
+import { CustomPlaceholder } from "./CustomPlaceholder ";
+import { CustomSingleValue } from "./CustomSingleValue";
 
 interface CityOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 interface CommonFlightSelectProps {
-  className?: string
-  options: CityOption[]
-  icon?: ReactNode
-  placeholder?: string
-  onClickClear?: () => void
-  onChange: (value: string) => void
-  label?: string
-  classNames?: ClassNamesConfig<CityOption, false, GroupType> | undefined
+  className?: string;
+  options: CityOption[];
+  icon?: ReactNode;
+  placeholder?: string;
+  onClickClear?: () => void;
+  onChange: (value: string) => void;
+  label?: string;
+  classNames?: ClassNamesConfig<CityOption, false, GroupType> | undefined;
 }
 
 const CommonFlightSelect: FC<CommonFlightSelectProps> = ({
@@ -33,13 +33,13 @@ const CommonFlightSelect: FC<CommonFlightSelectProps> = ({
   onClickClear,
   onChange,
 }) => {
-  let debounceTimeout: ReturnType<typeof setTimeout> | null = null
+  let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
   const loadOptions = (
     inputValue: string,
     callback: (options: CityOption[]) => void
   ) => {
-    if (debounceTimeout) clearTimeout(debounceTimeout)
+    if (debounceTimeout) clearTimeout(debounceTimeout);
 
     debounceTimeout = setTimeout(() => {
       const filteredOptions = inputValue
@@ -48,22 +48,22 @@ const CommonFlightSelect: FC<CommonFlightSelectProps> = ({
               opt.label.toLowerCase().includes(inputValue.toLowerCase())
             )
             .slice(0, 50)
-        : options.slice(0, 30)
+        : options.slice(0, 30);
 
-      callback(filteredOptions)
-    }, 200)
-  }
+      callback(filteredOptions);
+    }, 200);
+  };
 
   return (
     <div className={`common-flight-select ${className}`}>
       {label && (
-        <Text
+        <CustomText
           as="label"
-          sx={{ mb: 10, ml: '10px' }}
-          variant={'Maison18Medium125'}
+          className="mb-10 ml-10"
+          variant={"font-18-medium-125"}
         >
           {label}
-        </Text>
+        </CustomText>
       )}
       <Select
         styles={flightSelectStylesConfig}
@@ -89,7 +89,7 @@ const CommonFlightSelect: FC<CommonFlightSelectProps> = ({
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default CommonFlightSelect
+export default CommonFlightSelect;

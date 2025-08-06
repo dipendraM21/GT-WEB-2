@@ -1,15 +1,16 @@
-import { TermsCheckboxProps } from '@/types/module/core/commonModule'
-import { translation } from '@/utils/translation'
-import { FC } from 'react'
-import { Box, Text } from 'theme-ui'
+import { TermsCheckboxProps } from "@/types/module/core/commonModule";
+import { translation } from "@/utils/translation";
+import { FC } from "react";
+import { Box } from "theme-ui";
+import CustomText from "../Text/CustomText";
 
 export const TermsCheckbox: FC<TermsCheckboxProps> = ({
   wrapperClass,
   wrapperSx,
   text,
-  textVariant = 'Maison16Regular20',
+  textVariant = "font-16-regular-20",
   textSx,
-  textClass = '',
+  textClass = "",
   onChange,
   checked,
 }) => {
@@ -21,37 +22,36 @@ export const TermsCheckbox: FC<TermsCheckboxProps> = ({
         type="checkbox"
         className="w-3 h-4 mt-[2px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
         onChange={(e) => {
-          onChange(e?.target?.checked)
+          onChange(e?.target?.checked);
         }}
         checked={checked}
       />
-      <Text
+      <CustomText
         variant={textVariant}
-        sx={{
-          fontSize: 15,
-          display: 'inline-flex',
-          alignItems: 'center',
-          ...textSx,
-        }}
+        color="primary_grey_800"
         className={`${textClass} flex items-center`}
       >
         {text}
-        <a
+        <CustomText
+          as="a"
           href="#"
-          className="text-primaryColor font-normal text-[14px] md:leading-[23.8px] whitespace-nowrap ms-1"
+          color="primary-blue-700"
+          className="whitespace-nowrap ms-1"
         >
           {translation?.TERMS_OF_SERVICES}
-        </a>
-        <Text sx={textSx} variant={textVariant} className="mx-1">
+        </CustomText>
+        <CustomText sx={textSx} variant={textVariant} className="mx-1">
           and
-        </Text>
-        <a
+        </CustomText>
+        <CustomText
+          as="a"
           href="#"
-          className="text-primaryColor font-normal text-[14px] md:leading-[23.8px] whitespace-nowrap"
+          color="primary-blue-700"
+          className="whitespace-nowrap"
         >
           {translation?.PRICACY_POLICY}
-        </a>
-      </Text>
+        </CustomText>
+      </CustomText>
     </Box>
-  )
-}
+  );
+};

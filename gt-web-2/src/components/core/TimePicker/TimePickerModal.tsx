@@ -1,114 +1,113 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { Box, Text } from 'theme-ui'
-import { ThemeButton } from '../Button/Button'
+"use client";
+import React, { useEffect, useState } from "react";
+import { Box } from "theme-ui";
+import { ThemeButton } from "../Button/Button";
+import CustomText from "../Text/CustomText";
 
 interface TimePickerModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onTimeSelect: (time: string) => void
-  initialTime?: string
-  title?: string
+  isOpen: boolean;
+  onClose: () => void;
+  onTimeSelect: (time: string) => void;
+  initialTime?: string;
+  title?: string;
 }
 
 interface TimeValue {
-  hours: string
-  minutes: string
+  hours: string;
+  minutes: string;
 }
 
 export const TimePickerModal: React.FC<TimePickerModalProps> = ({
   isOpen,
   onClose,
   onTimeSelect,
-  initialTime = '00:00',
-  title = 'Select Time',
+  initialTime = "00:00",
+  title = "Select Time",
 }) => {
   const [selectedTime, setSelectedTime] = useState<TimeValue>({
-    hours: '00',
-    minutes: '00',
-  })
+    hours: "00",
+    minutes: "00",
+  });
 
   // Generate hours array (00-23)
   const hours = Array.from({ length: 24 }, (_, i) =>
-    i.toString().padStart(2, '0')
-  )
+    i.toString().padStart(2, "0")
+  );
 
   // Generate minutes array (00-59)
   const minutes = Array.from({ length: 60 }, (_, i) =>
-    i.toString().padStart(2, '0')
-  )
+    i.toString().padStart(2, "0")
+  );
 
   useEffect(() => {
     if (initialTime) {
-      const [h, m] = initialTime.split(':')
+      const [h, m] = initialTime.split(":");
       setSelectedTime({
-        hours: h || '00',
-        minutes: m || '00',
-      })
+        hours: h || "00",
+        minutes: m || "00",
+      });
     }
-  }, [initialTime])
+  }, [initialTime]);
 
   const handleHourSelect = (hour: string) => {
-    setSelectedTime((prev) => ({ ...prev, hours: hour }))
-  }
+    setSelectedTime((prev) => ({ ...prev, hours: hour }));
+  };
 
   const handleMinuteSelect = (minute: string) => {
-    setSelectedTime((prev) => ({ ...prev, minutes: minute }))
-  }
+    setSelectedTime((prev) => ({ ...prev, minutes: minute }));
+  };
 
   const handleConfirm = () => {
-    const timeString = `${selectedTime.hours}:${selectedTime.minutes}`
-    onTimeSelect(timeString)
-    onClose()
-  }
+    const timeString = `${selectedTime.hours}:${selectedTime.minutes}`;
+    onTimeSelect(timeString);
+    onClose();
+  };
 
   const handleCancel = () => {
-    onClose()
-  }
+    onClose();
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="time-picker-overlay">
       <div className="time-picker-modal">
         <Box sx={{ p: 4 }}>
           {/* Header */}
-          <Box sx={{ mb: 3, textAlign: 'center' }}>
-            <Text sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text' }}>
+          <Box sx={{ mb: 3, textAlign: "center" }}>
+            <CustomText variant="font-18-medium-20" color="primary-grey-800">
               {title}
-            </Text>
+            </CustomText>
           </Box>
 
           {/* Time Display */}
-          <Box sx={{ mb: 4, textAlign: 'center' }}>
-            <Text
-              sx={{ fontSize: '24px', fontWeight: 'bold', color: 'primary' }}
-            >
+          <Box sx={{ mb: 4, textAlign: "center" }}>
+            <CustomText variant="font-24-medium-125" color="primary-grey-800">
               {selectedTime.hours}:{selectedTime.minutes}
-            </Text>
+            </CustomText>
           </Box>
 
           {/* Time Picker */}
-          <Box sx={{ display: 'flex', gap: 3, mb: 4 }}>
+          <Box sx={{ display: "flex", gap: 3, mb: 4 }}>
             {/* Hours Column */}
             <Box sx={{ flex: 1 }}>
-              <Text
+              <CustomText
+                variant="font-14-medium-20"
+                color="primary-grey-800"
                 sx={{
-                  fontSize: '14px',
-                  fontWeight: 'bold',
                   mb: 2,
-                  textAlign: 'center',
+                  textAlign: "center",
                 }}
               >
                 Hours
-              </Text>
+              </CustomText>
               <Box
                 sx={{
-                  height: '200px',
-                  overflowY: 'auto',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '8px',
-                  bg: 'white',
+                  height: "200px",
+                  overflowY: "auto",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "8px",
+                  bg: "white",
                 }}
                 className="time-scroll-container"
               >
@@ -117,22 +116,25 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
                     key={hour}
                     sx={{
                       p: 2,
-                      cursor: 'pointer',
-                      textAlign: 'center',
+                      cursor: "pointer",
+                      textAlign: "center",
                       backgroundColor:
-                        selectedTime.hours === hour ? 'primary' : 'transparent',
-                      color: selectedTime.hours === hour ? 'white' : 'text',
-                      '&:hover': {
+                        selectedTime.hours === hour ? "primary" : "transparent",
+                      color: selectedTime.hours === hour ? "white" : "text",
+                      "&:hover": {
                         backgroundColor:
-                          selectedTime.hours === hour ? 'primary' : '#f8fafc',
+                          selectedTime.hours === hour ? "primary" : "#f8fafc",
                       },
-                      borderBottom: '1px solid #f1f5f9',
+                      borderBottom: "1px solid #f1f5f9",
                     }}
                     onClick={() => handleHourSelect(hour)}
                   >
-                    <Text sx={{ fontSize: '16px', fontWeight: 'medium' }}>
+                    <CustomText
+                      variant="font-16-medium-125"
+                      color="primary-grey-800"
+                    >
                       {hour}
-                    </Text>
+                    </CustomText>
                   </Box>
                 ))}
               </Box>
@@ -140,23 +142,23 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
 
             {/* Minutes Column */}
             <Box sx={{ flex: 1 }}>
-              <Text
+              <CustomText
+                variant="font-14-medium-20"
+                color="primary-grey-800"
                 sx={{
-                  fontSize: '14px',
-                  fontWeight: 'bold',
                   mb: 2,
-                  textAlign: 'center',
+                  textAlign: "center",
                 }}
               >
                 Minutes
-              </Text>
+              </CustomText>
               <Box
                 sx={{
-                  height: '200px',
-                  overflowY: 'auto',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '8px',
-                  bg: 'white',
+                  height: "200px",
+                  overflowY: "auto",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "8px",
+                  bg: "white",
                 }}
                 className="time-scroll-container"
               >
@@ -165,26 +167,29 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
                     key={minute}
                     sx={{
                       p: 2,
-                      cursor: 'pointer',
-                      textAlign: 'center',
+                      cursor: "pointer",
+                      textAlign: "center",
                       backgroundColor:
                         selectedTime.minutes === minute
-                          ? 'primary'
-                          : 'transparent',
-                      color: selectedTime.minutes === minute ? 'white' : 'text',
-                      '&:hover': {
+                          ? "primary"
+                          : "transparent",
+                      color: selectedTime.minutes === minute ? "white" : "text",
+                      "&:hover": {
                         backgroundColor:
                           selectedTime.minutes === minute
-                            ? 'primary'
-                            : '#f8fafc',
+                            ? "primary"
+                            : "#f8fafc",
                       },
-                      borderBottom: '1px solid #f1f5f9',
+                      borderBottom: "1px solid #f1f5f9",
                     }}
                     onClick={() => handleMinuteSelect(minute)}
                   >
-                    <Text sx={{ fontSize: '16px', fontWeight: 'medium' }}>
+                    <CustomText
+                      variant="font-16-medium-125"
+                      color="primary-grey-800"
+                    >
                       {minute}
-                    </Text>
+                    </CustomText>
                   </Box>
                 ))}
               </Box>
@@ -192,7 +197,7 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
           </Box>
 
           {/* Action Buttons */}
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+          <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
             <ThemeButton
               text="Cancel"
               variant="secondary"
@@ -226,8 +231,7 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
         .time-picker-modal {
           background: white;
           border-radius: 12px;
-          box-shadow:
-            0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
             0 10px 10px -5px rgba(0, 0, 0, 0.04);
           max-width: 400px;
           width: 90%;
@@ -259,5 +263,5 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
         }
       `}</style>
     </div>
-  )
-}
+  );
+};

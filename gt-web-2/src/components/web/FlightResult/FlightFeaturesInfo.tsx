@@ -1,16 +1,16 @@
-import React from 'react'
-import { FaPlane } from 'react-icons/fa'
-import { Text } from 'theme-ui'
+import { CustomText } from "@/components/core/Text";
+import React from "react";
+import { FaPlane } from "react-icons/fa";
 
 interface FeatureItem {
-  icon: React.ReactNode
-  label?: string
-  muted?: boolean
+  icon: React.ReactNode;
+  label?: string;
+  muted?: boolean;
 }
 
 interface FlightFeaturesInfoProps {
-  aircraftModel: string
-  features: FeatureItem[]
+  aircraftModel: string;
+  features: FeatureItem[];
 }
 
 const FlightFeaturesInfo: React.FC<FlightFeaturesInfoProps> = ({
@@ -27,19 +27,21 @@ const FlightFeaturesInfo: React.FC<FlightFeaturesInfoProps> = ({
       {features.map((feat, idx) => (
         <div key={idx} className="flex items-center gap-2">
           <span
-            className={`${feat.muted ? 'text-gray-400' : 'text-black'} text-base`}
+            className={`${
+              feat.muted ? "text-gray-400" : "text-black"
+            } text-base`}
           >
             {feat.icon}
           </span>
           {feat.label && (
-            <Text variant="Maison14Medium20" color="grey_medium">
+            <CustomText variant="font-14-medium-20" color="primary-grey-300">
               {feat.label}
-            </Text>
+            </CustomText>
           )}
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default FlightFeaturesInfo
+export default FlightFeaturesInfo;

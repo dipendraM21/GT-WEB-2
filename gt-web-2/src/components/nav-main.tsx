@@ -2,7 +2,6 @@
 
 import { ChevronRight, type LucideIcon } from "lucide-react";
 import * as React from "react";
-import { Text } from "theme-ui";
 
 import {
   Collapsible,
@@ -19,6 +18,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import CustomText from "./core/Text/CustomText";
 
 export function NavMain({
   items,
@@ -60,9 +60,12 @@ export function NavMain({
                           <item.icon className="h-5 w-5 text-gray-500" />
                         </div>
                       )}
-                      <Text variant="Maison16Regular20" className="text-left">
+                      <CustomText
+                        variant="font-16-regular-20"
+                        className="text-left"
+                      >
                         {item.title}
-                      </Text>
+                      </CustomText>
                     </div>
                     <ChevronRight className="h-5 mr-[-10px] w-5 text-gray-400 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </div>
@@ -77,12 +80,12 @@ export function NavMain({
                         className="px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors"
                       >
                         <Link className="no-underline" href={subItem.url}>
-                          <Text
-                            variant="Maison14Regular20"
+                          <CustomText
+                            variant="font-14-regular-20"
                             className="text-wrap-style-balance"
                           >
                             {subItem.title}
-                          </Text>
+                          </CustomText>
                         </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
