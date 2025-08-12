@@ -247,177 +247,173 @@ const FlightBookingCard: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <div className="booking-card">
-        <CommonTab
-          tabs={flightBookingTabs}
-          activeTab="flight"
-          iconSize={30}
-          textVariant="font-22-medium-125"
-          iconClass="booking-card-icon"
-        />
+    <div className="booking-card">
+      <CommonTab
+        tabs={flightBookingTabs}
+        activeTab="flight"
+        iconSize={30}
+        textVariant="font-22-medium-125"
+        iconClass="booking-card-icon"
+      />
 
-        <CommonRadioButton
-          options={selecteTripOptions}
-          name="paymentOptions"
-          textClass="mgl-10"
-          selectedValue={flightFiltersData?.journeyType}
-          onChange={handleOptionChange}
-          mainClass="radio-group flex justify-start my-20 gap-4 item-center ml-20"
-        />
+      <CommonRadioButton
+        options={selecteTripOptions}
+        name="paymentOptions"
+        textClass="mgl-10"
+        selectedValue={flightFiltersData?.journeyType}
+        onChange={handleOptionChange}
+        mainClass="radio-group flex justify-start my-20 gap-4 item-center ml-20"
+      />
 
-        <div className="grid grid-cols-12 gap-x-3 gap-y-20 w-full h-full">
-          <div className="col-span-12 grid grid-cols-12 gap-3">
-            <div className="col-span-12 md:col-span-6">
-              <CommonFlightSelect
-                options={country.filter(
-                  (opt) => opt.value !== flightFiltersData?.destination
-                )}
-                label="From"
-                classNames={{
-                  control: () => "common-flight-booking-card w-full br-l-10",
-                  singleValue: () => "w-390",
-                }}
-                placeholder="Origin"
-                icon={<MdFlightTakeoff color={"black"} size={23} />}
-                onChange={(val) => {
-                  dispatch(saveFlightSearchData({ origin: val }));
-                }}
-              />
-            </div>
-
-            <div className="absolute left-1/2 top-1/2 translate-center z-10">
-              <div
-                className="rounded-full bg-white shadow-md border w-[34px] h-[34px] flex items-center justify-center cursor-pointer hover:rotate-180 transition-transform duration-300"
-                onClick={() => {}}
-              >
-                <HiSwitchHorizontal size={22} />
-              </div>
-            </div>
-
-            <div className="col-span-12 md:col-span-6">
-              <CommonFlightSelect
-                label="To"
-                options={country.filter(
-                  (opt) => opt.value !== flightFiltersData?.origin
-                )}
-                placeholder="Destination"
-                icon={<MdFlightLand color={"black"} size={23} />}
-                classNames={{
-                  control: () => "common-flight-booking-card w-full br-r-10",
-                  singleValue: () => "w-390",
-                }}
-                onChange={(val) => {
-                  dispatch(saveFlightSearchData({ destination: val }));
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <TextInputField
-              variant="secondaryInput"
-              label="Departure Date:"
-              labelColor="black_soft"
-              labelVariant="Maison18Medium125"
-              firstInputBox
-              customClassName="br-l-10"
-              placeholder="Onward Date"
-              value={formattedDate}
-              onClick={() => {
-                setOpenDateRange({ returnDate: false, departureDate: true });
+      <div className="grid grid-cols-12 gap-x-3 gap-y-20 w-full h-full">
+        <div className="col-span-12 grid grid-cols-12 gap-3">
+          <div className="col-span-12 md:col-span-6">
+            <CommonFlightSelect
+              options={country.filter(
+                (opt) => opt.value !== flightFiltersData?.destination
+              )}
+              label="From"
+              classNames={{
+                control: () => "common-flight-booking-card w-full br-l-10",
+                singleValue: () => "w-390",
+              }}
+              placeholder="Origin"
+              icon={<MdFlightTakeoff color={"black"} size={23} />}
+              onChange={(val) => {
+                dispatch(saveFlightSearchData({ origin: val }));
               }}
             />
-            {openDateRange.departureDate && (
-              <DateSelectModal
-                isRoundTrip={isRoundTrip}
-                selectedTrip={flightFiltersData?.journeyType}
-                onClickRoundTrip={() => {
-                  dispatch(
-                    saveFlightSearchData({
-                      journeyType: translation.ROUND_TRIP,
-                    })
-                  );
-                }}
-                ranges={getNormalizedRange()}
-                onChange={handleSelect}
-              />
-            )}
           </div>
 
-          <div
-            className="col-span-12 md:col-span-4 cursor-pointer"
+          <div className="absolute left-1/2 top-1/2 translate-center z-10">
+            <div
+              className="rounded-full bg-white shadow-md border w-[34px] h-[34px] flex items-center justify-center cursor-pointer hover:rotate-180 transition-transform duration-300"
+              onClick={() => {}}
+            >
+              <HiSwitchHorizontal size={22} />
+            </div>
+          </div>
+
+          <div className="col-span-12 md:col-span-6">
+            <CommonFlightSelect
+              label="To"
+              options={country.filter(
+                (opt) => opt.value !== flightFiltersData?.origin
+              )}
+              placeholder="Destination"
+              icon={<MdFlightLand color={"black"} size={23} />}
+              classNames={{
+                control: () => "common-flight-booking-card w-full br-r-10",
+                singleValue: () => "w-390",
+              }}
+              onChange={(val) => {
+                dispatch(saveFlightSearchData({ destination: val }));
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="col-span-12 md:col-span-4">
+          <TextInputField
+            variant="secondaryInput"
+            label="Departure Date:"
+            labelColor="black_soft"
+            labelVariant="Maison18Medium125"
+            firstInputBox
+            customClassName="br-l-10"
+            placeholder="Onward Date"
+            value={formattedDate}
             onClick={() => {
-              if (!isRoundTrip) {
-                dispatch(
-                  saveFlightSearchData({ journeyType: translation.ROUND_TRIP })
-                );
-              }
-              setShouldFocusReturnDate(true);
-              setOpenDateRange({ returnDate: true, departureDate: false });
+              setOpenDateRange({ returnDate: false, departureDate: true });
             }}
-          >
-            <TextInputField
-              ref={returnDateInputRef}
-              firstInputBox
-              variant="secondaryInput"
-              label="Return Date:"
-              labelVariant="Maison18Medium125"
-              labelColor="black_soft"
-              disabled={!isRoundTrip}
-              value={formattedEndDate as string}
-              wrapperClass="w-full"
-              // customClassName="br-0"
-              placeholder={returnDatePlaceholder}
-            />
-            {openDateRange.returnDate && (
-              <DateSelectModal
-                isRoundTrip={isRoundTrip}
-                selectedTrip={flightFiltersData?.journeyType}
-                ranges={getNormalizedRange()}
-                onChange={handleSelect}
-              />
-            )}
-          </div>
-
-          {/* TRAVELLERS */}
-          <div className="col-span-12 md:col-span-4 relative">
-            <TextInputField
-              variant="secondaryInput"
-              labelVariant="Maison18Medium125"
-              label="Travellers & Class:"
-              labelColor="black_soft"
-              firstInputBox
-              wrapperClass="w-full"
-              customClassName="br-r-10 cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowTravelModal(!showTravelModal);
-              }}
-              readOnly
-              value={getTravellerSummary() || ""}
-              placeholder="Tap to select"
-            />
-            {showTravelModal && (
-              <div className="absolute z-50 top-full left-0 w-full">
-                <TravelClassSelector
-                  onClose={() => setShowTravelModal(false)}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex justify-center items-center my-3">
-          <ThemeButton
-            text="Search"
-            variant="Border50PrimaryGrenade"
-            wrapperClassName="flex items-center gap-2"
-            iconRight={<IoSearchOutline size={20} />}
-            onClick={handleSubmit}
-            // isLoading={loading}
           />
+          {openDateRange.departureDate && (
+            <DateSelectModal
+              isRoundTrip={isRoundTrip}
+              selectedTrip={flightFiltersData?.journeyType}
+              onClickRoundTrip={() => {
+                dispatch(
+                  saveFlightSearchData({
+                    journeyType: translation.ROUND_TRIP,
+                  })
+                );
+              }}
+              ranges={getNormalizedRange()}
+              onChange={handleSelect}
+            />
+          )}
         </div>
+
+        <div
+          className="col-span-12 md:col-span-4 cursor-pointer"
+          onClick={() => {
+            if (!isRoundTrip) {
+              dispatch(
+                saveFlightSearchData({ journeyType: translation.ROUND_TRIP })
+              );
+            }
+            setShouldFocusReturnDate(true);
+            setOpenDateRange({ returnDate: true, departureDate: false });
+          }}
+        >
+          <TextInputField
+            ref={returnDateInputRef}
+            firstInputBox
+            variant="secondaryInput"
+            label="Return Date:"
+            labelVariant="Maison18Medium125"
+            labelColor="black_soft"
+            disabled={!isRoundTrip}
+            value={formattedEndDate as string}
+            wrapperClass="w-full"
+            // customClassName="br-0"
+            placeholder={returnDatePlaceholder}
+          />
+          {openDateRange.returnDate && (
+            <DateSelectModal
+              isRoundTrip={isRoundTrip}
+              selectedTrip={flightFiltersData?.journeyType}
+              ranges={getNormalizedRange()}
+              onChange={handleSelect}
+            />
+          )}
+        </div>
+
+        {/* TRAVELLERS */}
+        <div className="col-span-12 md:col-span-4 relative">
+          <TextInputField
+            variant="secondaryInput"
+            labelVariant="Maison18Medium125"
+            label="Travellers & Class:"
+            labelColor="black_soft"
+            firstInputBox
+            wrapperClass="w-full"
+            customClassName="br-r-10 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowTravelModal(!showTravelModal);
+            }}
+            readOnly
+            value={getTravellerSummary() || ""}
+            placeholder="Tap to select"
+          />
+          {showTravelModal && (
+            <div className="absolute z-50 top-full left-0 w-full">
+              <TravelClassSelector onClose={() => setShowTravelModal(false)} />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center my-3">
+        <ThemeButton
+          text="Search"
+          variant="Border50PrimaryGrenade"
+          wrapperClassName="flex items-center gap-2"
+          iconRight={<IoSearchOutline size={20} />}
+          onClick={handleSubmit}
+          // isLoading={loading}
+        />
       </div>
     </div>
   );

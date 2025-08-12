@@ -59,30 +59,18 @@ export function AppSidebar({ data: menuItems, ...props }: AppSidebarProps) {
   return (
     <Sidebar
       collapsible="icon"
-      className="bg-white border-r border-gray-200"
+      className="bg-white border-r border-gray-200 shadow-sm"
       {...props}
     >
-      {/* <SidebarHeader className="px-4 py-4 border-b border-gray-100"> */}
-      {/* <TeamSwitcher teams={data.teams} /> */}
-      {/* <Link
-          href="/admin-dashboard"
-          className="flex items-center justify-center"
-        >
-          <Image
-            src={gtLogo}
-            alt="Gayatri Travels Logo"
-            className="h-12 w-auto object-contain transition-transform hover:scale-105"
-            priority
-          />
-        </Link> */}
-      {/* </SidebarHeader> */}
-      <SidebarHeader className="pt-4 flex flex-col h-full">
-        <SidebarContent className="px-1 py-6">
-          <NavMain items={menuItems || []} />
-        </SidebarContent>
+      <SidebarHeader className="px-3 py-4">
+        {/* Logo or title can go here */}
       </SidebarHeader>
 
-      <SidebarFooter className="px-4 py-4 border-t border-gray-100">
+      <SidebarContent className="px-3 py-4">
+        <NavMain items={menuItems || []} />
+      </SidebarContent>
+
+      <SidebarFooter className="px-3 py-4 border-t border-gray-100">
         <NavUser user={data.user} />
       </SidebarFooter>
 

@@ -36,10 +36,7 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      {/* <SidebarGroupLabel className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
-        Platform
-      </SidebarGroupLabel> */}
-      <SidebarMenu className="space-y-[20px]">
+      <SidebarMenu className="space-y-1">
         {items?.map((item) => (
           <Collapsible
             key={item.title}
@@ -51,37 +48,37 @@ export function NavMain({
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton
                   tooltip={item.title}
-                  className="w-full px-4 py-3 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors"
+                  className="w-full px-3 py-2.5 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors duration-200 group-data-[state=open]:bg-gray-50"
                 >
                   <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-3">
                       {item.icon && (
                         <div className="flex-shrink-0">
-                          <item.icon className="h-5 w-5 text-gray-500" />
+                          <item.icon className="h-5 w-5 text-gray-500 group-hover:text-gray-700" />
                         </div>
                       )}
                       <CustomText
-                        variant="font-16-regular-20"
-                        className="text-left"
+                        variant="font-14-medium-20"
+                        className="text-left text-gray-700 group-hover:text-gray-900"
                       >
                         {item.title}
                       </CustomText>
                     </div>
-                    <ChevronRight className="h-5 mr-[-10px] w-5 text-gray-400 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    <ChevronRight className="h-4 w-4 text-gray-400 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </div>
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <SidebarMenuSub className="ml-6 mt-2 space-y-1">
+                <SidebarMenuSub className="ml-4 mt-1 space-y-1">
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton
                         asChild
-                        className="px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors"
+                        className="px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors duration-200"
                       >
                         <Link className="no-underline" href={subItem.url}>
                           <CustomText
-                            variant="font-14-regular-20"
+                            variant="font-13-regular-20"
                             className="text-wrap-style-balance"
                           >
                             {subItem.title}

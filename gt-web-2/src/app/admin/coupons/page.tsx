@@ -1,9 +1,5 @@
-import CouponListWithTanStackQuery from "@/components/admin/CouponsView/CouponListWithTanStackQuery";
+import CouponList from "@/components/admin/CouponsView/CouponList";
 
-export default function CouponListPage() {
-  return (
-    <div>
-      <CouponListWithTanStackQuery />
-    </div>
-  );
+export default function CouponsPage() {
+  return <CouponList />;
 }

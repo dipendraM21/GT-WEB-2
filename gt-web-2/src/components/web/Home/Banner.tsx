@@ -27,7 +27,7 @@ const Banner = () => {
     },
   ];
   return (
-    <div className="container pt-80 pb-30">
+    <div className="pt-80 pb-30">
       <div className="bg-home">
         <CommonInputCard
           fields={CompanyDetailsfieldset}

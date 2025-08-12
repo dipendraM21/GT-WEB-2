@@ -1,6 +1,5 @@
 "use client";
 import { ThemeButton } from "@/components/core/Button/Button";
-import { AdminCard } from "@/components/core/Card/AdminCard";
 import {
   ActionDropdown,
   ActionItem,
@@ -72,11 +71,6 @@ export default function UserListing() {
 
   const userListColumns: ColumnDef<UserDataWithId>[] = [
     {
-      accessorFn: (_, index) => (currentPage - 1) * itemsPerPage + index + 1,
-      header: "Sr",
-      cell: ({ getValue }) => getValue(),
-    },
-    {
       accessorKey: "firstName",
       header: "Name",
       cell: ({ row }) => (
@@ -85,9 +79,9 @@ export default function UserListing() {
           href={`${appRoutes?.userRequests}/${row.original._id}`}
         >
           <CustomText
-            variant="font-16-medium-20"
+            variant="font-14-medium-20"
             color="primary-blue-700"
-            className="text-decoration-unset user-link-primary"
+            className="text-decoration-unset user-link-primary hover:text-blue-800"
           >
             {`${row.original.firstName} ${row.original.lastName}`}
           </CustomText>
@@ -97,19 +91,50 @@ export default function UserListing() {
     {
       accessorKey: "email",
       header: "Email",
-    },
-    {
-      accessorKey: "mobileNumber",
-      header: "Phone Number",
-    },
-    {
-      accessorKey: "address.city",
-      header: "City",
-      cell: ({ row }) => row.original.address.city,
+      cell: ({ row }) => (
+        <CustomText variant="font-14-regular-20" className="text-gray-700">
+          {row.original.email}
+        </CustomText>
+      ),
     },
     {
       accessorKey: "registerAs",
-      header: "Register As",
+      header: "Role",
+      cell: ({ row }) => (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          {row.original.registerAs}
+        </span>
+      ),
+    },
+    {
+      accessorKey: "approvalStatus",
+      header: "Status",
+      cell: ({ row }) => (
+        <span
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            row.original.approvalStatus === "approved"
+              ? "bg-green-100 text-green-800"
+              : row.original.approvalStatus === "pending"
+              ? "bg-yellow-100 text-yellow-800"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {row.original.approvalStatus === "approved"
+            ? "Active"
+            : row.original.approvalStatus === "pending"
+            ? "Pending"
+            : "Inactive"}
+        </span>
+      ),
+    },
+    {
+      id: "lastLogin",
+      header: "Last Login",
+      cell: ({ row }) => (
+        <CustomText variant="font-14-regular-20" className="text-gray-600">
+          {"2024-01-15 10:30 AM"}
+        </CustomText>
+      ),
     },
     {
       id: "actions",
@@ -208,7 +233,7 @@ export default function UserListing() {
       mobileNumber: "+91 9876543210",
       userName: "johndoe",
       companyName: "Tech Solutions Inc",
-      registerAs: "Individual",
+      registerAs: "Admin",
       isAdmin: false,
       panNumber: "ABCDE1234F",
       nameOnPan: "John Doe",
@@ -238,14 +263,14 @@ export default function UserListing() {
       mobileNumber: "+91 9876543211",
       userName: "janesmith",
       companyName: "Digital Marketing Pro",
-      registerAs: "Business",
+      registerAs: "User",
       isAdmin: false,
       panNumber: "FGHIJ5678K",
       nameOnPan: "Jane Smith",
       landline: "022-12345680",
       faxNo: "022-12345681",
       userTNC: true,
-      approvalStatus: "pending" as ApprovalStatus,
+      approvalStatus: "approved" as ApprovalStatus,
       password: "hashedpassword",
       __v: 0,
       gstNumber: "27BBBBB0000B2Z6",
@@ -268,14 +293,14 @@ export default function UserListing() {
       mobileNumber: "+91 9876543212",
       userName: "robertjohnson",
       companyName: "Healthcare Solutions",
-      registerAs: "Individual",
+      registerAs: "Manager",
       isAdmin: false,
       panNumber: "KLMNO9012P",
       nameOnPan: "Robert Johnson",
       landline: "022-12345682",
       faxNo: "022-12345683",
       userTNC: true,
-      approvalStatus: "approved" as ApprovalStatus,
+      approvalStatus: "pending" as ApprovalStatus,
       password: "hashedpassword",
       __v: 0,
       gstNumber: "33CCCCC0000C3Z7",
@@ -298,14 +323,14 @@ export default function UserListing() {
       mobileNumber: "+91 9876543213",
       userName: "sarahwilliams",
       companyName: "Creative Design Studio",
-      registerAs: "Business",
+      registerAs: "User",
       isAdmin: false,
       panNumber: "PQRST3456U",
       nameOnPan: "Sarah Williams",
       landline: "022-12345684",
       faxNo: "022-12345685",
       userTNC: true,
-      approvalStatus: "rejected" as ApprovalStatus,
+      approvalStatus: "approved" as ApprovalStatus,
       password: "hashedpassword",
       __v: 0,
       gstNumber: "44DDDDD0000D4Z8",
@@ -328,14 +353,14 @@ export default function UserListing() {
       mobileNumber: "+91 9876543214",
       userName: "michaelbrown",
       companyName: "Financial Services Ltd",
-      registerAs: "Individual",
+      registerAs: "Admin",
       isAdmin: false,
       panNumber: "UVWXY6789Z",
       nameOnPan: "Michael Brown",
       landline: "022-12345686",
       faxNo: "022-12345687",
       userTNC: true,
-      approvalStatus: "pending" as ApprovalStatus,
+      approvalStatus: "approved" as ApprovalStatus,
       password: "hashedpassword",
       __v: 0,
       gstNumber: "55EEEEE0000E5Z9",
@@ -358,91 +383,53 @@ export default function UserListing() {
     })) as UserDataWithId[]) || dummyUserData;
 
   return (
-    <AdminCard
-      heading="User List"
-      subtitle="Manage and view all registered users"
-    >
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-4">
-          {/* <div className="flex items-center flex-wrap gap-2">
-            {UserListFillterData?.map((itm, idx) => (
-              <ThemeButton
-                className="cta-button tertiary-button-focused justify-end"
-                text={itm?.label}
-                sx={{
-                  backgroundColor:
-                    currentUserStatus === itm?.key
-                      ? "disableDarkBlue"
-                      : "yellow_status_bg",
-                }}
-                textSx={{
-                  color:
-                    currentUserStatus === itm?.key
-                      ? "white"
-                      : "primary_text_dark",
-                }}
-                key={`table-fillter-${idx}`}
-                onClick={() => {
-                  setCurrentPage(1);
-                  dispatch(setCurrentUserStatus(itm?.key));
-                }}
-                variant="secondary"
-              />
-            ))}
-          </div> */}
-
-          {/* <div className="flex items-center gap-2">
-            <ThemeButton
-              variant="primary"
-              className="cta-button"
-              onClick={handleClickSubmit}
-              text={translation?.SEARCH}
-            />
-            <TextInputField
-              firstInputBox
-              value={queryValue}
-              onChange={handleFilterChange}
-              Inputsx={{ borderRadius: "6px" }}
-              inputWidth="table-fillter-input"
-              placeholder="Search users..."
-            />
-          </div> */}
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="px-6 py-6 border-b border-gray-200">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-2xl font-semibold text-gray-900">
+            User Management
+          </h1>
+          <p className="text-sm text-gray-600">
+            Manage your application users and their permissions
+          </p>
         </div>
       </div>
 
-      <CommonTable<UserDataWithId>
-        columns={userListColumns}
-        data={tableData}
-        isLoading={getUserData.loading}
-        dataLength={tableData.length}
-        className="user-listing-table"
-      />
+      <div className="p-6">
+        <CommonTable<UserDataWithId>
+          columns={userListColumns}
+          data={tableData}
+          isLoading={getUserData.loading}
+          dataLength={tableData.length}
+          className="user-listing-table"
+        />
 
-      {getUserData?.data?.totalUsers > itemsPerPage && (
-        <div className="flex justify-center mt-6">
-          <div className="flex items-center gap-2">
-            <ThemeButton
-              variant="secondary"
-              text="Previous"
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-            />
-            <span className="px-4 py-2 text-gray-700">
-              Page {currentPage} of{" "}
-              {Math.ceil((getUserData?.data?.totalUsers || 0) / itemsPerPage)}
-            </span>
-            <ThemeButton
-              variant="secondary"
-              text="Next"
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={
-                currentPage >=
-                Math.ceil((getUserData?.data?.totalUsers || 0) / itemsPerPage)
-              }
-            />
+        {getUserData?.data?.totalUsers > itemsPerPage && (
+          <div className="flex justify-center mt-6">
+            <div className="flex items-center gap-2">
+              <ThemeButton
+                variant="secondary"
+                text="Previous"
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+              />
+              <span className="px-4 py-2 text-gray-700">
+                Page {currentPage} of{" "}
+                {Math.ceil((getUserData?.data?.totalUsers || 0) / itemsPerPage)}
+              </span>
+              <ThemeButton
+                variant="secondary"
+                text="Next"
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={
+                  currentPage >=
+                  Math.ceil((getUserData?.data?.totalUsers || 0) / itemsPerPage)
+                }
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </AdminCard>
+        )}
+      </div>
+    </div>
   );
 }

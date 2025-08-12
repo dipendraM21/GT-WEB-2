@@ -20,7 +20,6 @@ import {
 } from "@tanstack/react-table";
 import debounce from "lodash.debounce";
 import React, { useEffect, useRef, useState } from "react";
-import CustomText from "../Text/CustomText";
 
 interface TableProps<T extends { id: string | number }> {
   columns: ColumnDef<T>[];
@@ -160,6 +159,14 @@ export const CommonTable = <T extends { id: string | number }>({
     );
   }
 
+  // Calculate responsive width based on sidebar state
+  const getTableWidth = () => {
+    if (state === "collapsed") {
+      return "w-full max-w-none";
+    }
+    return "w-full max-w-none";
+  };
+
   return (
     <div
       ref={containerRef}
@@ -168,17 +175,8 @@ export const CommonTable = <T extends { id: string | number }>({
         handleHorizontalScroll();
       }}
       onWheel={handleWheel}
-      className={`overflow-x-auto rounded-lg border shadow-lg ${
-        state === "collapsed"
-          ? "w-full max-w-[1766px]"
-          : "w-full max-w-[1585px]"
-      }`}
+      className={`overflow-x-auto rounded-lg border border-gray-200 bg-white ${getTableWidth()}`}
       style={{
-        background:
-          "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%)",
-        border: "1px solid rgba(226, 232, 240, 0.8)",
-        boxShadow:
-          "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)",
         scrollbarWidth: "none" /* Firefox */,
         msOverflowStyle: "none" /* Internet Explorer 10+ */,
       }}
@@ -190,43 +188,40 @@ export const CommonTable = <T extends { id: string | number }>({
       `}</style>
       <div className="min-w-max relative">
         <Table>
-          <TableHeader className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white sticky top-0 z-10 shadow-lg">
+          <TableHeader className="bg-gray-50 border-b border-gray-200">
             {table.getHeaderGroups().map((headerGroup, index) => (
               <TableRow
                 key={`headerGroup-${headerGroup?.id}-${index}`}
-                className="hover:bg-gray-800 transition-colors"
+                className="hover:bg-gray-100 transition-colors"
               >
                 {headerGroup?.headers?.map((header, headerIndex) => (
                   <TableHead
                     key={`header-${header.id}-${index}-${headerIndex}`}
                     colSpan={header.colSpan}
-                    className="border-b border-gray-700"
+                    className="border-b border-gray-200 px-4 py-3 text-left"
                   >
                     {header?.isPlaceholder ? null : (
                       <div
                         className={
                           header?.column?.getCanSort()
-                            ? "cursor-pointer select-none flex items-center gap-2 text-white hover:text-blue-200 transition-colors duration-200"
-                            : "text-white"
+                            ? "cursor-pointer select-none flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors duration-200 font-medium text-sm"
+                            : "text-gray-700 font-medium text-sm"
                         }
                         onClick={header?.column?.getToggleSortingHandler()}
                       >
-                        <CustomText
-                          variant="font-16-regular-20"
-                          sx={{ color: "white" }}
-                        >
+                        <span>
                           {flexRender(
                             header?.column?.columnDef?.header,
                             header?.getContext()
                           )}
-                        </CustomText>
+                        </span>
                         {header?.column?.getCanSort() && sortable && (
                           <div className="flex flex-col">
                             <span
                               className={`text-xs transition-colors duration-200 ${
                                 header.column.getIsSorted() === "asc"
-                                  ? "text-blue-300"
-                                  : "text-gray-300"
+                                  ? "text-blue-600"
+                                  : "text-gray-400"
                               }`}
                             >
                               ▲
@@ -234,8 +229,8 @@ export const CommonTable = <T extends { id: string | number }>({
                             <span
                               className={`text-xs transition-colors duration-200 ${
                                 header.column.getIsSorted() === "desc"
-                                  ? "text-blue-300"
-                                  : "text-gray-300"
+                                  ? "text-blue-600"
+                                  : "text-gray-400"
                               }`}
                             >
                               ▼
@@ -271,7 +266,7 @@ export const CommonTable = <T extends { id: string | number }>({
                         : ""
                     }
                     ${rowIndex % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                    hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50
+                    hover:bg-gray-100
                     transition-all duration-200 cursor-pointer
                     border-b border-gray-100
                   `}
@@ -284,14 +279,12 @@ export const CommonTable = <T extends { id: string | number }>({
                   {row?.getVisibleCells()?.map((cell, cellIndex) => (
                     <TableCell
                       key={`cell-${cell.id}-${cellIndex}`}
-                      className="py-3 px-4 transition-colors duration-200"
+                      className="py-3 px-4 transition-colors duration-200 text-sm text-gray-700"
                     >
-                      <CustomText variant="font-16-medium-125">
-                        {flexRender(
-                          cell?.column?.columnDef?.cell,
-                          cell?.getContext()
-                        )}
-                      </CustomText>
+                      {flexRender(
+                        cell?.column?.columnDef?.cell,
+                        cell?.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>

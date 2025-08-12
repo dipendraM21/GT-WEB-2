@@ -14,7 +14,7 @@ const ServicesCard = () => {
       headingColor="primary-orange-500-transparent"
       data={featureData}
       heading={translation?.WHY_WITH_US}
-      containerClassName="container mx-auto why-choose-inner-area my-30"
+      containerClassName="why-choose-inner-area my-30"
     />
   );
 };

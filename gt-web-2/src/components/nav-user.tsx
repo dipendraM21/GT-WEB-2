@@ -44,17 +44,17 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="w-full px-3 py-2 hover:bg-gray-50 rounded-md transition-colors"
+              className="w-full px-3 py-2 hover:bg-gray-50 rounded-lg transition-colors duration-200"
             >
               <div className="flex items-center gap-3">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 rounded-full bg-gray-200">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg bg-gray-200 text-gray-600">
-                    CN
+                  <AvatarFallback className="rounded-full bg-gray-200 text-gray-600 text-sm font-medium">
+                    {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left">
-                  <span className="text-sm font-semibold text-gray-900 truncate">
+                  <span className="text-sm font-medium text-gray-900 truncate">
                     {user.name}
                   </span>
                   <span className="text-xs text-gray-500 truncate">
@@ -73,14 +73,14 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-2 py-1.5 text-left">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 rounded-full bg-gray-200">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg bg-gray-200 text-gray-600">
-                    CN
+                  <AvatarFallback className="rounded-full bg-gray-200 text-gray-600 text-sm font-medium">
+                    {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left">
-                  <span className="text-sm font-semibold text-gray-900 truncate">
+                  <span className="text-sm font-medium text-gray-900 truncate">
                     {user.name}
                   </span>
                   <span className="text-xs text-gray-500 truncate">
